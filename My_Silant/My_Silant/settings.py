@@ -37,7 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'accounts',
+    'silant',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -66,6 +74,22 @@ TEMPLATES = [
         },
     },
 ]
+
+# Setting for allauth
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_UNIQUE_USERNAME = True
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+is_open_for_signup = 'False'
+
+
+
+
 
 WSGI_APPLICATION = 'My_Silant.wsgi.application'
 
@@ -103,19 +127,21 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+LANGUAGE_CODE = 'ru'
+TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
-
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+
 STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
+# STATIC_ROOT = f'{BASE_DIR}/static'
+# MEDIA_ROOT = f'{BASE_DIR}/media'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

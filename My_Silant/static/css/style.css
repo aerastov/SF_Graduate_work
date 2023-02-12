@@ -1,0 +1,75 @@
+:root {
+  --silant_black: #163E6C;
+  --silant_red: #D20A11;
+  --silant_beige: #EBE6D6;
+}
+
+@font-face {
+    font-family: 'PT-Astra-Sans_Regular';
+    src: local('PT-Astra-Sans_Regular'), url('/static/fonts/PT Astra Sans/PT-Astra-Sans_Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'PT-Astra-Sans_Bold';
+    src: local('PT-Astra-Sans_Bold'), url('/static/fonts/PT Astra Sans/PT-Astra-Sans_Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'PT-Astra-Sans_Bold-italic';
+    src: local('PT-Astra-Sans_Bold-italic'), url('/static/fonts/PT Astra Sans/PT-Astra-Sans_Bold-italic.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'PT-Astra-Sans_Italic';
+    src: local('PT-Astra-Sans_Italic'), url('/static/fonts/PT Astra Sans/PT-Astra-Sans_Italic.ttf') format('truetype');
+}
+
+html {
+  font-family: "PT-Astra-Sans_Regular";
+  font-size: 20px;
+  /* Нормализатор */
+  line-height: 2.15; /* Высота строки для всех браузеров */
+  -webkit-text-size-adjust: 100%; /* фикс размера шрифта в iOS при повороте экрана */
+  -ms-text-size-adjust: 100%; /* фикс размера шрифта в ms при повороте экрана */
+  -moz-text-size-adjust: 100%; /* фикс размера шрифта в mozilla при повороте экрана */
+  -ms-overflow-style: scrollbar; /* стандартные полосы прокрутки */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  /* убираем цвет подсветки ссылки при касании */
+  }
+
+body {
+  margin: 0;
+  padding: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--silant_black);
+  text-align: left;
+  background-color: white;
+  }
+
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+.logo {
+    width: 200px;
+}
+.logo img {
+    width: 100%;
+    height: auto;
+}
+.header_name {
+    color: var(--silant_black);
+}
+.header_top {
+    display: -webkit-flex;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main {
+
+}

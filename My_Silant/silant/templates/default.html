@@ -1,0 +1,45 @@
+{% load static %}
+
+<html lang="en">
+	<head>
+		<title>{% block title %} {% endblock title %}</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	</head>
+
+
+
+<body>
+
+	<header>
+		<div class="header">
+			<div class="header_top">
+				<div class="logo">
+<!--					<img src="{% static 'images/Logotype accent RGB 2.jpg' %}">-->
+					<img src="{% static 'images/Logotype silant.jpg' %}">
+				</div>
+				<div>
+					<a>+7-8352-20-12-09, telegram</a>
+				</div>
+				<div>
+					<a>авторизация</a>
+				</div>
+			</div>
+			<a class="header_name">Электронная сервисная книжка "Мой Силант"</a>
+		</div>
+	</header>
+
+
+	<main>{% block content %} {% endblock content %}</main>
+
+
+	<footer>
+		<div>
+			<a>Мой Силант 2002</a>
+		</div>
+	</footer>
+
+	
+</body>
+
+</html>
