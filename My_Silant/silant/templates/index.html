@@ -1,19 +1,25 @@
 {% extends 'default.html' %}
 
-{% block title %}Index{% endblock title %}
+{% block title %}Мой Силант (
+    {% if user.is_authenticated %}
+        {{registered_user}}
+    {% else %}
+        Неавторизованный пользователь
+    {% endif %})
+{% endblock title %}
 
 
 {% block content %}
 
 
     {% if registered_user %}
-        <div class="main">
+
 			<a>{{registered_user}}</a>
-		</div>
+
     {% else %}
-        <div class="main">
+
 			<a>Проверьте комплектацию и технические характеристики техники Силант</a>
-		</div>
+
     {% endif %}
 
 

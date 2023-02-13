@@ -6,11 +6,10 @@
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="{% static 'css/style.css' %}">
 	</head>
-
-
-
 <body>
 
+
+<div class="wrapper">
 	<header>
 		<div class="header">
 			<div class="header_top">
@@ -18,28 +17,30 @@
 <!--					<img src="{% static 'images/Logotype accent RGB 2.jpg' %}">-->
 					<img src="{% static 'images/Logotype silant.jpg' %}">
 				</div>
-				<div>
-					<a>+7-8352-20-12-09, telegram</a>
-				</div>
-				<div>
-					<a>авторизация</a>
-				</div>
+				<div>+7-8352-20-12-09, telegram</div>
+				<div><a>авторизация</a></div>
 			</div>
 			<a class="header_name">Электронная сервисная книжка "Мой Силант"</a>
 		</div>
 	</header>
-
-
-	<main>{% block content %} {% endblock content %}</main>
-
-
-	<footer>
-		<div>
-			<a>Мой Силант 2002</a>
+	<main>
+		<div class="main">
+		{% block content %} {% endblock content %}
 		</div>
+	</main>
+	<footer>
+		<div class="footer">+7-8352-20-12-09, telegram</div>
+		<div class="footer">Мой Силант 2002</div>
 	</footer>
+</div>
 
-	
 </body>
-
 </html>
+
+
+
+
+
+
+
+
