@@ -1,4 +1,6 @@
 {% extends 'default.html' %}
+{% load bootstrap5 %}
+
 
 {% block title %}Мой Силант (
     {% if user.is_authenticated %}
@@ -11,14 +13,30 @@
 
 {% block content %}
 
-
     {% if registered_user %}
-
-			<a>{{registered_user}}</a>
-
+        {{registered_user}}
     {% else %}
+        <p class="center">Проверьте комплектацию и технические характеристики техники Силант</p>
+	<form method="post">
+		{% csrf_token %}
+		{% bootstrap_form form layout='horizontal' %}
+		{% buttons submit='поиск' %}{% endbuttons %}
+	</form>
+{{cars}}
+ {% if cars %}
+        {% for car in cars %}
+{{factory_number}}
+            <p>
+            <a href="/index/{{ car.id }}" style="font-size: 20px;"><b>{{ car.factory_number }}</b></a><br>
+            {{ car.technique_model }}<br>
+            <span style="font-size: 12px;">Автор: &nbsp;| &ensp;дата публикации: {{ car.dateCreation|date:'d.M.Y' }} г.</span>
+            </p>
+            <br><br>
+        {% endfor %}
+    {% else %}
+        <h2>Ничего не найдено</h2>
+    {% endif %}
 
-			<a>Проверьте комплектацию и технические характеристики техники Силант</a>
 
     {% endif %}
 

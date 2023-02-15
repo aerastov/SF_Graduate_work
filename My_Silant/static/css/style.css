@@ -52,9 +52,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 40px 20px 30px;
 }
 p {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    padding: 10px 20px;
+
 }
 
 
@@ -73,6 +71,7 @@ header {
 }
 main {
     flex: 1 0 auto;
+    background: #EEE9E9;
 }
 footer {
     display: -webkit-flex;
@@ -83,19 +82,18 @@ footer {
 }
 
 
-
+.center {
+    display: -webkit-flex;
+    display: flex;
+    justify-content: center;
+    color: var(--silant_black);
+}
 .logo {
     width: 200px;
 }
 .logo img {
     width: 100%;
     height: auto;
-}
-.header_name {
-    display: -webkit-flex;
-    display: flex;
-    justify-content: center;
-    color: var(--silant_black);
 }
 .header_top {
     display: -webkit-flex;
