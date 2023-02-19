@@ -1,5 +1,5 @@
 {% extends 'default.html' %}
-{% load bootstrap5 %}
+		{% load bootstrap5 %}
 
 
 {% block title %}Мой Силант (
@@ -17,11 +17,32 @@
         {{registered_user}}
     {% else %}
         <p class="center">Проверьте комплектацию и технические характеристики техники Силант</p>
-	<form method="post">
+
+
+	<form method="post" class="form">
 		{% csrf_token %}
-		{% bootstrap_form form layout='horizontal' %}
-		{% buttons submit='поиск' %}{% endbuttons %}
+        <div class="input-group">
+            {% bootstrap_form form layout='horizontal' %}
+<!--            {% bootstrap_form form layout='group'%}-->
+            <span class="input-group-btn">
+                {% buttons submit='поиск' class="btn btn-primary" %}{% endbuttons %}
+            </span>
+        </div>
 	</form>
+
+
+<form class="form-inline">
+  <div class="form-group">
+    <div class="input-group">
+      <input type="text" class="form-control" style="width: 350px" name="{{ param }}" value="{{ term }}">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>найти</button>
+      </span>
+    </div>
+  </div>
+</form>
+
+
 {{cars}}
  {% if cars %}
         {% for car in cars %}
