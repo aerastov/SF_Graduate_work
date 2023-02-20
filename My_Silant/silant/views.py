@@ -2,10 +2,12 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
 from .forms import *
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+
 
 
 
@@ -53,5 +55,17 @@ class Index(FormMixin, ListView):
         return self.render_to_response(self.get_context_data(object_list=self.object_list, form=form))
 
 
+class Info(LoginRequiredMixin, ListView):
+    model = Car
+    template_name = 'info.html'
+    context_object_name = 'cars'
 
+class Maintenance(LoginRequiredMixin, ListView):
+    model = Car
+    template_name = 'index.html'
+    context_object_name = 'cars'
 
+class Complaints(LoginRequiredMixin, ListView):
+    model = Car
+    template_name = 'index.html'
+    context_object_name = 'cars'

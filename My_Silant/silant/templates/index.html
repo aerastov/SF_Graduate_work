@@ -2,13 +2,6 @@
 {% load bootstrap5 %}
 {% load auth_extras %}
 
-{% block title %}Мой Силант (
-    {% if user.is_authenticated %}
-        {{registered_user}}
-    {% else %}
-        Неавторизованный пользователь
-    {% endif %})
-{% endblock title %}
 
 {% block content %}
 

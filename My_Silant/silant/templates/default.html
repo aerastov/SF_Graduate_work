@@ -2,7 +2,14 @@
 
 <html lang="en">
 	<head>
-		<title>{% block title %} {% endblock title %}</title>
+		<title>
+			Мой Силант (
+			{% if user.is_authenticated %}
+				{{ user.username }}
+			{% else %}
+				Неавторизованный пользователь
+			{% endif %})
+		</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
