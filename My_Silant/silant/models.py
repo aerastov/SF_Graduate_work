@@ -99,6 +99,7 @@ class Car(models.Model):
     class Meta:
         verbose_name = 'Машины'
         verbose_name_plural = 'Машины'
+        ordering = ['date_of_shipment_from_the_factory']
 
 
 

@@ -13,19 +13,20 @@
 {% block content %}
 
     {% if registered_user %}
-
-        {{registered_user}}
-<br>
-
-<!--        {% if request.user|has_group:"client" %}-->
-<!--            <p>Группа: client</p>{{ user.groups.all.0 }}-->
-<!--        {% endif %}-->
-
-
-        {% if perms.silant.view_car %}
-            <p>Add a New Record </p>
+        Имя юзера: {{ registered_user }}
+        <br>
+        {% if request.user|has_group:"client" %}
+            Проверена принадлежность к группе {{ user.groups.all.0 }}
         {% endif %}
+        <br>
+        {% if perms.silant.view_car %}
+            Успешно проверили разрешение
+        {% endif %}
+        <br>
 
+
+
+{{ cars }}
 
     {% else %}
         <p class="center">Проверьте комплектацию и технические характеристики техники Силант</p>
