@@ -19,28 +19,30 @@
         <p class="center">Проверьте комплектацию и технические характеристики техники Силант</p>
 
 
-	<form method="post" class="form">
+	<form method="post" class="row g-3">
 		{% csrf_token %}
         <div class="input-group">
             {% bootstrap_form form layout='horizontal' %}
-<!--            {% bootstrap_form form layout='group'%}-->
-            <span class="input-group-btn">
-                {% buttons submit='поиск' class="btn btn-primary" %}{% endbuttons %}
-            </span>
+            {{ form.content }}
+            {% buttons %}
+            <button type="submit" class="btn btn-outline-primary">поиск</button>
+            {% endbuttons %}
         </div>
 	</form>
 
-
-<form class="form-inline">
-  <div class="form-group">
-    <div class="input-group">
-      <input type="text" class="form-control" style="width: 350px" name="{{ param }}" value="{{ term }}">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>найти</button>
-      </span>
-    </div>
-  </div>
-</form>
+<!--<form class="row g-3">-->
+<!--  <div class="col-auto">-->
+<!--    <label for="staticEmail2" class="visually-hidden">Эл. адрес</label>-->
+<!--    <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="email@example.com">-->
+<!--  </div>-->
+<!--  <div class="col-auto">-->
+<!--    <label for="inputPassword2" class="visually-hidden">Пароль</label>-->
+<!--    <input type="password" class="form-control" id="inputPassword2" placeholder="Password">-->
+<!--  </div>-->
+<!--  <div class="col-auto">-->
+<!--    <button type="submit" class="btn btn-primary mb-3">поиск</button>-->
+<!--  </div>-->
+<!--</form>-->
 
 
 {{cars}}

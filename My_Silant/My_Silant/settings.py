@@ -48,16 +48,10 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
-# BOOTSTRAP4 = {
-#     'required_css_class': 'required',
-#     'success_css_class': 'has-success',
-#     'error_css_class': 'has-error',
-# }
 
 BOOTSTRAP5 = {
-    "error_css_class": "bootstrap5-error",
-    "required_css_class": "bootstrap5-required",
-    "javascript_in_head": True,
+    'horizontal_label_class': 'col-md-5',
+    'horizontal_field_class': 'col-md-7',
 }
 
 MIDDLEWARE = [

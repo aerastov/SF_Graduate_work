@@ -61,18 +61,25 @@ p {
     display: flex;
     flex-direction: column;
     /* justify-content: space-between; */
-    width: 750px;
+    width: 640px;
     min-height: 100%;
     margin: 0 auto;
+    border: 1px solid black;
 
 }
 header {
     height: 100px;
+    padding: 10px;
+    margin: 0 0 30px 0;
 }
 main {
     flex: 1 0 auto;
     background: #EEE9E9;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 10px;
 }
+
 footer {
     display: -webkit-flex;
     display: flex;
@@ -90,6 +97,7 @@ footer {
 }
 .logo {
     width: 200px;
+    padding: 0;
 }
 .logo img {
     width: 100%;
@@ -102,6 +110,11 @@ footer {
     align-items: center;
 }
 
+
+
+.btn {
+    margin: auto 10px;
+}
 
 .footer {
     margin: auto 10px;
