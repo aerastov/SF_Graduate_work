@@ -9,7 +9,6 @@ from django.http import HttpResponseRedirect
 
 
 
-
 class Index(FormMixin, ListView):
     model = Car
     template_name = 'index.html'

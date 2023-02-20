@@ -1,5 +1,6 @@
 {% extends 'default.html' %}
 {% load bootstrap5 %}
+{% load auth_extras %}
 
 {% block title %}Мой Силант (
     {% if user.is_authenticated %}
@@ -12,20 +13,12 @@
 {% block content %}
 
     {% if registered_user %}
+
         {{registered_user}}
 
-
-
-
-
-
-
-
-
-
-
-
-
+        {% if request.user|has_group:"client" %}
+            <p>Группа: client</p>
+        {% endif %}
 
 
 
