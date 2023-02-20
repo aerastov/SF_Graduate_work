@@ -15,11 +15,16 @@
     {% if registered_user %}
 
         {{registered_user}}
+<br>
 
-        {% if request.user|has_group:"client" %}
-            <p>Группа: client</p>
+<!--        {% if request.user|has_group:"client" %}-->
+<!--            <p>Группа: client</p>{{ user.groups.all.0 }}-->
+<!--        {% endif %}-->
+
+
+        {% if perms.silant.view_car %}
+            <p>Add a New Record </p>
         {% endif %}
-
 
 
     {% else %}
