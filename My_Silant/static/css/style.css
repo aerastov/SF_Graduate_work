@@ -52,10 +52,15 @@ h1, h2, h3, h4, h5, h6 {
     padding: 40px 20px 30px;
 }
 p {
-
 }
 
 
+
+td {
+    padding: 5px 20px;
+    vertical-align: bottom;
+    background-color: var(--silant_beige);
+}
 
 .wrapper {
     display: flex;
@@ -74,8 +79,8 @@ header {
 }
 main {
     flex: 1 0 auto;
-    background: #EEE9E9;
-    border: 1px solid black;
+/*    background: #EEE9E9;*/
+/*    border: 1px solid black;*/
     border-radius: 20px;
     padding: 10px;
 }
@@ -88,7 +93,6 @@ footer {
     background: var(--silant_beige);
 }
 
-
 .center {
     display: -webkit-flex;
     display: flex;
@@ -97,7 +101,6 @@ footer {
 }
 .logo {
     width: 200px;
-    padding: 0;
 }
 .logo img {
     width: 100%;

@@ -1,6 +1,5 @@
 {% extends 'default.html' %}
-		{% load bootstrap5 %}
-
+{% load bootstrap5 %}
 
 {% block title %}Мой Силант (
     {% if user.is_authenticated %}
@@ -10,59 +9,57 @@
     {% endif %})
 {% endblock title %}
 
-
 {% block content %}
 
     {% if registered_user %}
         {{registered_user}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     {% else %}
         <p class="center">Проверьте комплектацию и технические характеристики техники Силант</p>
-
-
-	<form method="post" class="row g-3">
-		{% csrf_token %}
-        <div class="input-group">
-            {% bootstrap_form form layout='horizontal' %}
-            {{ form.content }}
-            {% buttons %}
-            <button type="submit" class="btn btn-outline-primary">поиск</button>
-            {% endbuttons %}
-        </div>
-	</form>
-
-<!--<form class="row g-3">-->
-<!--  <div class="col-auto">-->
-<!--    <label for="staticEmail2" class="visually-hidden">Эл. адрес</label>-->
-<!--    <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="email@example.com">-->
-<!--  </div>-->
-<!--  <div class="col-auto">-->
-<!--    <label for="inputPassword2" class="visually-hidden">Пароль</label>-->
-<!--    <input type="password" class="form-control" id="inputPassword2" placeholder="Password">-->
-<!--  </div>-->
-<!--  <div class="col-auto">-->
-<!--    <button type="submit" class="btn btn-primary mb-3">поиск</button>-->
-<!--  </div>-->
-<!--</form>-->
-
-
-{{cars}}
- {% if cars %}
-        {% for car in cars %}
-{{factory_number}}
-            <p>
-            <a href="/index/{{ car.id }}" style="font-size: 20px;"><b>{{ car.factory_number }}</b></a><br>
-            {{ car.technique_model }}<br>
-            <span style="font-size: 12px;">Автор: &nbsp;| &ensp;дата публикации: {{ car.dateCreation|date:'d.M.Y' }} г.</span>
-            </p>
-            <br><br>
-        {% endfor %}
-    {% else %}
-        <h2>Ничего не найдено</h2>
+        <form method="post" class="row g-3">
+            {% csrf_token %}
+            <div class="input-group">
+                {% bootstrap_form form layout='horizontal' %}
+                {{ form.content }}
+                {% buttons %}
+                <button type="submit" class="btn btn-outline-primary">поиск</button>
+                {% endbuttons %}
+            </div>
+        </form>
+        {% if cars %}
+            {% for car in cars %}
+                <br>
+                <p class="center">Данные найденной машины:</p>
+                <table class="center">
+                <tr><td>Зав. №  машины:</td><td>{{ car.factory_number }}</td></tr>
+                <tr><td>Модель техники:</td><td>{{ car.technique_model }}</td></tr>
+                <tr><td>Модель двигателя:</td><td>{{ car.engine_model }}</td></tr>
+                <tr><td>Зав. № двигателя:</td><td>{{ car.engine_number }}</td></tr>
+                <tr><td>Модель трансмиссии:</td><td>{{ car.transmission_model }}</td></tr>
+                <tr><td>Зав. № трансмиссии:</td><td>{{ car.transmission_number }}</td></tr>
+                <tr><td>Модель ведущего моста:</td><td>{{ car.drive_axle_model }}</td></tr>
+                <tr><td>Зав. № ведущего моста:</td><td>{{ car.drive_axle_number }}</td></tr>
+                <tr><td>Модель управляемого моста:</td><td>{{ car.steerable_axle_model }}</td></tr>
+                <tr><td>Зав. № управляемого моста:</td><td>{{ car.steerable_axle_number }}</td></tr>
+                </table>
+            {% endfor %}
+        {% else %}
+            <h4 class="center">Ничего не найдено</h4>
+        {% endif %}
     {% endif %}
-
-
-    {% endif %}
-
-
-    
 {% endblock content %}

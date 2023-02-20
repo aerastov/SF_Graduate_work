@@ -33,6 +33,7 @@ class Index(FormMixin, ListView):
         if form.is_valid():
             # print(form.cleaned_data.get("factory_number"))
             self.object_list = Car.objects.filter(factory_number=form.cleaned_data['factory_number'])
+            # self.object_list = [list(i.values()) for i in list(Car.objects.filter(factory_number=form.cleaned_data['factory_number']).values())]
             # print("object_list = ", self.object_list)
         else:
             self.object_list = []
