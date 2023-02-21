@@ -76,6 +76,7 @@ header {
     height: 100px;
     padding: 10px;
     margin: 0 0 30px 0;
+    color: var(--silant_black);
 }
 main {
     flex: 1 0 auto;
@@ -83,6 +84,7 @@ main {
 /*    border: 1px solid black;*/
     border-radius: 20px;
     padding: 10px;
+    color: var(--silant_black);
 }
 
 footer {
@@ -91,12 +93,14 @@ footer {
     justify-content: space-between;
     height: 40px;
     background: var(--silant_beige);
+    color: var(--silant_black);
 }
 
 .center {
     display: -webkit-flex;
     display: flex;
     justify-content: center;
+    text-align: center;
     color: var(--silant_black);
 }
 .logo {
@@ -113,10 +117,19 @@ footer {
     align-items: center;
 }
 
-
-
 .btn {
     margin: auto 10px;
+}
+
+
+
+
+
+.div_full_horizontal_content_space_around {
+    display: -webkit-flex;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .footer {

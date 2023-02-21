@@ -1,2 +1,45 @@
 {% extends 'default.html' %}
+{% load auth_extras %}
 
+{% block content %}
+
+<!--<br>-->
+<!--{% if perms.silant.view_car %}-->
+<!--    Успешно проверили разрешение-->
+<!--{% endif %}-->
+<!--<br>-->
+
+{% include "fragments/username_group.html" %}
+<h6 class="center">Информация о комплектации и технических<br>характеристиках Вашей техники</h6>
+<div class="div_full_horizontal_content_space_around">
+    <a class="btn btn-outline-dark" href="{% url 'info' %}" role="button">Общая инфо</a>
+    <a class="btn btn-outline-dark" href="{% url 'index' %}" role="button">ТО</a>
+    <a class="btn btn-outline-dark" href="{% url 'index' %}" role="button">Рекламации</a>
+</div>
+
+    {% if cars %}
+            <br>
+            <p class="center">Данные найденной машины:</p>
+            <table class="center">
+            <tr><th>Номер:</th><th>Модель техники:</th><th>Модель двигателя:</th><th>Дата отгрузки с завода:</th><th>Сервисная организация:</th></tr>
+        {% for car in cars %}
+            <tr><td>{{ car.factory_number }}</td><td>{{ car.technique_model }}</td><td>{{ car.engine_model }}</td><td>{{ car.date_of_shipment_from_the_factory|date:"d.m.Y" }}</td><td>{{ car.service_company }}</td></tr>
+        {% endfor %}
+            </table>
+    {% else %}
+        <h4 class="center">Данных о машине с таким заводским номером нет в системе</h4>
+    {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}

@@ -18,30 +18,6 @@ class Index(FormMixin, ListView):
     form_class = FactoryNumber
     success_url = 'index'
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        # context['cars'] = Car.objects.all()
-        # context['form'] = self.form
-        if self.request.user.is_authenticated:
-            print("пользователь аутентифицирован")
-            context['registered_user'] = User.objects.get(username=self.request.user)
-            if self.request.user.groups.filter(name='manager').exists():
-                print("группа manager, user.id = ", self.request.user.id)
-                context['cars'] = Car.objects.filter(client=self.request.user.id)
-            elif self.request.user.groups.filter(name='service').exists():
-                print("группа service, user.id = ", self.request.user.id)
-                context['cars'] = Car.objects.filter(client=self.request.user.id)
-            elif self.request.user.groups.filter(name='client').exists():
-                print("группа client, user.id = ", self.request.user.id)
-                context['cars'] = Car.objects.filter(client=self.request.user.id)
-            else:
-                print("группа не найдена")
-                context['cars'] = []
-        else:
-            print("пользователь не аутентифицирован")
-            context['registered_user'] = ""  # Если AnonymousUser
-        return context
-
     def post(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
         form = self.get_form()
@@ -59,6 +35,29 @@ class Info(LoginRequiredMixin, ListView):
     model = Car
     template_name = 'info.html'
     context_object_name = 'cars'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+
+        if self.request.user.groups.filter(name='admin').exists():
+            print("группа admin, user.id = ", self.request.user.id)
+            context['cars'] = Car.objects.all
+        elif self.request.user.groups.filter(name='manager').exists():
+            print("группа manager, user.id = ", self.request.user.id)
+            context['cars'] = Car.objects.all
+        elif self.request.user.groups.filter(name='service').exists():
+            print("группа service, user.id = ", self.request.user.id)
+            context['cars'] = Car.objects.filter(client=self.request.user.id)
+        elif self.request.user.groups.filter(name='client').exists():
+            print("группа client, user.id = ", self.request.user.id)
+            context['cars'] = Car.objects.filter(client=self.request.user.id)
+        else:
+            print("группа не найдена")
+            context['cars'] = []
+
+        return context
+
 
 class Maintenance(LoginRequiredMixin, ListView):
     model = Car

@@ -5,53 +5,36 @@
 
 {% block content %}
 
-    {% if registered_user %}
-        Имя юзера: {{ registered_user }}
-        <br>
-        {% if request.user|has_group:"client" %}
-            Проверена принадлежность к группе {{ user.groups.all.0 }}
-        {% endif %}
-        <br>
-        {% if perms.silant.view_car %}
-            Успешно проверили разрешение
-        {% endif %}
-        <br>
-
-
-
-{{ cars }}
-
+    <h6 class="center">Проверьте комплектацию и технические характеристики техники Силант</h6>
+    <form method="post" class="row g-3">
+        {% csrf_token %}
+        <div class="input-group">
+            {% bootstrap_form form layout='horizontal' %}
+            {{ form.content }}
+            {% buttons %}
+            <button type="submit" class="btn btn-outline-secondary">поиск</button>
+            {% endbuttons %}
+        </div>
+    </form>
+    {% if cars %}
+        {% for car in cars %}
+            <br>
+            <p class="center">Данные найденной машины:</p>
+            <table class="center">
+            <tr><td>Зав. №  машины:</td><td>{{ car.factory_number }}</td></tr>
+            <tr><td>Модель техники:</td><td>{{ car.technique_model }}</td></tr>
+            <tr><td>Модель двигателя:</td><td>{{ car.engine_model }}</td></tr>
+            <tr><td>Зав. № двигателя:</td><td>{{ car.engine_number }}</td></tr>
+            <tr><td>Модель трансмиссии:</td><td>{{ car.transmission_model }}</td></tr>
+            <tr><td>Зав. № трансмиссии:</td><td>{{ car.transmission_number }}</td></tr>
+            <tr><td>Модель ведущего моста:</td><td>{{ car.drive_axle_model }}</td></tr>
+            <tr><td>Зав. № ведущего моста:</td><td>{{ car.drive_axle_number }}</td></tr>
+            <tr><td>Модель управляемого моста:</td><td>{{ car.steerable_axle_model }}</td></tr>
+            <tr><td>Зав. № управляемого моста:</td><td>{{ car.steerable_axle_number }}</td></tr>
+            </table>
+        {% endfor %}
     {% else %}
-        <p class="center">Проверьте комплектацию и технические характеристики техники Силант</p>
-        <form method="post" class="row g-3">
-            {% csrf_token %}
-            <div class="input-group">
-                {% bootstrap_form form layout='horizontal' %}
-                {{ form.content }}
-                {% buttons %}
-                <button type="submit" class="btn btn-outline-primary">поиск</button>
-                {% endbuttons %}
-            </div>
-        </form>
-        {% if cars %}
-            {% for car in cars %}
-                <br>
-                <p class="center">Данные найденной машины:</p>
-                <table class="center">
-                <tr><td>Зав. №  машины:</td><td>{{ car.factory_number }}</td></tr>
-                <tr><td>Модель техники:</td><td>{{ car.technique_model }}</td></tr>
-                <tr><td>Модель двигателя:</td><td>{{ car.engine_model }}</td></tr>
-                <tr><td>Зав. № двигателя:</td><td>{{ car.engine_number }}</td></tr>
-                <tr><td>Модель трансмиссии:</td><td>{{ car.transmission_model }}</td></tr>
-                <tr><td>Зав. № трансмиссии:</td><td>{{ car.transmission_number }}</td></tr>
-                <tr><td>Модель ведущего моста:</td><td>{{ car.drive_axle_model }}</td></tr>
-                <tr><td>Зав. № ведущего моста:</td><td>{{ car.drive_axle_number }}</td></tr>
-                <tr><td>Модель управляемого моста:</td><td>{{ car.steerable_axle_model }}</td></tr>
-                <tr><td>Зав. № управляемого моста:</td><td>{{ car.steerable_axle_number }}</td></tr>
-                </table>
-            {% endfor %}
-        {% else %}
-            <h4 class="center">Ничего не найдено</h4>
-        {% endif %}
+        <h4 class="center">Ничего не найдено</h4>
     {% endif %}
+
 {% endblock content %}
