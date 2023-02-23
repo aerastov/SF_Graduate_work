@@ -77,23 +77,23 @@ class Service_company(models.Model):
 
 
 class Car(models.Model):
-    factory_number = models.TextField(max_length=17, unique=True, verbose_name='Заводской номер')
-    technique_model = models.ForeignKey(Technique_model, on_delete=models.CASCADE, verbose_name='Модель техники')
-    engine_model = models.ForeignKey(Engine_model, on_delete=models.CASCADE, verbose_name='Модель двигателя')
+    factory_number = models.TextField(max_length=17, unique=True, db_index=True, verbose_name='Заводской номер')
+    technique_model = models.ForeignKey(Technique_model, on_delete=models.CASCADE, db_index=True, verbose_name='Модель техники')
+    engine_model = models.ForeignKey(Engine_model, on_delete=models.CASCADE, db_index=True, verbose_name='Модель двигателя')
     engine_number = models.TextField(max_length=17, verbose_name='Номер двигателя')
-    transmission_model = models.ForeignKey(Transmission_model, on_delete=models.CASCADE, verbose_name='Модель трансмиссии')
+    transmission_model = models.ForeignKey(Transmission_model, on_delete=models.CASCADE, db_index=True, verbose_name='Модель трансмиссии')
     transmission_number = models.TextField(max_length=50, verbose_name='Номер трансмиссии')
-    drive_axle_model = models.ForeignKey(Drive_axle_model, on_delete=models.CASCADE, verbose_name='Модель ведущего моста')
+    drive_axle_model = models.ForeignKey(Drive_axle_model, on_delete=models.CASCADE, db_index=True, verbose_name='Модель ведущего моста')
     drive_axle_number = models.TextField(max_length=50, verbose_name='Номер ведущего моста')
-    steerable_axle_model = models.ForeignKey(Steerable_axle_model, on_delete=models.CASCADE, verbose_name='Модель управляемого моста')
+    steerable_axle_model = models.ForeignKey(Steerable_axle_model, on_delete=models.CASCADE, db_index=True, verbose_name='Модель управляемого моста')
     steerable_axle_number = models.TextField(max_length=50, verbose_name='Номер управляемого моста')
     supply_contract = models.TextField(max_length=50, blank=True, verbose_name='Договор поставки №, дата.')
-    date_of_shipment_from_the_factory = models.DateField(blank=True, verbose_name='Дата отгрузки с завода')
+    date_of_shipment_from_the_factory = models.DateField(db_index=True, verbose_name='Дата отгрузки с завода')
     consignee = models.TextField(max_length=50, blank=True, verbose_name='Грузополучатель')
     delivery_address = models.TextField(max_length=150, blank=True, verbose_name='Адрес поставки (эксплуатации)')
     equipment = models.TextField(max_length=150, blank=True, verbose_name='Комплектация (доп. опции)')
-    client = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, verbose_name='Клиент')
-    service_company = models.ForeignKey(Service_company, on_delete=models.CASCADE, blank=True, verbose_name='Сервисная компания')
+    client = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Клиент')
+    service_company = models.ForeignKey(Service_company, null=True, on_delete=models.CASCADE, blank=True, verbose_name='Сервисная компания')
 
     def __str__(self):
         return f'{self.factory_number}'

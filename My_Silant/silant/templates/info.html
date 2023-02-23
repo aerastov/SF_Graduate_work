@@ -9,8 +9,7 @@
 <!--{% endif %}-->
 <!--<br>-->
 
-{% include "fragments/username_group.html" %}
-<h6 class="center">Информация о комплектации и технических<br>характеристиках Вашей техники</h6>
+{% include "fragments/username_group.html" %}<br>
 <div class="div_full_horizontal_content_space_around">
     <a class="btn btn-outline-dark" href="{% url 'info' %}" role="button">Общая инфо</a>
     <a class="btn btn-outline-dark" href="{% url 'index' %}" role="button">ТО</a>
@@ -18,20 +17,35 @@
 </div>
 
     {% if cars %}
-            <br>
-            <p class="center">Данные найденной машины:</p>
+            <h6 class="center">Информация о комплектации и технических<br>характеристиках Вашей техники</h6>
+
+
+        {% if request.user|has_group:"manager" or request.user|has_group:"admin" %}
+            <div>
+                <a href="{% url 'create_car' %}" role="button">Добавить запись о машине</a>
+            </div>
+        {% endif %}
+
+
             <table class="center">
-            <tr><th>Номер:</th><th>Модель техники:</th><th>Модель двигателя:</th><th>Дата отгрузки с завода:</th><th>Сервисная организация:</th></tr>
+            <tr><th><a href="?order_by=factory_number">Номер:</a></th><th><a href="?order_by=technique_model">Модель техники:</a></th><th><a href="?order_by=engine_model">Модель двигателя:</a></th><th><a href="?order_by=transmission_model">модель трансмиссии:</a></th><th><a href="?order_by=drive_axle_model">модель ведущего моста:</a></th><th><a href="?order_by=steerable_axle_model">модель управляемого моста:</a></th><th><a href="?order_by=date_of_shipment_from_the_factory">дата отгрузки с завода:</a></th></tr>
         {% for car in cars %}
-            <tr><td>{{ car.factory_number }}</td><td>{{ car.technique_model }}</td><td>{{ car.engine_model }}</td><td>{{ car.date_of_shipment_from_the_factory|date:"d.m.Y" }}</td><td>{{ car.service_company }}</td></tr>
+            <tr><td>{{ car.factory_number }}</td><td>{{ car.technique_model }}</td><td>{{ car.engine_model }}</td><td>{{ car.transmission_model }}</td><td>{{ car.drive_axle_model }}</td><td>{{ car.steerable_axle_model }}</td><td>{{ car.date_of_shipment_from_the_factory|date:"d.m.Y" }}</td></tr>
         {% endfor %}
             </table>
     {% else %}
-        <h4 class="center">Данных о машине с таким заводским номером нет в системе</h4>
+        <h6 class="center">Нет записей о машинах, которые вам доступны к просмотру.</h6>
+
+
+        {% if request.user|has_group:"manager" or request.user|has_group:"admin" %}
+            <div class="center">
+                <a class="btn btn-outline-dark" href="{% url 'create_car' %}" role="button">Создать новую запись о машине</a>
+            </div>
+        {% endif %}
     {% endif %}
 
 
-
+<!--{{ car.date_of_shipment_from_the_factory|date:"d.m.Y" }}-->
 
 
 
