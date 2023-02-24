@@ -27,10 +27,12 @@
         {% endif %}
 
 
-            <table class="center">
+            <table class="table_info">
             <tr><th><a href="?order_by=factory_number">Номер:</a></th><th><a href="?order_by=technique_model">Модель техники:</a></th><th><a href="?order_by=engine_model">Модель двигателя:</a></th><th><a href="?order_by=transmission_model">модель трансмиссии:</a></th><th><a href="?order_by=drive_axle_model">модель ведущего моста:</a></th><th><a href="?order_by=steerable_axle_model">модель управляемого моста:</a></th><th><a href="?order_by=date_of_shipment_from_the_factory">дата отгрузки с завода:</a></th></tr>
         {% for car in cars %}
-            <tr><td>{{ car.factory_number }}</td><td>{{ car.technique_model }}</td><td>{{ car.engine_model }}</td><td>{{ car.transmission_model }}</td><td>{{ car.drive_axle_model }}</td><td>{{ car.steerable_axle_model }}</td><td>{{ car.date_of_shipment_from_the_factory|date:"d.m.Y" }}</td></tr>
+            <tr class="table_row"><td><a href="/info/{{ car.id }}">{{ car.factory_number }}</a></td><td><a href="/info/{{ car.id }}">{{ car.technique_model }}</a></td><td><a href="/info/{{ car.id }}">{{ car.engine_model }}</a></td><td><a href="/info/{{ car.id }}">{{ car.transmission_model }}</a></td><td><a href="/info/{{ car.id }}">{{ car.drive_axle_model }}</a></td><td><a href="/info/{{ car.id }}">{{ car.steerable_axle_model }}</a></td><td><a href="/info/{{ car.id }}">{{ car.date_of_shipment_from_the_factory|date:"d.m.Y" }}</a></td></tr>
+
+
         {% endfor %}
             </table>
     {% else %}

@@ -51,16 +51,28 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0.5rem;
     padding: 40px 20px 30px;
 }
+
 p {
 }
 
 
-
-td {
-    padding: 5px 20px;
-    vertical-align: bottom;
-    background-color: var(--silant_beige);
+table_info {
+    font-size: 0.6em;
 }
+.table_row:hover {
+       background: var(--silant_beige);
+       color: blue;
+       /*font-weight: bold;*/
+}
+table_info a {
+   text-decoration: none;
+   color: var(--silant_black);
+}
+table_info a:hover {
+   color: blue;
+}
+
+
 
 .wrapper {
     display: flex;

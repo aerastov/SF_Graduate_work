@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin, CreateView
 from django.contrib.auth.models import User
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .models import *
 from .forms import *
 from django.urls import reverse
@@ -15,6 +15,9 @@ class Index(FormMixin, ListView):
     context_object_name = 'cars'
     form_class = FactoryNumber
     success_url = 'index'
+
+    def get_queryset(self):
+        return []
 
     def post(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
@@ -29,7 +32,8 @@ class Index(FormMixin, ListView):
         return self.render_to_response(self.get_context_data(object_list=self.object_list, form=form))
 
 
-class Info(LoginRequiredMixin, ListView):
+class Info(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = 'silant.view_car'
     model = Car
     template_name = 'info.html'
     context_object_name = 'cars'
@@ -44,7 +48,7 @@ class Info(LoginRequiredMixin, ListView):
 
         if self.request.user.groups.filter(name='admin').exists():
             print("группа admin, user.id = ", self.request.user.id)
-            context['cars'] = Car.objects.all
+            context['cars'] = Car.objects.all().order_by(order_by)
             # context['cars'] = Car.objects.all().order_by(order_by)
         elif self.request.user.groups.filter(name='manager').exists():
             print("группа manager, user.id = ", self.request.user.id)
@@ -52,17 +56,26 @@ class Info(LoginRequiredMixin, ListView):
             context['cars'] = Car.objects.all().order_by(order_by)
         elif self.request.user.groups.filter(name='service').exists():
             print("группа service, user.id = ", self.request.user.id)
-            context['cars'] = Car.objects.filter(client=self.request.user.id)
+            context['cars'] = Car.objects.filter(client=self.request.user.id).order_by(order_by)
             # context['cars'] = Car.objects.filter(client=self.request.user.id).order_by(order_by)
         elif self.request.user.groups.filter(name='client').exists():
             print("группа client, user.id = ", self.request.user.id)
-            context['cars'] = Car.objects.filter(client=self.request.user.id)
+            context['cars'] = Car.objects.filter(client=self.request.user.id).order_by(order_by)
             # context['cars'] = Car.objects.filter(client=self.request.user.id).order_by(order_by)
         else:
             print("группа не найдена")
             context['cars'] = []
 
         return context
+
+
+class InfoItem(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+    permission_required = 'silant.view_car'
+    model = Car
+    template_name = 'car_item.html'
+    context_object_name = 'car'
+
+
 
 
 class Maintenance(LoginRequiredMixin, ListView):
@@ -76,7 +89,8 @@ class Complaints(LoginRequiredMixin, ListView):
     context_object_name = 'cars'
 
 
-class CreateCar(LoginRequiredMixin, CreateView):
+class CreateCar(PermissionRequiredMixin, CreateView):
+    permission_required = 'silant.add_car'
     model = Car
     template_name = 'create_car.html'
     form_class = CreateCarForm

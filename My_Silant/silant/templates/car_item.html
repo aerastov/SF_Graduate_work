@@ -1,0 +1,42 @@
+{% extends 'default.html' %}
+{% load auth_extras %}
+{% load bootstrap5 %}
+
+{% block content %}
+
+    <p class="center">Данные выбранной машины:</p>
+<div class="center">
+    <table>
+    <tr><td>Зав. №  машины:</td><td>{{ car.factory_number }}</td></tr>
+    <tr><td>Модель техники:</td><td>{{ car.technique_model }}</td></tr>
+    <tr><td>Модель двигателя:</td><td>{{ car.engine_model }}</td></tr>
+    <tr><td>Зав. № двигателя:</td><td>{{ car.engine_number }}</td></tr>
+    <tr><td>Модель трансмиссии:</td><td>{{ car.transmission_model }}</td></tr>
+    <tr><td>Зав. № трансмиссии:</td><td>{{ car.transmission_number }}</td></tr>
+    <tr><td>Модель ведущего моста:</td><td>{{ car.drive_axle_model }}</td></tr>
+    <tr><td>Зав. № ведущего моста:</td><td>{{ car.drive_axle_number }}</td></tr>
+    <tr><td>Модель управляемого моста:</td><td>{{ car.steerable_axle_model }}</td></tr>
+    <tr><td>Зав. № управляемого моста:</td><td>{{ car.steerable_axle_number }}</td></tr>
+    <tr><td>Договор поставки №, дата:</td><td>{{ car.supply_contract }}</td></tr>
+    <tr><td>Дата отгрузки с завода:</td><td>{{ car.date_of_shipment_from_the_factory|date:"d.m.Y" }}</td></tr>
+    <tr><td>Грузополучатель:</td><td>{{ car.consignee }}</td></tr>
+    <tr><td>Адрес поставки (эксплуатации):</td><td>{{ car.delivery_address }}</td></tr>
+    <tr><td>Комплектация (доп. опции):</td><td>{{ car.equipment }}</td></tr>
+    <tr><td>Клиент:</td><td>{{ car.client }}</td></tr>
+    <tr><td>Сервисная организация:</td><td>{{ car.service_company }}</td></tr>
+    </table>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}

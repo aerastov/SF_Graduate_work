@@ -93,7 +93,7 @@ class Car(models.Model):
     delivery_address = models.TextField(max_length=150, blank=True, verbose_name='Адрес поставки (эксплуатации)')
     equipment = models.TextField(max_length=150, blank=True, verbose_name='Комплектация (доп. опции)')
     client = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Клиент')
-    service_company = models.ForeignKey(Service_company, null=True, on_delete=models.CASCADE, blank=True, verbose_name='Сервисная компания')
+    service_company = models.ForeignKey(Service_company, null=True, on_delete=models.CASCADE, blank=True, verbose_name='Сервисная организация')
 
     def __str__(self):
         return f'{self.factory_number}'
