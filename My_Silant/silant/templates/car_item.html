@@ -25,10 +25,12 @@
     <tr><td>Клиент:</td><td>{{ car.client }}</td></tr>
     <tr><td>Сервисная организация:</td><td>{{ car.service_company }}</td></tr>
     </table>
-
 </div>
 
-
+        {% if request.user.username%}
+            <a href="{{ request.get_full_path }}/edit" class="btn btn-primary">Редактировать</a>
+            <a href="{{ request.get_full_path }}/delete" class="btn btn-primary">Удалить</a>
+        {% endif %}
 
 
 

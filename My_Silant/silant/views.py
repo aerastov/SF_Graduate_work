@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import FormMixin, CreateView
+from django.views.generic.edit import FormMixin, CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .models import *
@@ -32,7 +32,7 @@ class Index(FormMixin, ListView):
         return self.render_to_response(self.get_context_data(object_list=self.object_list, form=form))
 
 
-class Info(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class Info(PermissionRequiredMixin, ListView):
     permission_required = 'silant.view_car'
     model = Car
     template_name = 'info.html'
@@ -69,24 +69,11 @@ class Info(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return context
 
 
-class InfoItem(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+class InfoItem(PermissionRequiredMixin, DetailView):
     permission_required = 'silant.view_car'
     model = Car
     template_name = 'car_item.html'
     context_object_name = 'car'
-
-
-
-
-class Maintenance(LoginRequiredMixin, ListView):
-    model = Car
-    template_name = 'index.html'
-    context_object_name = 'cars'
-
-class Complaints(LoginRequiredMixin, ListView):
-    model = Car
-    template_name = 'index.html'
-    context_object_name = 'cars'
 
 
 class CreateCar(PermissionRequiredMixin, CreateView):
@@ -94,12 +81,33 @@ class CreateCar(PermissionRequiredMixin, CreateView):
     model = Car
     template_name = 'create_car.html'
     form_class = CreateCarForm
+    success_url = 'info'
+
+
+class EditCar(PermissionRequiredMixin, UpdateView):
+    permission_required = 'silant.change_car'
+    model = Car
+    template_name = 'create_car.html'
+    form_class = CreateCarForm
     success_url = '/info'
 
-    # def form_valid(self, form):
-    #     # form.save(commit=False)
-    #     # car = form.save(commit=False)
-    #     # form = self.get_form()
-    #     # car.client = User.objects.get(username=form.cleaned_data.get("client"))
-    #     # car.save()
-    #     return HttpResponseRedirect(reverse('info'))
+
+class DeleteCar(PermissionRequiredMixin, DeleteView):
+    permission_required = 'silant.delete_car'
+    model = Car
+    template_name = 'delete_car.html'
+    success_url = '/info'
+
+
+class Maintenance(LoginRequiredMixin, ListView):
+    model = Car
+    template_name = 'index.html'
+    context_object_name = 'cars'
+
+
+class Complaints(LoginRequiredMixin, ListView):
+    model = Car
+    template_name = 'index.html'
+    context_object_name = 'cars'
+
+

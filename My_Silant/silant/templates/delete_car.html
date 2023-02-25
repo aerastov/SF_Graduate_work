@@ -1,0 +1,15 @@
+{% extends 'default.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+
+
+
+    <h2>Вы действительно хотите удалить эту запись о машине?</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <input type=button value="< Назад" class="btn btn-primary" onClick="javascript:history.go(-1);">&nbsp
+        <button type="submit" class="btn btn-primary" style="background: red">Delete</button>
+    </form>
+
+{% endblock content %}
