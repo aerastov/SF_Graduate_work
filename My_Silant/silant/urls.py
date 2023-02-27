@@ -11,8 +11,7 @@ urlpatterns = [
     path('create_car', CreateCar.as_view(), name='create_car'),
 
     path('maintenance', Maintenance.as_view(), name='maintenance'),
-    path('select_car_maintenance', SelectCarMaintenance.as_view(), name='select_car_maintenance'),
-    path('create_maintenance/<int:pk>', CreateMaintenances.as_view(), name='create_maintenances'),
+    path('create_maintenance', CreateMaintenances.as_view(), name='create_maintenance'),
 
 
     path('complaints', Complaints.as_view(), name='complaints'),
