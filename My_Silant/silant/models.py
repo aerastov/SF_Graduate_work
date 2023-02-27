@@ -118,7 +118,7 @@ class Maintenance(models.Model):
     service_company = models.OneToOneField(Service_company, on_delete=models.CASCADE, verbose_name='Сервисная организация')
     type_maintenance = models.ForeignKey(Type_maintenance, on_delete=models.CASCADE, verbose_name='Вид ТО')
     maintenance_date = models.DateField(verbose_name='Дата проведения ТО')
-    operating_time = models.IntegerField(verbose_name='Наработка м/час')
+    operating_time = models.IntegerField(verbose_name='Наработка мотто/часов')
     order = models.TextField(max_length=50, verbose_name='Номер заказа-наряда')
     order_date = models.DateField(verbose_name='Дата заказа-наряда')
 

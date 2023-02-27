@@ -26,14 +26,14 @@
     <tr><td>Сервисная организация:</td><td>{{ car.service_company }}</td></tr>
     </table>
 </div>
-
-        {% if request.user.username%}
-            <a href="{{ request.get_full_path }}/edit" class="btn btn-primary">Редактировать</a>
-            <a href="{{ request.get_full_path }}/delete" class="btn btn-primary">Удалить</a>
-        {% endif %}
-
-
-
+<br>
+<input type=button value="< Назад" class="btn btn-primary" onClick="javascript:history.go(-1);">&nbsp
+{% if perms.silant.change_car %}
+    <a href="{{ request.get_full_path }}/edit" class="btn btn-primary">Редактировать</a>
+{% endif %}
+{% if perms.silant.delete_car %}
+    <a href="{{ request.get_full_path }}/delete" class="btn btn-primary">Удалить</a>
+{% endif %}
 
 
 

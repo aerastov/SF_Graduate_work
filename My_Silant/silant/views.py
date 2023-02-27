@@ -81,7 +81,7 @@ class CreateCar(PermissionRequiredMixin, CreateView):
     model = Car
     template_name = 'create_car.html'
     form_class = CreateCarForm
-    success_url = 'info'
+    success_url = '/info'
 
 
 class EditCar(PermissionRequiredMixin, UpdateView):
@@ -99,15 +99,58 @@ class DeleteCar(PermissionRequiredMixin, DeleteView):
     success_url = '/info'
 
 
-class Maintenance(LoginRequiredMixin, ListView):
+class Maintenance(PermissionRequiredMixin, ListView):
+    permission_required = 'silant.view_maintenance'
+    model = Maintenance
+    template_name = 'maintenance.html'
+    context_object_name = 'maintenances'
+
+
+class SelectCarMaintenance(PermissionRequiredMixin, ListView):
+    permission_required = 'silant.add_maintenance'
     model = Car
+    template_name = 'select_car.html'
+    context_object_name = 'cars'
+
+    def get_queryset(self):
+        if self.request.user.groups.filter(name='admin').exists() or self.request.user.groups.filter(name='manager').exists():
+            list_cars = Car.objects.all()
+        else:
+            list_cars = Car.objects.all(client='self.request.user')
+        return list_cars
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        order_by = self.request.GET.get('order_by', 'service_company')
+        if order_by in ['technique_model']:
+            order_by = order_by+"__name"
+        context['cars'] = context['cars'].order_by(order_by)
+        return context
+
+
+class CreateMaintenances(PermissionRequiredMixin, CreateView):
+    permission_required = 'silant.add_maintenance'
+    model = Maintenance
+    template_name = 'create_maintenance.html'
+    form_class = CreateMaintenancesForm
+    success_url = '/maintenance'
+
+
+
+
+
+
+
+
+
+
+
+
+class Complaints(PermissionRequiredMixin, ListView):
+    permission_required = 'silant.view_complaints'
+    model = Complaints
     template_name = 'index.html'
     context_object_name = 'cars'
 
-
-class Complaints(LoginRequiredMixin, ListView):
-    model = Car
-    template_name = 'index.html'
-    context_object_name = 'cars'
 
 

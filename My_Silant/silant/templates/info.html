@@ -3,17 +3,12 @@
 
 {% block content %}
 
-<!--<br>-->
-<!--{% if perms.silant.view_car %}-->
-<!--    Успешно проверили разрешение-->
-<!--{% endif %}-->
-<!--<br>-->
 
 {% include "fragments/username_group.html" %}<br>
 <div class="div_full_horizontal_content_space_around">
     <a class="btn btn-outline-dark" href="{% url 'info' %}" role="button">Общая инфо</a>
-    <a class="btn btn-outline-dark" href="{% url 'index' %}" role="button">ТО</a>
-    <a class="btn btn-outline-dark" href="{% url 'index' %}" role="button">Рекламации</a>
+    <a class="btn btn-outline-dark" href="{% url 'maintenance' %}" role="button">ТО</a>
+    <a class="btn btn-outline-dark" href="{% url 'complaints' %}" role="button">Рекламации</a>
 </div>
 
     {% if cars %}
@@ -45,15 +40,6 @@
             </div>
         {% endif %}
     {% endif %}
-
-
-<!--{{ car.date_of_shipment_from_the_factory|date:"d.m.Y" }}-->
-
-
-
-
-
-
 
 
 

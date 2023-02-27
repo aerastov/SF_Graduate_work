@@ -1,0 +1,24 @@
+{% extends 'default.html' %}
+{% load bootstrap5 %}
+{% load auth_extras %}
+
+
+
+{% block content %}
+
+
+
+
+    <h6 class="center">Выберите машину, для которой необходимо создать запись о ТО</h6>
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            {% bootstrap_form form layout='horizontal' %}
+
+            {% buttons %}
+            <button type="submit" class="btn btn-outline-secondary">выбрать</button>
+            {% endbuttons %}
+        </div>
+    </form>
+
+{% endblock content %}
