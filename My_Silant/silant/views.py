@@ -134,7 +134,21 @@ class CreateMaintenances(PermissionRequiredMixin, CreateView):
     template_name = 'create_maintenance.html'
     form_class = CreateMaintenancesForm
     success_url = '/maintenance'
+    context_object_name = 'cars'
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        id = self.request.GET.get('id', '---')
+        if "---" in id:
+            context['select_car'] = "---"
+        else:
+            context['select_car'] = Car.objects.get(id=id)
+
+        if self.request.user.groups.filter(name='admin').exists() or self.request.user.groups.filter(name='manager').exists():
+            context['cars'] = Car.objects.all()
+        else:
+            context['cars'] = Car.objects.all(client='self.request.user')
+        return context
 
 
 

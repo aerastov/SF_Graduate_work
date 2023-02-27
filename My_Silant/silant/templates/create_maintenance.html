@@ -6,6 +6,17 @@
 
 {% block content %}
 
+<select  onchange="window.location.href = this.options[this.selectedIndex].value">
+    <option value="{{select_car.id}}">{{ select_car.factory_number }} {{ select_car.technique_model }} {{ select_car.engine_model }} {{ select_car.service_company }}</option>
+    {% for car in cars %}
+        {% if car.id != select_car.id %}
+            <option value="?id={{car.id}}">{{ car.factory_number }} {{ car.technique_model }}</option>
+        {% endif %}
+    {% endfor %}
+</select>
+
+
+
 
 
 

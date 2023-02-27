@@ -32,8 +32,21 @@ class CreateCarForm(forms.ModelForm):
 
 
 class CreateMaintenancesForm(forms.ModelForm):
+    # FRUIT_CHOICES = [
+    #     ('blue', 'Blue'),
+    #     ('green', 'Green'),
+    #     ('black', 'Black'),
+    # ]
+    # cars = forms.Select(choices=FRUIT_CHOICES)
+
     class Meta:
         model = Maintenance
         widgets = {'order': forms.Textarea(attrs={'rows': 1}),
                    'maintenance_date': forms.SelectDateWidget(years=list(reversed(range(2000, now.year + 1))))}
         fields = '__all__'
+
+    # def __init__(self, *args, **kwargs):
+    #     super(PostForm, self).__init__(*args, **kwargs)
+    #     self.fields['category'].label = "Тип публикации:"
+    #     self.fields['title'].label = "Название публикации:"
+    #     self.fields['text'].label = "Текст публикации:"
