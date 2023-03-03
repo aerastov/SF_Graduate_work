@@ -24,29 +24,22 @@ class CreateCarForm(forms.ModelForm):
                    'equipment': forms.Textarea(attrs={'rows': 1}),
                    'date_of_shipment_from_the_factory': forms.SelectDateWidget(years=list(reversed(range(2000, now.year+1)))) }
         fields = '__all__'
-    #date_of_shipment_from_the_factory
-    # def __init__(self, *args, **kwargs):
-    #     super(CreateCarForm, self).__init__(*args, **kwargs)
-    #     self.fields['title'].label = "Название публикации:"
-    #     self.fields['text'].label = "Текст публикации:"
 
 
 class CreateMaintenancesForm(forms.ModelForm):
-    # FRUIT_CHOICES = [
-    #     ('blue', 'Blue'),
-    #     ('green', 'Green'),
-    #     ('black', 'Black'),
-    # ]
-    # cars = forms.Select(choices=FRUIT_CHOICES)
-
+    # service_company = forms.CharField(max_length=200, help_text='Use puns liberally', label = "Сервисная компания")
     class Meta:
         model = Maintenance
+        exclude = ('car',)
         widgets = {'order': forms.Textarea(attrs={'rows': 1}),
-                   'maintenance_date': forms.SelectDateWidget(years=list(reversed(range(2000, now.year + 1))))}
-        fields = '__all__'
+                   'maintenance_date': forms.SelectDateWidget(years=list(reversed(range(2000, now.year + 1)))),
+                   }
 
-    # def __init__(self, *args, **kwargs):
-    #     super(PostForm, self).__init__(*args, **kwargs)
-    #     self.fields['category'].label = "Тип публикации:"
-    #     self.fields['title'].label = "Название публикации:"
-    #     self.fields['text'].label = "Текст публикации:"
+    def __init__(self, *args, **kwargs):
+        service_company = kwargs.pop('initial')['service_company']
+        super(CreateMaintenancesForm, self).__init__(*args, **kwargs)
+        self.fields['service_company'].initial = service_company
+        self.fields['service_company'].help_text='Назначить или изменить организацию может менеджер в информации о машине'
+        self.fields['service_company'].widget.attrs['disabled'] = True
+
+

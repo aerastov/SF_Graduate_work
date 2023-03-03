@@ -129,10 +129,18 @@ class CreateMaintenances(PermissionRequiredMixin, CreateView):
             context['cars'] = Car.objects.all(client='self.request.user')
         return context
 
-
-
-
-
+    def get_form_kwargs(self):
+        """Return the keyword arguments for instantiating the form."""
+        kwargs = super().get_form_kwargs()
+        id = self.request.GET.get('id', '---')
+        if "---" in id:
+            kwargs['initial'] = {'select_car': ""}
+        else:
+            service_company = Car.objects.get(id=id).service_company
+            kwargs['initial'] = {'service_company': service_company}
+        if hasattr(self, 'object'):
+            kwargs.update({'instance': self.object})
+        return kwargs
 
 
 
