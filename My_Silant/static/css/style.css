@@ -54,7 +54,12 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
 }
-
+select {
+   color: var(--silant_black);
+   border: 1px solid #ced4da;
+   border-radius: 0.25rem;
+   width: 348px;
+}
 
 table_info {
     font-size: 0.6em;
@@ -64,7 +69,7 @@ table_info {
        color: blue;
        /*font-weight: bold;*/
 }
-table_info a {
+table a {
    text-decoration: none;
    color: var(--silant_black);
 }
@@ -114,6 +119,14 @@ footer {
     justify-content: center;
     text-align: center;
     color: var(--silant_black);
+}
+.left-right {
+    display: -webkit-flex;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    color: var(--silant_black);
+    padding: 10px 0;
 }
 .logo {
     width: 200px;

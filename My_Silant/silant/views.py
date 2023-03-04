@@ -117,9 +117,9 @@ class CreateMaintenances(PermissionRequiredMixin, CreateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        id = self.request.GET.get('id', '---')
-        if "---" in id:
-            context['select_car'] = "---"
+        id = self.request.GET.get('id', '')
+        if id == '':
+            context['select_car'] = "---------"
         else:
             context['select_car'] = Car.objects.get(id=id)
 
@@ -130,16 +130,13 @@ class CreateMaintenances(PermissionRequiredMixin, CreateView):
         return context
 
     def get_form_kwargs(self):
-        """Return the keyword arguments for instantiating the form."""
         kwargs = super().get_form_kwargs()
-        id = self.request.GET.get('id', '---')
-        if "---" in id:
-            kwargs['initial'] = {'select_car': ""}
+        id = self.request.GET.get('id', '')
+        if id == '':
+            kwargs['initial'] = {'service_company': ""}
         else:
-            service_company = Car.objects.get(id=id).service_company
-            kwargs['initial'] = {'service_company': service_company}
-        if hasattr(self, 'object'):
-            kwargs.update({'instance': self.object})
+            service_company = Car.objects.get(id=id).service_company_id
+            kwargs['initial'] = {'service_company': service_company, 'car': id}
         return kwargs
 
 
@@ -156,31 +153,3 @@ class Complaints(PermissionRequiredMixin, ListView):
 
 
 
-
-
-
-
-
-
-
-
-# class SelectCarMaintenance(PermissionRequiredMixin, ListView):
-#     permission_required = 'silant.add_maintenance'
-#     model = Car
-#     template_name = 'select_car.html'
-#     context_object_name = 'cars'
-#
-#     def get_queryset(self):
-#         if self.request.user.groups.filter(name='admin').exists() or self.request.user.groups.filter(name='manager').exists():
-#             list_cars = Car.objects.all()
-#         else:
-#             list_cars = Car.objects.all(client='self.request.user')
-#         return list_cars
-#
-#     def get_context_data(self, *args, **kwargs):
-#         context = super().get_context_data(*args, **kwargs)
-#         order_by = self.request.GET.get('order_by', 'service_company')
-#         if order_by in ['technique_model']:
-#             order_by = order_by+"__name"
-#         context['cars'] = context['cars'].order_by(order_by)
-#         return context

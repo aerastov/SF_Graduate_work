@@ -5,32 +5,33 @@
 
 
 {% block content %}
-    <h6 class="center">Выберите машину, для которой необходимо создать запись о ТО</h6>
-    <select  onchange="window.location.href = this.options[this.selectedIndex].value">
-        <option value="{{select_car.id}}">{{ select_car }} {{ select_car.technique_model }} {{ select_car.engine_model }} {{ select_car.service_company }}</option>
-        {% for car in cars %}
-            {% if car.id != select_car.id %}
-                <option value="?id={{car.id}}">{{ car.factory_number }} {{ car.technique_model }}</option>
-            {% endif %}
-        {% endfor %}
-    </select>
-
-{{ select_car.service_company }}
-    {% if select_car.service_company == None %}
-        <h6 class="center">Для обслуживания данной машины пока не назначена сервисная компания</h6>
-        <p>Постановку машины на обслуживание в сервисную компанию может сделать менеджер параметрах машины</p>
-    {% else %}
-        <h6 class="center">Данная машина находится на обслуживании сервисной компании {{ select_car.service_company }}</h6>
-        <p>Если требуется изменить сервисную компанию, обратитесь к администратору</p>
-    {% endif %}
+<!--    <h6 class="center">Выберите машину, для которой необходимо создать запись о ТО</h6>-->
+    <div class="left-right">
+        <p>Выберите машину</p>
+        <select  onchange="window.location.href = this.options[this.selectedIndex].value">
+            <option value="{{select_car.id}}">{{ select_car }} {{ select_car.technique_model }} {{ select_car.engine_model }}</option>
+            {% for car in cars %}
+                {% if car.id != select_car.id %}
+                    <option value="?id={{car.id}}">{{ car.factory_number }} {{ car.technique_model }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+<!--    {{ select_car.service_company }}-->
+<!--    {% if select_car.service_company == None %}-->
+<!--        <h6 class="center">Для обслуживания данной машины пока не назначена сервисная компания</h6>-->
+<!--        <p>Постановку машины на обслуживание в сервисную компанию может сделать менеджер параметрах машины</p>-->
+<!--    {% else %}-->
+<!--        <h6 class="center">Данная машина находится на обслуживании сервисной компании {{ select_car.service_company }}</h6>-->
+<!--        <p>Если требуется изменить сервисную компанию, обратитесь к администратору</p>-->
+<!--    {% endif %}-->
 
     <form method="post">
         {% csrf_token %}
         <div>
             {% bootstrap_form form layout='horizontal' %}
-
             {% buttons %}
-            <button type="submit" class="btn btn-outline-secondary">выбрать</button>
+            <button type="submit" class="btn btn-outline-secondary">Сохранить</button>
             {% endbuttons %}
         </div>
     </form>

@@ -108,14 +108,17 @@ class Type_maintenance(models.Model):
     name = models.TextField(verbose_name='Название')
     description = models.TextField(blank=True, verbose_name='Описание')
 
+    def __str__(self):
+        return f'{self.name}'
+
     class Meta:
         verbose_name = 'Вид ТО'
         verbose_name_plural = 'Вид ТО'
 
 
 class Maintenance(models.Model):
-    car = models.OneToOneField(Car, on_delete=models.CASCADE, verbose_name='Машина')
-    service_company = models.OneToOneField(Service_company, on_delete=models.CASCADE, verbose_name='Сервисная организация')
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, verbose_name='Машина')
+    service_company = models.ForeignKey(Service_company, on_delete=models.CASCADE, verbose_name='Сервисная организация')
     type_maintenance = models.ForeignKey(Type_maintenance, on_delete=models.CASCADE, verbose_name='Вид ТО')
     maintenance_date = models.DateField(verbose_name='Дата проведения ТО')
     operating_time = models.IntegerField(verbose_name='Наработка мотто/часов')
@@ -123,7 +126,7 @@ class Maintenance(models.Model):
     order_date = models.DateField(verbose_name='Дата заказа-наряда')
 
     def __str__(self):
-        return f'{self.car}'
+        return f'{self.car, self.type_maintenance}'
 
     class Meta:
         verbose_name = 'ТО'
@@ -151,8 +154,8 @@ class Recovery_method(models.Model):
 
 
 class Complaints(models.Model):
-    car = models.OneToOneField(Car, on_delete=models.CASCADE, verbose_name='Машина')
-    service_company = models.OneToOneField(Service_company, on_delete=models.CASCADE, verbose_name='Сервисная организация')
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, verbose_name='Машина')
+    service_company = models.ForeignKey(Service_company, on_delete=models.CASCADE, verbose_name='Сервисная организация')
     date_of_refusal = models.DateField(verbose_name='Дата отказа')
     operating_time = models.IntegerField(verbose_name='Наработка м/час')
     failure_node = models.TextField(verbose_name='Узел отказа')
