@@ -28,12 +28,14 @@
 
     <form method="post">
         {% csrf_token %}
-        <div>
-            {% bootstrap_form form layout='horizontal' %}
+        {% bootstrap_form form layout='horizontal' %}
+        <div class="center">
             {% buttons %}
-            <button type="submit" class="btn btn-outline-secondary">Сохранить</button>
+            <a class="btn btn-outline-secondary" href="{% url 'maintenance' %}" role="button">отмена</a>
+            <button type="submit" class="btn btn-outline-secondary">сохранить</button>
             {% endbuttons %}
         </div>
+
     </form>
 
 {% endblock content %}

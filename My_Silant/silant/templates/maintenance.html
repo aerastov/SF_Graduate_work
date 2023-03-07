@@ -2,60 +2,47 @@
 {% load auth_extras %}
 
 {% block content %}
+    {% include "fragments/username_group.html" %}<br>
+    {% include "fragments/menu.html" %}
 
-{% include "fragments/username_group.html" %}<br>
-<div class="div_full_horizontal_content_space_around">
-    <a class="btn btn-outline-dark" href="{% url 'info' %}" role="button">Общая инфо</a>
-    <a class="btn btn-outline-dark" href="{% url 'maintenance' %}" role="button">ТО</a>
-    <a class="btn btn-outline-dark" href="{% url 'complaints' %}" role="button">Рекламации</a>
-</div>
-
-
+    <h6 class="center">Информация о проведенных ТО Вашей техники</h6>
+    <div class="center">
+        <a class="btn btn-outline-secondary" href="{% url 'create_maintenance' %}" role="button">Добавить запись</a>
+        {% if request.user|has_group:"manager" or request.user|has_group:"admin" %}
+            <a class="btn btn-outline-secondary" href="{% url 'reference_book' %}" role="button">Редактор справочников</a>
+        {% endif %}
+    </div>
 
     {% if maintenances %}
-        <h6 class="center">Информация о проведенных ТО Вашей техники</h6>
-
-
-        <div>
-            <a href="{% url 'create_maintenance' %}" role="button">Добавить запись о ТО</a>
-        </div>
-
-
-
-            <table class="table_info">
-            <tr>
-                <th><a href="?order_by=factory_number">Машина:</a></th>
-                <th><a href="?order_by=technique_model">Сервисная организация:</a>
-                </th><th><a href="?order_by=engine_model">Вид ТО:</a></th>
-                <th><a href="?order_by=transmission_model">Дата ТО:</a></th>
-                <th><a href="?order_by=drive_axle_model">Наработка:</a></th>
-                <th><a href="?order_by=steerable_axle_model">Номер заказа-наряда:</a>
-                </th><th><a href="?order_by=date_of_shipment_from_the_factory">Дата заказа-наряда:</a></th></tr>
+        <table class="table_info">
+        <tr>
+            <th><a href="?order_by=factory_number">Машина:</a></th>
+            <th><a href="?order_by=technique_model">Сервисная организация:</a>
+            </th><th><a href="?order_by=engine_model">Вид ТО:</a></th>
+            <th><a href="?order_by=transmission_model">Дата ТО:</a></th>
+            <th><a href="?order_by=drive_axle_model">Наработка:</a></th>
+            <th><a href="?order_by=steerable_axle_model">Номер заказа-наряда:</a>
+            </th><th><a href="?order_by=date_of_shipment_from_the_factory">Дата заказа-наряда:</a></th>
+        </tr>
         {% for maintenance in maintenances %}
             <tr class="table_row">
-                <td><a href="/info/{{ maintenance.id }}">{{ maintenance.car }}</a></td>
-                <td><a href="/info/{{ maintenance.id }}">{{ maintenance.service_company }}</a></td>
-                <td><a href="/info/{{ maintenance.id }}">{{ maintenance.type_maintenance }}</a></td>
-                <td><a href="/info/{{ maintenance.id }}">{{ maintenance.maintenance_date|date:"d.m.Y" }}</a></td>
-                <td><a href="/info/{{ maintenance.id }}">{{ maintenance.operating_time }}</a></td>
-                <td><a href="/info/{{ maintenance.id }}">{{ maintenance.order }}</a></td>
-                <td><a href="/info/{{ maintenance.id }}">{{ maintenance.order_date|date:"d.m.Y" }}</a></td></tr>
-
-
+                <td><a href="/maintenance/{{ maintenance.id }}">{{ maintenance.car }}</a></td>
+                <td><a href="/maintenance/{{ maintenance.id }}">{{ maintenance.service_company }}</a></td>
+                <td><a href="/maintenance/{{ maintenance.id }}">{{ maintenance.type_maintenance }}</a></td>
+                <td><a href="/maintenance/{{ maintenance.id }}">{{ maintenance.maintenance_date|date:"d.m.Y" }}</a></td>
+                <td><a href="/maintenance/{{ maintenance.id }}">{{ maintenance.operating_time }}</a></td>
+                <td><a href="/maintenance/{{ maintenance.id }}">{{ maintenance.order }}</a></td>
+                <td><a href="/maintenance/{{ maintenance.id }}">{{ maintenance.order_date|date:"d.m.Y" }}</a></td>
+            </tr>
         {% endfor %}
-            </table>
+        </table>
     {% else %}
         <h6 class="center">Еще нет записей о ТО ваших машин.</h6>
-
-
-
-        <div class="center">
-            <a class="btn btn-outline-dark" href="{% url 'create_maintenance' %}" role="button">Добавить запись о ТО</a>
-        </div>
-
+    <div class="center">
+        <a class="btn btn-outline-secondary" href="{% url 'create_maintenance' %}" role="button">Добавить первую запись о ТО</a>
+        {% if request.user|has_group:"manager" or request.user|has_group:"admin" %}
+            <a class="btn btn-outline-secondary" href="{% url 'reference_book' %}" role="button">Редактор справочников</a>
+        {% endif %}
+    </div>
     {% endif %}
-
-
-
-
 {% endblock content %}

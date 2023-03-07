@@ -5,8 +5,8 @@
 
 
 
-    <h2>Вы действительно хотите удалить эту запись о машине?</h2>
-    <form method="POST">
+    <h5 class="center">Вы действительно хотите удалить эту запись?</h5>
+    <form class="center" method="POST">
         {% csrf_token %}
         <input type=button value="Отмена" class="btn btn-primary" onClick="javascript:history.go(-1);">&nbsp
         <button type="submit" class="btn btn-primary" style="background: red">Удалить</button>

@@ -139,6 +139,9 @@ class Description_failure(models.Model):
     name = models.TextField(verbose_name='Название')
     description = models.TextField(blank=True, verbose_name='Описание')
 
+    def __str__(self):
+        return f'{self.name}'
+
     class Meta:
         verbose_name = 'Характер отказа'
         verbose_name_plural = 'Характер отказа'
@@ -147,6 +150,9 @@ class Description_failure(models.Model):
 class Recovery_method(models.Model):
     name = models.TextField(verbose_name='Название')
     description = models.TextField(blank=True, verbose_name='Описание')
+
+    def __str__(self):
+        return f'{self.name}'
 
     class Meta:
         verbose_name = 'Способ восстановления'
@@ -166,7 +172,7 @@ class Complaints(models.Model):
     equipment_downtime = models.TextField(verbose_name='Время простоя техники')
 
     def __str__(self):
-        return f'{self.car}'
+        return f'{self.car, self.failure_node}'
 
     class Meta:
         verbose_name = 'Рекламации'

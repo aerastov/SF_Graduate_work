@@ -1,0 +1,42 @@
+{% extends 'default.html' %}
+{% load auth_extras %}
+
+{% block content %}
+    {% include "fragments/username_group.html" %}
+
+        {% if request.user|has_group:"manager" or request.user|has_group:"admin" %}
+            <div>
+                <h5 class="center">Справочники раздела "Машины"</h5>
+                <table>
+                    <tr>
+                    <td><a class="btn btn-outline-secondary" style="width: 270px"
+                           href="{% url 'reference_book' %}1" role="button">Модель техники</a></td>
+                    <td><a class="btn btn-outline-secondary" style="width: 270px"
+                           href="{% url 'reference_book' %}2" role="button">Модель двигателя</a></td>
+                     </tr>
+                    <tr>
+                    <td><a class="btn btn-outline-secondary" style="width: 270px"
+                           href="{% url 'reference_book' %}3" role="button">Модель трансмиссии</a></td>
+                    <td><a class="btn btn-outline-secondary" style="width: 270px"
+                           href="{% url 'reference_book' %}4" role="button">Модель ведущего моста</a></td>
+                    </tr>
+                    <tr>
+                    <td><a class="btn btn-outline-secondary" style="width: 270px"
+                           href="{% url 'reference_book' %}5" role="button">Модель управляемого моста</a></td>
+                    <td><a class="btn btn-outline-secondary" style="width: 270px"
+                           href="{% url 'reference_book' %}6" role="button">Сервисная организация</a></td>
+                    </tr>
+                </table>
+                <h5 class="center">Справочник раздела "ТО"</h5>
+                <a class="btn btn-outline-secondary" style="width: 270px"
+                   href="{% url 'reference_book' %}7" role="button">Вид ТО</a>
+                <h5 class="center">Справочники раздела "Рекламации"</h5>
+                <a class="btn btn-outline-secondary" style="width: 270px"
+                   href="{% url 'reference_book' %}8" role="button">Характер отказа</a>
+                <a class="btn btn-outline-secondary" style="width: 270px"
+                   href="{% url 'reference_book' %}9" role="button">Способ восстановления</a>
+            </div><br><br>
+        {% endif %}
+
+{% endblock content %}
+

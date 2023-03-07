@@ -2,7 +2,7 @@
 <div class="div_full_horizontal_content_space_around">
     <div>Логин пользователя: {{ user.username }}</div>
     <div>
-        Стаус:
+        Роль:
         {% if request.user|has_group:"client" %}
             Клиент
         {% elif request.user|has_group:"service" %}

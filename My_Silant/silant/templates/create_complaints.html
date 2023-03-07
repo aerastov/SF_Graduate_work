@@ -1,0 +1,31 @@
+{% extends 'default.html' %}
+{% load bootstrap5 %}
+{% load auth_extras %}
+
+
+
+{% block content %}
+    <div class="left-right">
+        <p>Выберите машину</p>
+        <select  onchange="window.location.href = this.options[this.selectedIndex].value">
+            <option value="{{select_car.id}}">{{ select_car }} {{ select_car.technique_model }} {{ select_car.engine_model }}</option>
+            {% for car in cars %}
+                {% if car.id != select_car.id %}
+                    <option value="?id={{car.id}}">{{ car.factory_number }} {{ car.technique_model }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form layout='horizontal' %}
+        <div class="center">
+            {% buttons %}
+            <a class="btn btn-outline-secondary" href="{% url 'complaints' %}" role="button">отмена</a>
+            <button type="submit" class="btn btn-outline-secondary">сохранить</button>
+            {% endbuttons %}
+        </div>
+    </form>
+
+{% endblock content %}

@@ -52,6 +52,7 @@ SITE_ID = 1
 BOOTSTRAP5 = {
     'horizontal_label_class': 'col-md-5',
     'horizontal_field_class': 'col-md-7',
+
 }
 
 MIDDLEWARE = [

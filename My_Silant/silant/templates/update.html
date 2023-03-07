@@ -1,0 +1,26 @@
+{% extends 'default.html' %}
+{% load bootstrap5 %}
+{% load auth_extras %}
+
+
+
+{% block content %}
+
+
+{% include "fragments/username_group.html" %}
+<h6 class="center">Измените данные:</h6>
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form layout='horizontal' %}
+            <div class="center">
+                {% buttons %}
+                <input type=button value="отмена" class="btn btn-outline-secondary" onClick="javascript:history.go(-1);">&nbsp
+                <button type="submit" class="btn btn-outline-secondary">сохранить</button>
+                {% endbuttons %}
+            </div>
+    </form>
+
+
+
+
+{% endblock content %}

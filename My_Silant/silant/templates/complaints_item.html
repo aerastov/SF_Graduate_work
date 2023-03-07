@@ -1,0 +1,32 @@
+{% extends 'default.html' %}
+{% load auth_extras %}
+{% load bootstrap5 %}
+
+{% block content %}
+
+    <p class="center">Данные рекламации:</p>
+<div class="center">
+    <table>
+    <tr><td>Зав. №  машины:</td><td>{{ complaints.car }}</td></tr>
+    <tr><td>Сервисная организация:</td><td>{{ complaints.service_company }}</td></tr>
+    <tr><td>Дата отказа:</td><td>{{ complaints.date_of_refusal }}</td></tr>
+    <tr><td>Наработка м/час:</td><td>{{ complaints.operating_time }}</td></tr>
+    <tr><td>Узел отказа:</td><td>{{ complaints.failure_node }}</td></tr>
+    <tr><td>Характер отказ:</td><td>{{ complaints.description_failure }}</td></tr>
+    <tr><td>Способ восстановления:</td><td>{{ complaints.recovery_method }}</td></tr>
+    <tr><td>Используемые запасные части:</td><td>{{ complaints.parts_used }}</td></tr>
+    <tr><td>Дата восстановления:</td><td>{{ complaints.date_of_restoration }}</td></tr>
+    <tr><td>Время простоя техники:</td><td>{{ complaints.equipment_downtime }}</td></tr>
+    </table>
+</div>
+<br>
+<input type=button value="< Назад" class="btn btn-primary" onClick="javascript:history.go(-1);">&nbsp
+{% if perms.silant.change_car %}
+    <a href="{{ request.get_full_path }}/edit" class="btn btn-primary">Редактировать</a>
+{% endif %}
+{% if perms.silant.delete_car %}
+    <a href="{{ request.get_full_path }}/delete" class="btn btn-primary">Удалить</a>
+{% endif %}
+
+
+{% endblock content %}

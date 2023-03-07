@@ -28,9 +28,9 @@
 
 html {
   font-family: "PT-Astra-Sans_Regular";
-  font-size: 20px;
+  font-size: 18px;
   /* Нормализатор */
-  line-height: 2.15; /* Высота строки для всех браузеров */
+  line-height: 1.5; /* Высота строки для всех браузеров */
   -webkit-text-size-adjust: 100%; /* фикс размера шрифта в iOS при повороте экрана */
   -ms-text-size-adjust: 100%; /* фикс размера шрифта в ms при повороте экрана */
   -moz-text-size-adjust: 100%; /* фикс размера шрифта в mozilla при повороте экрана */
@@ -61,22 +61,32 @@ select {
    width: 348px;
 }
 
-table_info {
-    font-size: 0.6em;
-}
-.table_row:hover {
-       background: var(--silant_beige);
-       color: blue;
-       /*font-weight: bold;*/
+table {
+    width: 100%;
+    font-size: 0.9em;
+    color: var(--silant_black);
 }
 table a {
    text-decoration: none;
    color: var(--silant_black);
 }
-table_info a:hover {
+table a:hover {
    color: blue;
 }
-
+.tds {
+  padding: 0px 0px;
+}
+th,
+td {
+  padding: 5px 10px;
+  border-top-width: 0;
+  border-left-width: 0;
+}
+.table_tr:hover {
+   background: var(--silant_beige);
+   color: blue;
+   /*font-weight: bold;*/
+}
 
 
 .wrapper {
@@ -116,6 +126,7 @@ footer {
 .center {
     display: -webkit-flex;
     display: flex;
+    /*flex-wrap: wrap;*/
     justify-content: center;
     text-align: center;
     color: var(--silant_black);
