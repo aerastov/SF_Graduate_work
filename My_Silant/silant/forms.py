@@ -89,6 +89,7 @@ class UpdateComplaintsForm(forms.ModelForm):
                    'car': forms.HiddenInput(),
                    }
 
+
 class UpdateTechniqueModelForm(forms.ModelForm):
     class Meta:
         model = Technique_model
@@ -120,6 +121,13 @@ class UpdateDriveAxleModelForm(forms.ModelForm):
 class UpdateSteerableAxleModelForm(forms.ModelForm):
     class Meta:
         model = Steerable_axle_model
+        fields = '__all__'
+        widgets = {'name': forms.Textarea(attrs={'rows': 1}),}
+
+
+class CreateServiceCompanyForm(forms.ModelForm):
+    class Meta:
+        model = Service_company
         fields = '__all__'
         widgets = {'name': forms.Textarea(attrs={'rows': 1}),}
 

@@ -4,6 +4,9 @@
 {% block content %}
     {% include "fragments/username_group.html" %}<br>
     <h5 class="center">Справочник "{{ name }}"</h5>
+
+    <a class="btn btn-outline-secondary" style="padding:0 10" href="{{ request.get_full_path }}{{ item.id }}create" role="button">Создать новую запись</a>
+    <br><br>
     <table>
         <tr><th>Наименование:</th><th>Описание:</th><th>Редактирование:</th></tr>
         {% for item in list %}

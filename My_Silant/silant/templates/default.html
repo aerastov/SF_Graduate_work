@@ -25,10 +25,30 @@
 			<div class="header_top">
 				<div class="logo">
 <!--					<img src="{% static 'images/Logotype accent RGB 2.jpg' %}">-->
-					<img src="{% static 'images/Logotype silant.jpg' %}">
+					<a href="{% url 'info' %}"> <img src="{% static 'images/Logotype silant.jpg' %}"></a>
 				</div>
 				<div>+7-8352-20-12-09, telegram</div>
-				<div><a>авторизация</a></div>
+				<div>
+
+
+				{% if user.is_authenticated %}
+
+
+							<a href="accounts/logout/">выйти</a>
+
+                       <br>
+                {% else %}
+					<a href="/accounts/login">
+                    	<img src="{{MEDIA_URL}}/media/images/users/default.jpg.100x100_q85_crop-smart.jpg" alt="Фото профиля">
+                    </a><br>
+                    <a href="/accounts/login" style="font-size: 13px">Sign in | Sign up</a>
+                {% endif %}
+
+
+
+
+
+				</div>
 			</div>
 			<p class="center">Электронная сервисная книжка "Мой Силант"</p>
 		</div>

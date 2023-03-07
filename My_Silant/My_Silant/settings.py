@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -70,7 +71,8 @@ ROOT_URLCONF = 'My_Silant.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'allauth')],
+        # 'DIRS': [BASE_DIR / 'accounts', BASE_DIR / 'templates', BASE_DIR / 'allauth'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -152,9 +154,9 @@ LOGIN_REDIRECT_URL = 'info'
 
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
-# STATIC_ROOT = f'{BASE_DIR}/static'
-# MEDIA_ROOT = f'{BASE_DIR}/media'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = f'{BASE_DIR}/static'
+MEDIA_ROOT = f'{BASE_DIR}/media'
+# STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

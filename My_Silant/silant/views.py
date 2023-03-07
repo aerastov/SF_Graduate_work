@@ -269,12 +269,28 @@ class ReferenceBookList(PermissionRequiredMixin, TemplateView):
         return context
 
 
+class TechniqueModeCreate(PermissionRequiredMixin, CreateView):
+    permission_required = 'silant.add_technique_model'
+    model = Technique_model
+    template_name = 'update.html'
+    form_class = UpdateTechniqueModelForm
+    success_url = './'
+
+
 class TechniqueModelEdit(PermissionRequiredMixin, UpdateView):
     permission_required = 'silant.change_technique_model'
     model = Technique_model
     template_name = 'update.html'
     form_class = UpdateTechniqueModelForm
     success_url = '../'
+
+
+class EngineModelCreate(PermissionRequiredMixin, CreateView):
+    permission_required = 'silant.add_engine_model'
+    model = Engine_model
+    template_name = 'update.html'
+    form_class = UpdateEngineModelForm
+    success_url = './'
 
 
 class EngineModelEdit(PermissionRequiredMixin, UpdateView):
@@ -285,12 +301,28 @@ class EngineModelEdit(PermissionRequiredMixin, UpdateView):
     success_url = '../'
 
 
+class TransmissionModelCreate(PermissionRequiredMixin, CreateView):
+    permission_required = 'silant.add_transmission_model'
+    model = Transmission_model
+    template_name = 'update.html'
+    form_class = UpdateTransmissionModelForm
+    success_url = './'
+
+
 class TransmissionModelEdit(PermissionRequiredMixin, UpdateView):
     permission_required = 'silant.change_transmission_model'
     model = Transmission_model
     template_name = 'update.html'
     form_class = UpdateTransmissionModelForm
     success_url = '../'
+
+
+class DriveAxleModelCreate(PermissionRequiredMixin, CreateView):
+    permission_required = 'silant.add_drive_axle_model'
+    model = Drive_axle_model
+    template_name = 'update.html'
+    form_class = UpdateDriveAxleModelForm
+    success_url = './'
 
 
 class DriveAxleModelEdit(PermissionRequiredMixin, UpdateView):
@@ -301,12 +333,28 @@ class DriveAxleModelEdit(PermissionRequiredMixin, UpdateView):
     success_url = '../'
 
 
+class SteerableAxleModelCreate(PermissionRequiredMixin, CreateView):
+    permission_required = 'silant.add_steerable_axle_model'
+    model = Steerable_axle_model
+    template_name = 'update.html'
+    form_class = UpdateSteerableAxleModelForm
+    success_url = './'
+
+
 class SteerableAxleModelEdit(PermissionRequiredMixin, UpdateView):
     permission_required = 'silant.change_steerable_axle_model'
     model = Steerable_axle_model
     template_name = 'update.html'
     form_class = UpdateSteerableAxleModelForm
     success_url = '../'
+
+
+class ServiceCompanyCreate(PermissionRequiredMixin, CreateView):
+    permission_required = 'silant.add_service_company'
+    model = Service_company
+    template_name = 'update.html'
+    form_class = CreateServiceCompanyForm
+    success_url = './'
 
 
 class ServiceCompanyEdit(PermissionRequiredMixin, UpdateView):
@@ -317,6 +365,14 @@ class ServiceCompanyEdit(PermissionRequiredMixin, UpdateView):
     success_url = '../'
 
 
+class TypeMaintenanceCreate(PermissionRequiredMixin, CreateView):
+    permission_required = 'silant.add_type_maintenance'
+    model = Type_maintenance
+    template_name = 'update.html'
+    form_class = UpdateTypeMaintenanceForm
+    success_url = './'
+
+
 class TypeMaintenanceEdit(PermissionRequiredMixin, UpdateView):
     permission_required = 'silant.change_type_maintenance'
     model = Type_maintenance
@@ -325,12 +381,28 @@ class TypeMaintenanceEdit(PermissionRequiredMixin, UpdateView):
     success_url = '../'
 
 
+class DescriptionFailureCreate(PermissionRequiredMixin, CreateView):
+    permission_required = 'silant.add_description_failure'
+    model = Description_failure
+    template_name = 'update.html'
+    form_class = UpdateDescriptionFailureForm
+    success_url = './'
+
+
 class DescriptionFailureEdit(PermissionRequiredMixin, UpdateView):
     permission_required = 'silant.change_description_failure'
     model = Description_failure
     template_name = 'update.html'
     form_class = UpdateDescriptionFailureForm
     success_url = '../'
+
+
+class RecoveryMethodCreate(PermissionRequiredMixin, CreateView):
+    permission_required = 'silant.add_recovery_method'
+    model = Recovery_method
+    template_name = 'update.html'
+    form_class = UpdateRecoveryMethodForm
+    success_url = './'
 
 
 class RecoveryMethodEdit(PermissionRequiredMixin, UpdateView):
