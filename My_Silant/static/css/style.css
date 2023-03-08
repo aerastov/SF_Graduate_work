@@ -52,8 +52,12 @@ h1, h2, h3, h4, h5, h6 {
     padding: 40px 20px 30px;
 }
 
-p {
-}
+a {
+
+  text-decoration: none !important;
+  }
+
+
 select {
    color: var(--silant_black);
    border: 1px solid #ced4da;

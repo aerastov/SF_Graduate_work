@@ -1,0 +1,15 @@
+{% extends 'default.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+<br><br>
+<div class="center"><h5>Подтвердите выход из аккаунта</h5></div>
+<div class="center">
+  <form method="post" action="{% url 'account_logout' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-outline-secondary">Выйти</button>
+  </form>
+  <input type=button value="Отмена" class="btn btn-outline-secondary" onClick="javascript:history.go(-1);">&nbsp
+</div>
+
+{% endblock %}
