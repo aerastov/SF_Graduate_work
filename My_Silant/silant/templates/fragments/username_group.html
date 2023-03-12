@@ -1,5 +1,5 @@
 {% load auth_extras %}
-{% if request.user is authenticated %}
+{% if user.is_authenticated %}
     <div class="div_full_horizontal_content_space_around">
         <div>Логин: {{ user.username }}</div>
         <div>

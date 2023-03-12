@@ -20,13 +20,13 @@
     {% if maintenances %}
         <table>
         <tr>
-            <th><a href="?order_by=factory_number">№</a></th>
-            <th><a href="?order_by=technique_model">Сервисная орг.</a>
-            </th><th><a href="?order_by=engine_model">Вид_ТО</a></th>
-            <th><a href="?order_by=transmission_model">Дата ТО</a></th>
-            <th><a href="?order_by=drive_axle_model">Нар.</a></th>
-            <th><a href="?order_by=steerable_axle_model">Номер заказа-наряда</a>
-            </th><th><a href="?order_by=date_of_shipment_from_the_factory">Дата заказа-наряда</a></th>
+            <th><a href="?order_by=car">№</a></th>
+            <th><a href="?order_by=service_company">Сервисная орг.</a>
+            </th><th><a href="?order_by=type_maintenance">Вид_ТО</a></th>
+            <th><a href="?order_by=maintenance_date">Дата ТО</a></th>
+            <th><a href="?order_by=operating_time">Наработка</a></th>
+            <th><a href="?order_by=order">Номер заказа-наряда</a>
+            </th><th><a href="?order_by=order_date">Дата заказа-наряда</a></th>
         </tr>
         {% for maintenance in maintenances %}
             <tr class="table_tr">
