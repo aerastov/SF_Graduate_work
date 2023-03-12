@@ -1,11 +1,53 @@
 {% extends 'default.html' %}
 {% load auth_extras %}
+{% load i18n %}
 
 {% block content %}
     {% include "fragments/username_group.html" %}<br>
+    <div class="center"><p>Группа: Администраторы</p></div>
+    <div class="center">
+        <table>
+            <tr><th>Логин</th><th>Наименование</th></tr>
+            {% for user in users %}
+                {% if user|has_group:"admin" %}
+                    <tr class="table_tr">
+                        <td><a href="/complaints/{{ user.name }}">{{ user.username }}</a></td>
+                        <td><a href="/complaints/{{ complaint.id }}">{{ user.lastname }}</a></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    </div>
 
 
 
+
+
+
+
+    <div class="center">
+        <table>
+            <tr><th>Логин</th><th>Наименование</th><th>Группа</th></tr>
+            {% for user in users %}
+                {% if user|has_group:"admin" %}
+                    {% trans "Администратор" as group %}
+                {% elif user|has_group:"manager"%}
+                    {% trans "Менеджер" as group %}
+                {% elif user|has_group:"service"%}
+                    {% trans "Сервисная организация" as group %}
+                {% elif user|has_group:"client"%}
+                    {% trans "Клиент" as group %}
+                {% else %}
+                     {% trans "" as group %}
+                {% endif %}
+                <tr class="table_row">
+                    <td><a href="/complaints/{{ user.name }}">{{ user.username }}</a></td>
+                    <td><a href="/complaints/{{ complaint.id }}">{{ user.lastname }}</a></td>
+                    <td><a href="/complaints/{{ complaint.id }}">{{ group }}</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 
 
 

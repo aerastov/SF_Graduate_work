@@ -5,22 +5,25 @@
 
 {% block content %}
 
-    <h6 class="center">Проверьте комплектацию и технические характеристики техники Силант</h6>
+    <h3 class="center">Проверьте комплектацию и технические характеристики техники Силант</h3>
+    <div class="center">
     <form method="post" class="row g-3">
         {% csrf_token %}
-        <div class="input-group">
-            {% bootstrap_form form layout='horizontal' %}
-            {{ form.content }}
+<!--        <div class="input-group">-->
+        <div>
+            {{ form }}
             {% buttons %}
-            <button type="submit" class="btn btn-outline-secondary">поиск</button>
+            <button type="submit" class="button buttonslim">поиск</button>
             {% endbuttons %}
         </div>
     </form>
+    </div>
     {% if cars %}
         {% for car in cars %}
             <br>
-            <p class="center">Данные найденной машины:</p>
-            <table class="center">
+            <h3 class="center">Данные найденной машины:</h3>
+<div class="center">
+            <table>
             <tr><td>Зав. №  машины:</td><td>{{ car.factory_number }}</td></tr>
             <tr><td>Модель техники:</td><td>{{ car.technique_model }}</td></tr>
             <tr><td>Модель двигателя:</td><td>{{ car.engine_model }}</td></tr>
@@ -32,9 +35,10 @@
             <tr><td>Модель управляемого моста:</td><td>{{ car.steerable_axle_model }}</td></tr>
             <tr><td>Зав. № управляемого моста:</td><td>{{ car.steerable_axle_number }}</td></tr>
             </table>
+</div>
         {% endfor %}
     {% else %}
-        <h6 class="center">Данных о машине с таким заводским номером нет в системе</h6>
+        <h3 class="center">Данных о машине с таким заводским номером нет в системе</h3>
     {% endif %}
 
 {% endblock content %}
