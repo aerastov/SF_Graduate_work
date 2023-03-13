@@ -3,6 +3,9 @@
     --silant_red: #D20A11;
     --silant_beige: #EBE6D6;
     --silant_grey: #6c757d;
+    --silant_light_grey: #e6e6e6;
+    --silant_cell_grey: #f3f3f3;
+
 }
 
 @font-face {
@@ -74,10 +77,21 @@ select {
 table {
     width: auto;
     font-size: 0.8em;
-    color: var(--silant_grey);
-    border-spacing: 0;
+    border: 1px solid var(--silant_grey);
     border-collapse: collapse;
+    text-align: left;
+    border-spacing: 0;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
 }
+
+th {
+    border-bottom: 1px solid var(--silant_grey);
+    background-color: var(--silant_light_grey);
+    padding: 2px 2px;
+}
+
 table a {
     text-decoration: none;
     color: var(--silant_black);
@@ -87,13 +101,16 @@ table a:hover {
 }
 th,td {
     padding: 2px 2px;
-    border: 1px solid var(--silant_grey);
+    border-right: 1px solid var(--silant_grey);
 }
 tr {
-    /*outline: thin solid;*/
+    white-space: nowrap;
+}
+tr:nth-child(odd) {
+  background: var(--silant_cell_grey);
 }
 .table_tr {
-    /*outline: thin solid;*/
+
 }
 .table_tr:hover {
     background: var(--silant_beige);

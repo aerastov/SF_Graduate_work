@@ -8,7 +8,7 @@ from .models import *
 from .forms import *
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-
+from django.core import serializers
 
 class Index(FormMixin, ListView):
     model = Car
@@ -47,27 +47,25 @@ class Info(PermissionRequiredMixin, ListView):
         # print("order_by = ", order_by)
         context['cars'] = []
 
-        if self.request.user.groups.filter(name='admin').exists():
-            # print("группа admin, user.id = ", self.request.user.id)
+        if self.request.user.groups.filter(name='admin').exists() or self.request.user.groups.filter(name='manager').exists():
             context['cars'] = Car.objects.all().order_by(order_by)
-            # context['cars'] = Car.objects.all().order_by(order_by)
-        elif self.request.user.groups.filter(name='manager').exists():
-            # print("группа manager, user.id = ", self.request.user.id)
-            # context['cars'] = Car.objects.all
-            context['cars'] = Car.objects.all().order_by(order_by)
-        elif self.request.user.groups.filter(name='service').exists():
-            # print("группа service, user.id = ", self.request.user.id)
-            context['cars'] = Car.objects.filter(client=self.request.user.id).order_by(order_by)
-            # context['cars'] = Car.objects.filter(client=self.request.user.id).order_by(order_by)
-        elif self.request.user.groups.filter(name='client').exists():
-            # print("группа client, user.id = ", self.request.user.id)
-            context['cars'] = Car.objects.filter(client=self.request.user.id).order_by(order_by)
-            # context['cars'] = Car.objects.filter(client=self.request.user.id).order_by(order_by)
+            context['cars_list'] = list(Car.objects.values('factory_number', 'technique_model', 'engine_model'))
         else:
-            # print("группа не найдена")
-            context['cars'] = []
-
+            context['cars'] = Car.objects.all(client='self.request.user').order_by(order_by)
         return context
+
+        # if self.request.user.groups.filter(name='admin').exists():
+        #     context['cars'] = Car.objects.all().order_by(order_by)
+        #     context['cars_list'] = list(Car.objects.values('factory_number', 'technique_model', 'engine_model'))
+        # elif self.request.user.groups.filter(name='manager').exists():
+        #     context['cars'] = Car.objects.all().order_by(order_by)
+        # elif self.request.user.groups.filter(name='service').exists():
+        #     context['cars'] = Car.objects.filter(client=self.request.user.id).order_by(order_by)
+        # elif self.request.user.groups.filter(name='client').exists():
+        #     context['cars'] = Car.objects.filter(client=self.request.user.id).order_by(order_by)
+        # else:
+        #     context['cars'] = []
+        # return context
 
 
 class InfoItem(PermissionRequiredMixin, DetailView):
