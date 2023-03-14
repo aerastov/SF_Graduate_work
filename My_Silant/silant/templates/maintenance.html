@@ -8,10 +8,13 @@
         <a class="button_menu active" href="{% url 'maintenance' %}" role="button">ТО</a>
         <a class="button_menu" href="{% url 'complaints' %}" role="button">Рекламации</a>
     </div>
-
-    <h4 class="center">Информация о проведенных ТО вашей техники</h4>
+    {% if maintenances %}
+        <h4 class="center">Информация о проведенных ТО вашей техники</h4>
+    {% endif %}
     <div class="center">
-        <a class="button slim" href="{% url 'create_maintenance' %}" role="button">Добавить запись</a>
+        {% if maintenances %}
+            <a class="button slim" href="{% url 'create_maintenance' %}" role="button">Добавить запись</a>
+        {% endif %}
         {% if request.user|has_group:"manager" or request.user|has_group:"admin" %}
             <a class="button slim" href="{% url 'reference_book' %}" role="button">Редактор справочников</a>
         {% endif %}
@@ -42,11 +45,11 @@
         </table>
     {% else %}
         <h4 class="center">Еще нет записей о ТО ваших машин.</h4>
-    <div class="center">
-        <a class="button slim" href="{% url 'create_maintenance' %}" role="button">Добавить первую запись о ТО</a>
-        {% if request.user|has_group:"manager" or request.user|has_group:"admin" %}
-            <a class="button slim" href="{% url 'reference_book' %}" role="button">Редактор справочников</a>
-        {% endif %}
-    </div>
+        <div class="center">
+            <a class="button slim" href="{% url 'create_maintenance' %}" role="button">Добавить первую запись о ТО</a>
+            {% if request.user|has_group:"manager" or request.user|has_group:"admin" %}
+                <a class="button slim" href="{% url 'reference_book' %}" role="button">Редактор справочников</a>
+            {% endif %}
+        </div>
     {% endif %}
 {% endblock content %}

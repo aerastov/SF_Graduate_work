@@ -36,7 +36,7 @@
 					<a href="{% url 'info' %}"> <img src="{% static 'images/Logotype silant.jpg' %}"></a>
 				</div>
 				<p>+7-8352-20-12-09, telegram</p>
-				<div>
+				<div id="account_menu">
 					{% if user.is_authenticated %}
 						{% if request.user|has_group:"admin" %}
 							<a class="button slim" href="{% url 'account_list' %}" role="button">ред.польз.</a>

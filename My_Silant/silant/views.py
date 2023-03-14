@@ -42,30 +42,20 @@ class Info(PermissionRequiredMixin, ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         order_by = self.request.GET.get('order_by', 'date_of_shipment_from_the_factory')
-        if order_by in ['technique_model', 'engine_model', 'transmission_model', 'drive_axle_model', 'steerable_axle_model']:
+        if order_by in ['technique_model', 'engine_model', 'transmission_model', 'drive_axle_model',
+                        'steerable_axle_model', 'client', 'service_company']:
             order_by = order_by+"__name"
         # print("order_by = ", order_by)
-        context['cars'] = []
 
         if self.request.user.groups.filter(name='admin').exists() or self.request.user.groups.filter(name='manager').exists():
             context['cars'] = Car.objects.all().order_by(order_by)
-            context['cars_list'] = list(Car.objects.values('factory_number', 'technique_model', 'engine_model'))
+        elif self.request.user.groups.filter(name='service').exists():
+            context['cars'] = Car.objects.filter(service_company__user=self.request.user.id).order_by(order_by)
+        elif self.request.user.groups.filter(name='client').exists():
+            context['cars'] = Car.objects.filter(client=self.request.user.id).order_by(order_by)
         else:
-            context['cars'] = Car.objects.all(client='self.request.user').order_by(order_by)
+            context['cars'] = []
         return context
-
-        # if self.request.user.groups.filter(name='admin').exists():
-        #     context['cars'] = Car.objects.all().order_by(order_by)
-        #     context['cars_list'] = list(Car.objects.values('factory_number', 'technique_model', 'engine_model'))
-        # elif self.request.user.groups.filter(name='manager').exists():
-        #     context['cars'] = Car.objects.all().order_by(order_by)
-        # elif self.request.user.groups.filter(name='service').exists():
-        #     context['cars'] = Car.objects.filter(client=self.request.user.id).order_by(order_by)
-        # elif self.request.user.groups.filter(name='client').exists():
-        #     context['cars'] = Car.objects.filter(client=self.request.user.id).order_by(order_by)
-        # else:
-        #     context['cars'] = []
-        # return context
 
 
 class InfoItem(PermissionRequiredMixin, DetailView):
@@ -103,6 +93,23 @@ class MaintenanceList(PermissionRequiredMixin, ListView):
     model = Maintenance
     template_name = 'maintenance.html'
     context_object_name = 'maintenances'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        order_by = self.request.GET.get('order_by', 'maintenance_date')
+        if order_by in ['car', 'service_company', 'type_maintenance']:
+            order_by = order_by+"__name"
+        # print("order_by = ", order_by)
+
+        if self.request.user.groups.filter(name='admin').exists() or self.request.user.groups.filter(name='manager').exists():
+            context['maintenances'] = Maintenance.objects.all().order_by(order_by)
+        elif self.request.user.groups.filter(name='service').exists():
+            context['maintenances'] = Maintenance.objects.filter(service_company__user=self.request.user).order_by(order_by)
+        elif self.request.user.groups.filter(name='client').exists():
+            context['maintenances'] = Maintenance.objects.filter(client=self.request.user.id).order_by(order_by)
+        else:
+            context['maintenances'] = []
+        return context
 
 
 class CreateMaintenances(PermissionRequiredMixin, CreateView):
@@ -166,6 +173,22 @@ class ComplaintsList(PermissionRequiredMixin, ListView):
     template_name = 'complaints.html'
     context_object_name = 'complaints'
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        order_by = self.request.GET.get('order_by', 'date_of_refusal')
+        if order_by in ['car', 'service_company', 'description_failure', 'recovery_method']:
+            order_by = order_by+"__name"
+        # print("order_by = ", order_by)
+
+        if self.request.user.groups.filter(name='admin').exists() or self.request.user.groups.filter(name='manager').exists():
+            context['complaints'] = Complaints.objects.all().order_by(order_by)
+        elif self.request.user.groups.filter(name='service').exists():
+            context['complaints'] = Complaints.objects.filter(service_company__user=self.request.user.id).order_by(order_by)
+        elif self.request.user.groups.filter(name='client').exists():
+            context['complaints'] = Complaints.objects.filter(client=self.request.user.id).order_by(order_by)
+        else:
+            context['complaints'] = []
+        return context
 
 
 class CreateComplaints(PermissionRequiredMixin, CreateView):
