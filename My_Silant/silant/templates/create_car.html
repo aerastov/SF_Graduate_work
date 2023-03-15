@@ -4,26 +4,18 @@
 {% load auth_extras %}
 
 
-
 {% block content %}
 
-
-{% include "fragments/username_group.html" %}
-<h6 class="center">Параметры машины:</h6>
+<h4 class="center">Параметры машины:</h4>
     <form method="post">
         {% csrf_token %}
-<!--        <table>-->
-<!--            {{ form.as_table }}-->
-<!--        </table><br>-->
-
         {% bootstrap_form form layout='horizontal' %}
         <div class="center">
             {% buttons %}
-            <a class="btn btn-outline-secondary" href="{% url 'info' %}" role="button">отмена</a>
-            <button type="submit" class="btn btn-outline-secondary">сохранить</button>
+            <a class="button medium" href="{% url 'info' %}" role="button">Отмена</a>
+            <button type="submit" class="button medium">Сохранить</button>
             {% endbuttons %}
         </div>
     </form>
-
 
 {% endblock content %}

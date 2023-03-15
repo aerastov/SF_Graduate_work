@@ -4,7 +4,7 @@
 
 {% block content %}
 
-    <p class="center">Данные выбранной машины:</p>
+    <h4 class="center">Данные выбранной машины:</h4>
 <div class="center">
     <table>
     <tr><td>Зав. №  машины:</td><td>{{ car.factory_number }}</td></tr>
@@ -17,22 +17,27 @@
     <tr><td>Зав. № ведущего моста:</td><td>{{ car.drive_axle_number }}</td></tr>
     <tr><td>Модель управляемого моста:</td><td>{{ car.steerable_axle_model }}</td></tr>
     <tr><td>Зав. № управляемого моста:</td><td>{{ car.steerable_axle_number }}</td></tr>
-    <tr><td>Договор поставки №, дата:</td><td>{{ car.supply_contract }}</td></tr>
-    <tr><td>Дата отгрузки с завода:</td><td>{{ car.date_of_shipment_from_the_factory|date:"d.m.Y" }}</td></tr>
-    <tr><td>Грузополучатель:</td><td>{{ car.consignee }}</td></tr>
-    <tr><td>Адрес поставки (эксплуатации):</td><td>{{ car.delivery_address }}</td></tr>
-    <tr><td>Комплектация (доп. опции):</td><td>{{ car.equipment }}</td></tr>
-    <tr><td>Клиент:</td><td>{{ car.client }}</td></tr>
-    <tr><td>Сервисная организация:</td><td>{{ car.service_company }}</td></tr>
+    <tr><td>Договор поставки №, дата:</td><td>{% if car.supply_contract %}{{ car.supply_contract }}
+        {% else %}Отсутствует{% endif %}</td></tr>
+    <tr><td>Дата отгрузки с завода:</td><td>{% if car.date_of_shipment_from_the_factory %}
+        {{ car.date_of_shipment_from_the_factory|date:"d.m.Y" }}{% else %}Отсутствует{% endif %}</td></tr>
+    <tr><td>Грузополучатель:</td><td>{% if car.consignee %}{{ car.consignee }}{% else %}Отсутствует{% endif %}</td></tr>
+    <tr><td>Адрес поставки (эксплуатации):</td><td>{% if car.delivery_address %}{{ car.delivery_address }}
+        {% else %}Отсутствует{% endif %}</td></tr>
+    <tr><td>Комплектация (доп. опции):</td><td>{% if car.equipment %}{{ car.equipment }}{% else %}Отсутствует
+        {% endif %}</td></tr>
+    <tr><td>Клиент:</td><td>{% if car.client %}{{ car.client }}{% else %}Отсутствует{% endif %}</td></tr>
+    <tr><td>Сервисная организация:</td><td>{% if car.service_company %}{{ car.service_company }}{% else %}Отсутствует
+        {% endif %}</td></tr>
     </table>
 </div>
 <br>
-<input type=button value="< Назад" class="btn btn-primary" onClick="javascript:history.go(-1);">&nbsp
+<a href="{% url 'info' %}" class="button medium">Назад</a>
 {% if perms.silant.change_car %}
-    <a href="{{ request.get_full_path }}/edit" class="btn btn-primary">Редактировать</a>
+    <a href="{{ request.get_full_path }}/edit" class="button medium">Редактировать</a>
 {% endif %}
 {% if perms.silant.delete_car %}
-    <a href="{{ request.get_full_path }}/delete" class="btn btn-primary">Удалить</a>
+    <a href="{{ request.get_full_path }}/delete" class="button medium">Удалить</a>
 {% endif %}
 
 

@@ -1,14 +1,19 @@
 html {
   font-size: 14px;
-  line-height: 1.5; /* Высота строки для всех браузеров */
-
 }
 .wrapper {
     width: 340px;
-
+}
 
 .header_top {
-    display: flex;
-    align-items: center;
+    -webkit-flex-direction: column-reverse; /* Safari 6.1+ */
+    flex-direction: column-reverse;
     justify-content: center;
+}
+.button.slim {
+    font-size: 11px;
+}
+.left-right {
+    -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+    flex-wrap: wrap;
 }

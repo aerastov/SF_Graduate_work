@@ -32,7 +32,6 @@
 
 html {
     font-family: "PT-Astra-Sans_Regular";
-    font-size: 18px;
     line-height: 1.5; /* Высота строки для всех браузеров */
     -webkit-text-size-adjust: 100%; /* фикс размера шрифта в iOS при повороте экрана */
     -ms-text-size-adjust: 100%; /* фикс размера шрифта в ms при повороте экрана */
@@ -43,7 +42,7 @@ html {
 
 body {
     height: 100%;
-    font-size: 1rem;
+
     font-weight: 400;
     line-height: 1.5;
     color: var(--silant_black);
@@ -67,15 +66,19 @@ input {
     color: var(--silant_black);
 }
 
+.select_car {
+    width: 73%;
+    padding: 0 52px 0 0;
+}
 select {
     color: var(--silant_black);
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
-    width: 348px;
+
 }
 
 table {
-    width: auto;
+    width: auto%;
     font-size: 0.8em;
     border: 1px solid var(--silant_grey);
     border-collapse: collapse;
@@ -83,13 +86,15 @@ table {
     border-spacing: 0;
     display: block;
     overflow-x: auto;
-    white-space: nowrap;
+    margin: auto;
 }
+
 
 th {
     border-bottom: 1px solid var(--silant_grey);
     background-color: var(--silant_light_grey);
     padding: 2px 2px;
+    white-space: nowrap;
 }
 
 table a {
@@ -100,22 +105,36 @@ table a:hover {
     color: blue;
 }
 th,td {
-    padding: 2px 2px;
+    padding: 2px 5px;
     border-right: 1px solid var(--silant_grey);
+    border-left: 1px solid var(--silant_grey);
+}
+
+.td_slim {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
 }
 tr {
-    white-space: nowrap;
 }
 tr:nth-child(odd) {
-  background: var(--silant_cell_grey);
-}
-.table_tr {
-
+    background: var(--silant_cell_grey);
 }
 .table_tr:hover {
     background: var(--silant_beige);
 }
 
+.table_maintenance {
+    max-width: 673px;
+}
+.table_car {
+    max-width: 1030px;
+}
+.table_complaints {
+    max-width: 1035px;
+}
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -133,8 +152,6 @@ header {
 .header_top {
     display: -webkit-flex; /* Safari */
     display: flex;
-    -webkit-flex-direction: column-reverse; /* Safari 6.1+ */
-    flex-direction: column-reverse;
     align-items: center;
 }
 
@@ -168,6 +185,7 @@ footer {
     display: -webkit-flex;
     display: flex;
     justify-content: space-between;
+    margin: 10px 0;
 }
 .logo {
     /*width: 200px;*/
@@ -189,13 +207,14 @@ footer {
     border-radius: 5px;
     color: var(--silant_grey);
     background: transparent;
+    cursor: pointer;
 }
 .button.slim {
     padding: 0 5px;
     margin: 5px;
 }
 .button.medium {
-    padding: 10px 10px;
+    padding: 5px 10px;
     margin: 5px;
 }
 .button.buttonslim{
