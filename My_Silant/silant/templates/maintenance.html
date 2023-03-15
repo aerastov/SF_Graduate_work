@@ -21,7 +21,9 @@
     </div>
 
     {% if maintenances %}
-        <table class="table_maintenance">
+
+
+        <table>
         <tr>
             <th><a href="?order_by=car">№</a></th>
             <th><a href="?order_by=service_company">&#9650; </a>Сервисная орг.</th>
@@ -43,6 +45,8 @@
             </tr>
         {% endfor %}
         </table>
+
+
     {% else %}
         <h4 class="center">Еще нет записей о ТО ваших машин.</h4>
         <div class="center">
