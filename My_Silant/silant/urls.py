@@ -24,6 +24,7 @@ urlpatterns = [
     path('create_complaints', CreateComplaints.as_view(), name='create_complaints'),
 
     path('reference_book/', reference_book, name='reference_book'),
+    path('reference_book/<int:pk>', ReferenceBookList.as_view()),
     path('reference_book/<int:pk>/', ReferenceBookList.as_view()),
     path('reference_book/1/create', TechniqueModeCreate.as_view()),
     path('reference_book/1/<int:pk>/edit', TechniqueModelEdit.as_view()),

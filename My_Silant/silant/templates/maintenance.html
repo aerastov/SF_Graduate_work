@@ -21,32 +21,28 @@
     </div>
 
     {% if maintenances %}
-
-
         <table>
         <tr>
-            <th><a href="?order_by=car">№</a></th>
-            <th><a href="?order_by=service_company">&#9650; </a>Сервисная орг.</th>
-            <th><a href="?order_by=type_maintenance">&#9650; </a>Вид_ТО</th>
-            <th><a href="?order_by=maintenance_date">&#9650; </a>Дата ТО</th>
+            <th><a href="?order_by=car">&#9650; </a>Машина</th>
+            <th><a href="?order_by=service_company">&#9650; </a>Сервисная организация</th>
+            <th><a href="?order_by=type_maintenance">&#9650; </a>Вид ТО<br>
+                <a href="?order_by=maintenance_date">&#9650; </a>Дата ТО</th>
             <th><a href="?order_by=operating_time">&#9650; </a>Наработка</th>
-            <th><a href="?order_by=order">&#9650; </a>Номер заказа-наряда</th>
-            <th><a href="?order_by=order_date">&#9650; </a>Дата заказа-наряда</th>
+            <th><a href="?order_by=order">&#9650; </a>№ заказа-наряда<br>
+                <a href="?order_by=order_date">&#9650; </a>Дата заказа-наряда</th>
         </tr>
         {% for maintenance in maintenances %}
-            <tr onclick="window.location.href='/maintenance/{{ maintenance.id }}'; return false" class="table_tr" class="table_tr">
+            <tr onclick="window.location.href='/maintenance/{{ maintenance.id }}'; return false" class="table_tr">
                 <td class="td_slim">{{ maintenance.car }}</td>
                 <td class="td_slim">{{ maintenance.service_company }}</td>
-                <td class="td_slim">{{ maintenance.type_maintenance }}</td>
-                <td class="td_slim">{{ maintenance.maintenance_date|date:"d.m.Y" }}</td>
+                <td class="td_slim">{{ maintenance.type_maintenance }}<br>
+                    {{ maintenance.maintenance_date|date:"d.m.Y" }}</td>
                 <td class="td_slim">{{ maintenance.operating_time }}</td>
-                <td class="td_slim">{{ maintenance.order }}</td>
-                <td class="td_slim">{{ maintenance.order_date|date:"d.m.Y" }}</td>
+                <td class="td_slim">{{ maintenance.order }}<br>
+                    {{ maintenance.order_date|date:"d.m.Y" }}</td>
             </tr>
         {% endfor %}
         </table>
-
-
     {% else %}
         <h4 class="center">Еще нет записей о ТО ваших машин.</h4>
         <div class="center">

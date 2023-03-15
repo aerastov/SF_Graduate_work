@@ -4,7 +4,7 @@
 
 {% block content %}
 
-    <h4 class="center">Данные выбранной машины:</h4>
+<h4 class="center">Данные выбранной машины:</h4>
 <div class="center">
     <table>
     <tr><td>Зав. №  машины:</td><td>{{ car.factory_number }}</td></tr>
@@ -32,14 +32,15 @@
     </table>
 </div>
 <br>
-<a href="{% url 'info' %}" class="button medium">Назад</a>
-{% if perms.silant.change_car %}
-    <a href="{{ request.get_full_path }}/edit" class="button medium">Редактировать</a>
-{% endif %}
-{% if perms.silant.delete_car %}
-    <a href="{{ request.get_full_path }}/delete" class="button medium">Удалить</a>
-{% endif %}
-
+<div class="center">
+    <a href="{% url 'info' %}" class="button medium">Назад</a>
+    {% if perms.silant.change_car %}
+        <a href="{{ request.get_full_path }}/edit" class="button medium">Редактировать</a>
+    {% endif %}
+    {% if perms.silant.delete_car %}
+        <a href="{{ request.get_full_path }}/delete" class="button medium">Удалить</a>
+    {% endif %}
+</div>
 
 
 

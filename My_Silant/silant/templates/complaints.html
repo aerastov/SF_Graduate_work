@@ -25,29 +25,29 @@
     {% if complaints %}
         <table>
         <tr>
-            <th><a href="?order_by=factory_number">№</a></th>
-            <th><a href="?order_by=service_company">Сервисная орг.</a></th>
-            <th><a href="?order_by=date_of_refusal">Дата отказа</a></th>
-            <th><a href="?order_by=operating_time">Наработка</a></th>
-            <th><a href="?order_by=failure_node">Узел отказа</a></th>
-            <th><a href="?order_by=description_failure">Характер отказа</a></th>
-            <th><a href="?order_by=recovery_method">Способ восстановления</a></th>
-            <th><a href="?order_by=recovery_method">Используемые запасные части</a></th>
-            <th><a href="?order_by=recovery_method">Дата восстановления</a></th>
-            <th><a href="?order_by=recovery_method">Время простоя техники</a></th>
+            <th><a href="?order_by=car">&#9650; </a>Машина<br>
+                <a href="?order_by=service_company">&#9650; </a>Сервисная организация</th>
+            <th><a href="?order_by=date_of_refusal">&#9650; </a>Дата отказа<br>
+                <a href="?order_by=operating_time">&#9650; </a>Наработка</th>
+            <th><a href="?order_by=failure_node">&#9650; </a>Узел отказа<br>
+                <a href="?order_by=description_failure">&#9650; </a>Характер отказа</th>
+            <th><a href="?order_by=recovery_method">&#9650; </a>Способ восстановления<br>
+                <a href="?order_by=parts_used">&#9650; </a>Используемые запасные части</th>
+            <th><a href="?order_by=date_of_restoration">&#9650; </a>Дата восстановления<br>
+                <a href="?order_by=equipment_downtime">&#9650; </a>Время простоя техники</th>
         </tr>
         {% for complaint in complaints %}
-            <tr class="table_tr">
-                <td><a href="/complaints/{{ complaint.id }}">{{ complaint.car }}</a></td>
-                <td><a href="/complaints/{{ complaint.id }}">{{ complaint.service_company }}</a></td>
-                <td><a href="/complaints/{{ complaint.id }}">{{ complaint.date_of_refusal|date:"d.m.Y" }}</a></td>
-                <td><a href="/complaints/{{ complaint.id }}">{{ complaint.operating_time }}</a></td>
-                <td><a href="/complaints/{{ complaint.id }}">{{ complaint.failure_node }}</a></td>
-                <td><a href="/complaints/{{ complaint.id }}">{{ complaint.description_failure }}</a></td>
-                <td><a href="/complaints/{{ complaint.id }}">{{ complaint.recovery_method }}</a></td>
-                <td><a href="/complaints/{{ complaint.id }}">{{ complaint.parts_used }}</a></td>
-                <td><a href="/complaints/{{ complaint.id }}">{{ complaint.date_of_restoration|date:"d.m.Y" }}</a></td>
-                <td><a href="/complaints/{{ complaint.id }}">{{ complaint.equipment_downtime }}</a></td>
+            <tr onclick="window.location.href='/complaints/{{ complaint.id }}'; return false" class="table_tr">
+                <td class="td_slim">{{ complaint.car }}<br>
+                    {{ complaint.service_company }}</td>
+                <td class="td_slim">{{ complaint.date_of_refusal|date:"d.m.Y" }}<br>
+                    {{ complaint.operating_time }}</td>
+                <td class="td_slim">{{ complaint.failure_node }}<br>
+                    {{ complaint.description_failure }}</td>
+                <td class="td_slim">{{ complaint.recovery_method }}<br>
+                    {{ complaint.parts_used }}</td>
+                <td class="td_slim">{{ complaint.date_of_restoration|date:"d.m.Y" }}<br>
+                    {{ complaint.equipment_downtime }}</td>
             </tr>
         {% endfor %}
         </table>

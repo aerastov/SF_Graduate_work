@@ -1,13 +1,13 @@
 {% extends 'default.html' %}
 {% load bootstrap5 %}
+{% block bootstrap_css %}{% bootstrap_css %}{% endblock bootstrap_css %}
 {% load auth_extras %}
-
 
 
 {% block content %}
     <div class="left-right">
-        <p>Выберите машину</p>
-        <select  onchange="window.location.href = this.options[this.selectedIndex].value">
+        <p class="select_car">Выберите машину</p>
+        <select class="form-select" onchange="window.location.href = this.options[this.selectedIndex].value">
             <option value="{{select_car.id}}">{{ select_car }} {{ select_car.technique_model }} {{ select_car.engine_model }}</option>
             {% for car in cars %}
                 {% if car.id != select_car.id %}
@@ -22,10 +22,11 @@
         {% bootstrap_form form layout='horizontal' %}
         <div class="center">
             {% buttons %}
-            <a class="btn btn-outline-secondary" href="{% url 'complaints' %}" role="button">отмена</a>
-            <button type="submit" class="btn btn-outline-secondary">сохранить</button>
+            <a class="button medium" href="{% url 'complaints' %}" role="button">отмена</a>
+            <button type="submit" class="button medium">сохранить</button>
             {% endbuttons %}
         </div>
     </form>
 
 {% endblock content %}
+

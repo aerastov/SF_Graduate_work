@@ -4,12 +4,10 @@
 {% load auth_extras %}
 
 
-
 {% block content %}
-
     <div class="left-right">
         <p class="select_car">Выберите машину</p>
-        <select class="form-select"  onchange="window.location.href = this.options[this.selectedIndex].value">
+        <select class="form-select" onchange="window.location.href = this.options[this.selectedIndex].value">
             <option value="{{select_car.id}}">{{ select_car }} {{ select_car.technique_model }} {{ select_car.engine_model }}</option>
             {% for car in cars %}
                 {% if car.id != select_car.id %}
@@ -37,7 +35,6 @@
             <button type="submit" class="button medium">Сохранить</button>
             {% endbuttons %}
         </div>
-
     </form>
 
 {% endblock content %}

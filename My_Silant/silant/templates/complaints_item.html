@@ -4,7 +4,7 @@
 
 {% block content %}
 
-    <p class="center">Данные рекламации:</p>
+<h4 class="center">Данные рекламации:</h4>
 <div class="center">
     <table>
     <tr><td>Зав. №  машины:</td><td>{{ complaints.car }}</td></tr>
@@ -20,13 +20,14 @@
     </table>
 </div>
 <br>
-<input type=button value="< Назад" class="btn btn-primary" onClick="javascript:history.go(-1);">&nbsp
-{% if perms.silant.change_car %}
-    <a href="{{ request.get_full_path }}/edit" class="btn btn-primary">Редактировать</a>
-{% endif %}
-{% if perms.silant.delete_car %}
-    <a href="{{ request.get_full_path }}/delete" class="btn btn-primary">Удалить</a>
-{% endif %}
-
+<div class="center">
+    <a href="{% url 'complaints' %}" class="button medium">Назад</a>
+    {% if perms.silant.change_car %}
+        <a href="{{ request.get_full_path }}/edit" class="button medium">Редактировать</a>
+    {% endif %}
+    {% if perms.silant.delete_car %}
+        <a href="{{ request.get_full_path }}/delete" class="button medium">Удалить</a>
+    {% endif %}
+</div>
 
 {% endblock content %}
