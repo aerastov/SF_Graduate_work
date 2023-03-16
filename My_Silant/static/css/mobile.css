@@ -1,5 +1,5 @@
 html {
-  font-size: 14px;
+  font-size: 15px;
 }
 .wrapper {
     width: 340px;
@@ -10,6 +10,8 @@ html {
     flex-direction: column-reverse;
     justify-content: center;
 }
+
+
 .button.slim {
     font-size: 11px;
 }

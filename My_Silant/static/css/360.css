@@ -1,11 +1,9 @@
 html {
-  font-size: 14px;
+  font-size: 15px;
 }
 
-.header_top {
-    -webkit-flex-direction: column-reverse; /* Safari 6.1+ */
-    flex-direction: column-reverse;
-    justify-content: center;
+.account_menu {
+    flex-direction: column;
 }
 .button.slim {
     font-size: 11px;

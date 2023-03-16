@@ -9,6 +9,7 @@ urlpatterns = [
     # path('signup/', BaseRegisterView.as_view(template_name = 'sign/signup.html'), name='signup'),
     path('', include('allauth.urls')),
     path('account_list', AccountList.as_view(), name='account_list'),
+    path('account_list/<int:pk>', AccountItem.as_view()),
 
 ]
 

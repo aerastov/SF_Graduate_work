@@ -34,13 +34,13 @@
 		<div class="header">
 			<div class="header_top">
 				<div class="logo">
-					<a href="{% url 'info' %}"><img src="{% static 'images/Logotype silant.jpg' %}"></a>
+					<a href="{% url 'info' %}"><img class='header_logo' src="{% static 'images/Logotype silant.jpg' %}"></a>
+				<p class="header_contact">+7-8352-20-12-09, telegram</p>
 				</div>
-				<p>+7-8352-20-12-09, telegram</p>
-				<div id="account_menu">
+				<div id="account_menu" class="account_menu">
 					{% if user.is_authenticated %}
 						{% if request.user|has_group:"admin" %}
-							<a class="button slim" href="{% url 'account_list' %}" role="button">ред.польз.</a>
+							<a class="button slim" href="{% url 'account_list' %}" role="button">аккаунты</a>
 						{% endif %}
 						<a class="button slim" href="/accounts/logout/" role="button">выйти</a>
 					{% else %}

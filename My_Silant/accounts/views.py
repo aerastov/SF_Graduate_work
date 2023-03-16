@@ -10,10 +10,17 @@ class AccountList(PermissionRequiredMixin, ListView):
     template_name = 'account_list.html'
     context_object_name = 'users'
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['users'] = User.objects.all().order_by('username').order_by('groups')
+        return context
 
 
-
-
+class AccountItem(PermissionRequiredMixin, DetailView):
+    permission_required = 'auth.view_user'
+    model = User
+    template_name = 'user_item.html'
+    context_object_name = 'user_item'
 
 
 
