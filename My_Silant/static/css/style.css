@@ -194,6 +194,20 @@ footer {
     justify-content: space-between;
     margin: 10px 0;
 }
+.column {
+    width: fit-content;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    -webkit-align-items: flex-start; /* Safari 7.0+ */
+    align-items: flex-start;
+    padding: 0 20px 0 0;
+    /*overflow: hidden;*/
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
 .logo {
     /*width: 200px;*/
 }

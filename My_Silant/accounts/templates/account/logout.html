@@ -8,7 +8,7 @@
 <div class="center">
   <form method="post" action="{% url 'account_logout' %}">
     {% csrf_token %}
-    <button type="submit" class="button medium slim">Выйти</button>
+    <button type="submit" class="button medium">Выйти</button>
   </form>
   <input type=button value="Отмена" class="button medium" onClick="javascript:history.go(-1);">&nbsp
 </div>

@@ -3,63 +3,29 @@
 
 {% block content %}
 
-<!--    <div class="center"><p>Группа: Администраторы</p></div>-->
-<!--    <div class="center">-->
-<!--        <table>-->
-<!--            <tr><th>Логин</th><th>Наименование</th></tr>-->
-<!--            {% for user in users %}-->
-<!--                {% if user|has_group:"admin" %}-->
-<!--                    <tr class="table_tr">-->
-<!--                        <td><a href="/complaints/{{ user.name }}">{{ user.username }}</a></td>-->
-<!--                        <td><a href="/complaints/{{ complaint.id }}">{{ user.lastname }}</a></td>-->
-<!--                    </tr>-->
-<!--                {% endif %}-->
-<!--            {% endfor %}-->
-<!--        </table>-->
-<!--    </div>-->
-
-<!--    <div class="center">-->
-<!--        <p>Группа: Менеджеры</p>-->
-<!--    </div>-->
-<!--    <div class="center">-->
-<!--        <div class="account_list">-->
-<!--            {% for user in users %}-->
-<!--                {% if user|has_group:"manager" %}-->
-<!--                    <div class="account_left">-->
-<!--                        <span>Логин:&nbsp</span><a href="/complaints/{{ user.name }}">{{ user.username }}</a>-->
-<!--                    </div>-->
-<!--                    <div class="account_right">-->
-<!--                        <span>Имя:&nbsp</span><a href="?order_by=service_company">{% if user.lastname %}{{ user.lastname }}{% else %}Отсутствует{% endif %}</a>-->
-<!--                    </div>-->
-<!--                {% endif %}-->
-<!--            {% endfor %}-->
-<!--        </div>-->
-<!--    </div>-->
-
-
-
-
-
     <div class="center">
         <table>
-            <tr><th class="account_tr">Логин</th><th class="account_tr">Наименование</th><th class="account_tr">Группа</th></tr>
+            <tr><th class="account_tr">Логин</th>
+                <th class="account_tr">Наименование</th>
+                <th class="account_tr">Группа</th>
+                <th class="account_tr"></th>
+            </tr>
             {% for user in users %}
                 <tr onclick="window.location.href='{{ request.get_full_path }}/{{ user.id }}'; return false" class="table_tr" style="cursor: pointer">
                     <td>{{ user.username }}</td>
-                    <td>{% if user.lastname %}{{ user.lastname }}{% else %}Отсутствует{% endif %}</td>
+                    <td>{% if user.first_name %}{{ user.first_name }}{% else %}Отсутствует{% endif %}</td>
                     <td>{{ user.groups.all.0 }}</td>
+                    <td>{% if user.is_active == True %}&#9989;{% else %}&#9940;{% endif %}</td>
                 </tr>
             {% endfor %}
         </table>
     </div>
-{{ request.GET.order_by }}
 
-
-
-
-
-
-
+<br>
+<div class="center">
+    <a href="{% url 'info' %}" class="button medium">Назад</a>
+    <a href="{% url 'create_account' %}" class="button medium">Создать новый аккаунт</a>
+</div>
 
 
 {% endblock content %}

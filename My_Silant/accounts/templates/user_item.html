@@ -5,26 +5,28 @@
 {% block content %}
 
 <h4 class="center">Данные аккаунта {{ user_item.username }}:</h4>
+
 <div class="center">
-    <table>
-    <tr><td>Логин:</td><td>{{ user_item.username }}</td></tr>
-    <tr><td>Имя:</td><td>{% if user_item.lastname %}{{ user_item.lastname }}{% else %}Отсутствует{% endif %}</td></tr>
-    <tr><td>Роль:</td><td>{{ user_item.groups.all.0 }}</td></tr>
-    </table>
+    <div class="column">
+         <p><b>Логин:</b></p>
+         <p><b>Имя: </b></p>
+         <p><b>E-mail: </b></p>
+         <p><b>Роль: </b></p>
+    </div>
+        <div class="column">
+         <p>{{ user_item.username }}</p>
+         <p>{% if user_item.first_name %}{{ user_item.first_name }}{% else %}Отсутствует{% endif %}</p>
+         <p>{% if user_item.email %}{{ user_item.email }}{% else %}Отсутствует{% endif %}</p>
+         <p>{{ user_item.groups.all.0 }}</p>
+    </div>
 </div>
+
+
 <br>
 <div class="center">
-    <a href="{% url 'info' %}" class="button medium">Назад</a>
-    {% if perms.silant.change_car %}
-        <a href="{{ request.get_full_path }}/edit" class="button medium">Редактировать</a>
-    {% endif %}
-    {% if perms.silant.delete_car %}
-        <a href="{{ request.get_full_path }}/delete" class="button medium">Удалить</a>
-    {% endif %}
+    <a href="{% url 'account_list' %}" class="button medium">Назад</a>
+    <a href="{{ request.get_full_path }}/edit" class="button medium">Редактировать</a>
 </div>
-
-
-
 
 
 

@@ -1,10 +1,9 @@
 from django import forms
 from .models import *
 import datetime
-
 from django.utils import timezone
 now = timezone.now()
-# print("now = ", now.year)
+
 
 class FactoryNumber(forms.Form):
     factory_number = forms.CharField(label='Заводской №', widget=forms.TextInput(attrs={'size': 8}),
@@ -23,7 +22,8 @@ class CreateCarForm(forms.ModelForm):
                    'consignee': forms.Textarea(attrs={'rows': 1}),
                    'delivery_address': forms.Textarea(attrs={'rows': 1}),
                    'equipment': forms.Textarea(attrs={'rows': 1}),
-                   'date_of_shipment_from_the_factory': forms.SelectDateWidget(years=list(reversed(range(2000, now.year+1)))) }
+                   'date_of_shipment_from_the_factory': forms.NumberInput(attrs={'type': 'date'})}
+                  # 'date_of_shipment_from_the_factory': forms.SelectDateWidget(years=list(reversed(range(2000, now.year+1)))) }
         fields = '__all__'
 
 
