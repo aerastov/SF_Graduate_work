@@ -385,6 +385,19 @@ class ServiceCompanyEdit(PermissionRequiredMixin, UpdateView):
     form_class = UpdateServiceCompanyForm
     success_url = '../'
 
+    def form_valid(self, form):
+        form.save()
+        # Перезаписываем имя сервисной компании в Аккаунте
+        name = form.cleaned_data.get("name")
+        username = form.cleaned_data.get("user")
+        id = User.objects.get(username=username).id
+        user = User.objects.get(id=id)
+        user.first_name = name
+        user.save()
+        return super().form_valid(form)
+
+
+
 
 class TypeMaintenanceCreate(PermissionRequiredMixin, CreateView):
     permission_required = 'silant.add_type_maintenance'

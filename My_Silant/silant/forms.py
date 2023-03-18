@@ -28,14 +28,13 @@ class CreateCarForm(forms.ModelForm):
 
 
 class CreateMaintenancesForm(forms.ModelForm):
-    # service_company = forms.CharField(max_length=200, help_text='Use puns liberally', label = "Сервисная компания")
     class Meta:
         model = Maintenance
         # exclude = ('car',)
         fields = '__all__'
         widgets = {'order': forms.Textarea(attrs={'rows': 1}),
-                   'maintenance_date': forms.SelectDateWidget(years=list(reversed(range(2000, now.year + 1)))),
-                   'order_date': forms.SelectDateWidget(years=list(reversed(range(2000, now.year + 1)))),
+                   'maintenance_date': forms.NumberInput(attrs={'type': 'date'}),
+                   'order_date': forms.NumberInput(attrs={'type': 'date'}),
                    'car': forms.HiddenInput(),
                    }
 
@@ -53,8 +52,8 @@ class UpdateMaintenancesForm(forms.ModelForm):
         model = Maintenance
         fields = '__all__'
         widgets = {'order': forms.Textarea(attrs={'rows': 1}),
-                   'maintenance_date': forms.SelectDateWidget(years=list(reversed(range(2000, now.year + 1)))),
-                   'order_date': forms.SelectDateWidget(years=list(reversed(range(2000, now.year + 1)))),
+                   'maintenance_date': forms.NumberInput(attrs={'type': 'date'}),
+                   'order_date': forms.NumberInput(attrs={'type': 'date'}),
                    'car': forms.HiddenInput(),
                    }
 
@@ -63,10 +62,10 @@ class CreateComplaintsForm(forms.ModelForm):
     class Meta:
         model = Complaints
         fields = '__all__'
-        widgets = {'date_of_refusal': forms.SelectDateWidget(years=list(reversed(range(2000, now.year + 1)))),
+        widgets = {'date_of_refusal': forms.NumberInput(attrs={'type': 'date'}),
                    'failure_node': forms.Textarea(attrs={'rows': 1}),
                    'parts_used': forms.Textarea(attrs={'rows': 1}),
-                   'date_of_restoration': forms.SelectDateWidget(years=list(reversed(range(2000, now.year + 1)))),
+                   'date_of_restoration': forms.NumberInput(attrs={'type': 'date'}),
                    'equipment_downtime': forms.Textarea(attrs={'rows': 1}),
                    'car': forms.HiddenInput(),
                    }
@@ -82,10 +81,10 @@ class UpdateComplaintsForm(forms.ModelForm):
     class Meta:
         model = Complaints
         fields = '__all__'
-        widgets = {'date_of_refusal': forms.SelectDateWidget(years=list(reversed(range(2000, now.year + 1)))),
+        widgets = {'date_of_refusal': forms.NumberInput(attrs={'type': 'date'}),
                    'failure_node': forms.Textarea(attrs={'rows': 1}),
                    'parts_used': forms.Textarea(attrs={'rows': 1}),
-                   'date_of_restoration': forms.SelectDateWidget(years=list(reversed(range(2000, now.year + 1)))),
+                   'date_of_restoration': forms.NumberInput(attrs={'type': 'date'}),
                    'equipment_downtime': forms.Textarea(attrs={'rows': 1}),
                    'car': forms.HiddenInput(),
                    }
@@ -136,8 +135,9 @@ class CreateServiceCompanyForm(forms.ModelForm):
 class UpdateServiceCompanyForm(forms.ModelForm):
     class Meta:
         model = Service_company
-        exclude = ('user',)
-        widgets = {'name': forms.Textarea(attrs={'rows': 1}),}
+        fields = '__all__'
+        # exclude = ('user',)
+        widgets = {'name': forms.Textarea(attrs={'rows': 1}), 'user': forms.HiddenInput(),}
 
 
 class UpdateTypeMaintenanceForm(forms.ModelForm):

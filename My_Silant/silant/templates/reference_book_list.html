@@ -4,7 +4,11 @@
 {% block content %}
     <h4 class="center">Справочник "{{ name }}"</h4>
     <div class="center">
-        <a class="button slim" href="{{ request.get_full_path }}{{ item.id }}create" role="button">Создать новую запись</a>
+        {% if name == "Сервисная организация" %}
+            <p><b>Новая запись в справочнике появится при создании аккаунта,<br> принадлежащего к группе "service" </b></p>
+        {% else %}
+            <a class="button slim" style="color:red" href="{{ request.build_absolute_uri}}/{{ item.id }}create" role="button">Создать новую запись</a>
+        {% endif %}
     </div>
     <table>
         <tr><th>Наименование:</th>
@@ -16,7 +20,7 @@
                 <td>{{ item.name }}</td>
                 <td>{{ item.description }}</td>
                 <td><a class="button slim" style="padding:0 10"
-                       href="{{ request.get_full_path }}{{ item.id }}/edit" role="button">Изменить</a></td>
+                       href="{{ request.build_absolute_uri}}/{{ item.id }}/edit" role="button">Изменить</a></td>
             </tr>
         {% endfor %}
     </table>
