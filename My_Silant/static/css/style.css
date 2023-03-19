@@ -74,8 +74,20 @@ select {
     color: var(--silant_black);
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
-
 }
+.select_name {
+    font-size: 0.8em;
+}
+.select_filter {
+    /*width: 75px;*/
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 0 5px 0 0;
+    font-size: 0.7em;
+    border-radius: 3px;
+}
+
 
 table {
     border-bottom: 1px solid var(--silant_grey);

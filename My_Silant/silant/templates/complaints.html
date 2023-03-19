@@ -11,6 +11,13 @@
     {% if complaints %}
         <h4 class="center">Информация о рекламациях вашей техники:</h4>
     {% endif %}
+
+
+<!--узел отказа;-->
+<!--способ восстановления;-->
+<!--сервисная компания для таблицы «Рекламация».-->
+
+
     <div class="center">
         {% if complaints %}
             {% if request.user|has_group:"service" or request.user|has_group:"manager" or request.user|has_group:"admin" %}

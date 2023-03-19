@@ -6,6 +6,7 @@ class UpdateAccountForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'email', 'groups', 'is_superuser', 'is_staff', 'is_active')
+        widgets = {'groups': forms.SelectMultiple,}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -16,6 +17,12 @@ class UpdateAccountForm(forms.ModelForm):
                                         'права, указанные в группе. Тонкую настройку прав самой группы вы можете сделать ' \
                                         'в административной части сайта (/admin).'
         self.fields['groups'].label='Роль (группа)'
+
+    def clean_groups(self):
+        groups = self.cleaned_data['groups']
+        if len(groups) > 1:
+            raise forms.ValidationError(f"Выберите не более 1 позиции")
+        return groups
 
 
 class CreateAccountForm(forms.ModelForm):

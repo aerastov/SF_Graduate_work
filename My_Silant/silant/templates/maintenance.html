@@ -11,6 +11,15 @@
     {% if maintenances %}
         <h4 class="center">Информация о проведенных ТО вашей техники</h4>
     {% endif %}
+
+
+<!--вид ТО;-->
+<!--зав.номер машины;-->
+<!--сервисная компания для таблицы «ТО»;-->
+
+
+
+
     <div class="center">
         {% if maintenances %}
             <a class="button slim" href="{% url 'create_maintenance' %}" role="button">Добавить запись</a>

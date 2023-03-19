@@ -14,35 +14,67 @@
 
     <h4 class="center">Информация о комплектации и технических<br>характеристиках вашей техники</h4>
 
+    <div>
+        <span class="select_name">машина</span>
+        <select class="select_filter" onchange="setFilter_te(this.value);">
+            <option value="{{select_car.technique_model}}">&nbsp;{{ te }}&nbsp;</option>
+<!--            <option value="{{select_car.technique_model}}">&#9776;</option>-->
+            {% for car in cars %}
+                <option value="{{car.technique_model}}">&nbsp;{{ car.technique_model }}&nbsp;</option>
+            {% endfor %}
+        </select>
+        <span class="select_name">двигатель</span>
+        <select class="select_filter" onchange="window.location.href = this.value">
+            <option value="{{select_car.engine_model}}">&nbsp;{{ en }}&nbsp;</option>
+            {% for car in cars %}
+                <option value="{{car.engine_model}}">&nbsp;{{ car.engine_model }}&nbsp;</option>
+            {% endfor %}
+        </select>
+        <span class="select_name">трансмиссия</span>
+        <select class="select_filter" onchange="window.location.href = this.value">
+            <option value="{{select_car.transmission_model}}">&nbsp;{{ tr }}&nbsp;</option>
+            {% for car in cars %}
+                <option value="{{car.transmission_model}}">&nbsp;{{ car.transmission_model }}&nbsp;</option>
+            {% endfor %}
+        </select>
+        <span class="select_name">вед. мост</span>
+        <select class="select_filter" onchange="window.location.href = this.value">
+            <option value="{{select_car.drive_axle_model}}">&nbsp;{{ da }}&nbsp;</option>
+            {% for car in cars %}
+                <option value="{{car.drive_axle_model}}">&nbsp;{{ car.drive_axle_model }}&nbsp;</option>
+            {% endfor %}
+        </select>
+        <span class="select_name">упр. мост</span>
+        <select class="select_filter" onchange="window.location.href = this.value">
+            <option value="{{select_car.steerable_axle_model}}">&nbsp;{{ sa }}&nbsp;</option>
+            {% for car in cars %}
+                <option value="{{car.steerable_axle_model}}">&nbsp;{{ car.steerable_axle_model }}&nbsp;</option>
+            {% endfor %}
+        </select>
+    </div>
 
-
-    {% if request.user|has_group:"manager" or request.user|has_group:"admin" %}
-        <div class="center">
-            <a class="button slim" href="{% url 'create_car' %}" role="button">Добавить запись</a>
-            <a class="button slim" href="{% url 'reference_book' %}" role="button">Редактор справочников</a>
-        </div>
-    {% endif %}
 
     {% if cars %}
         <table class="small_font">
         <tr>
-            <th><a href="?order_by=factory_number">&#9650; </a>№ маш.<br>
-                <a href="?order_by=technique_model">&#9650; </a>Mодель </th>
-            <th><a href="?order_by=engine_model">&#9650; </a>Модель двиг.<br>
-                <a href="?order_by=engine_number">&#9650; </a>№ двигателя</th>
-            <th><a href="?order_by=transmission_model">&#9650; </a>Модель трансм.<br>
-                <a href="?order_by=transmission_number">&#9650; </a>№ трансмиссии</th>
-            <th><a href="?order_by=drive_axle_model">&#9650; </a>Модель вед. моста<br>
-                <a href="?order_by=drive_axle_number">&#9650; </a>№ ведущего моста</th>
-            <th><a href="?order_by=steerable_axle_model">&#9650; </a>Мод. упр-го моста<br>
-                <a href="?order_by=steerable_axle_number">&#9650; </a>№ упр-го моста</th>
-            <th><a href="?order_by=supply_contract">&#9650; </a>Дог. поставки.<br>
-                <a href="?order_by=date_of_shipment_from_the_factory">&#9650; </a>Дата отгрузки</th>
-            <th><a href="?order_by=consignee">&#9650; </a>Грузополучатель<br>
-                <a href="?order_by=delivery_address">&#9650; </a>Адрес поставки</th>
-            <th><a href="?order_by=equipment">&#9650; </a>Комплектация<br>(доп. опции)</th>
-            <th><a href="?order_by=client">&#9650; </a>Клиент<br>
-                <a href="?order_by=service_company">&#9650; </a>Сервисная организация</th>
+<!--            <th><a href="?order_by=factory_number">&#9650; </a>№ маш.<br>-->
+            <th><a title="Сортировать" href="#" onclick="setOrder_by('?order_by=factory_number'); return false" >&#9650; </a>№ маш.<br>
+                <a title="Сортировать" href="#" onclick="setOrder_by('?order_by=technique_model'); return false" >&#9650; </a>Mодель</th>
+            <th><a title="Сортировать" href="#" onclick="setOrder_by('?order_by=engine_model'); return false" >&#9650; </a>Модель двиг.<br>
+                <a title="Сортировать" href="#" onclick="setOrder_by('?order_by=engine_number'); return false" >&#9650; </a>№ двигателя</th>
+            <th><a title="Сортировать" href="#" onclick="setOrder_by('?order_by=transmission_model'); return false" >&#9650; </a>Модель трансм.<br>
+                <a title="Сортировать" href="#" onclick="setOrder_by('?order_by=transmission_number'); return false" >&#9650; </a>№ трансмиссии</th>
+            <th><a title="Сортировать" href="#" onclick="setOrder_by('?order_by=drive_axle_model'); return false" >&#9650; </a>Модель вед. моста<br>
+                <a title="Сортировать" href="#" onclick="setOrder_by('?order_by=drive_axle_number'); return false" >&#9650; </a>№ ведущего моста</th>
+            <th><a title="Сортировать" href="#" onclick="setOrder_by('?order_by=steerable_axle_model'); return false" >&#9650; </a>Мод. упр-го моста<br>
+                <a title="Сортировать" href="#" onclick="setOrder_by('?order_by=steerable_axle_number'); return false" >&#9650; </a>№ упр-го моста</th>
+            <th><a title="Сортировать" href="#" onclick="setOrder_by('?order_by=supply_contract'); return false" >&#9650; </a>Дог. поставки.<br>
+                <a title="Сортировать" href="#" onclick="setOrder_by('?order_by=date_of_shipment_from_the_factory'); return false" >&#9650; </a>Дата отгрузки</th>
+            <th><a title="Сортировать" href="#" onclick="setOrder_by('?order_by=consignee'); return false" >&#9650; </a>Грузополучатель<br>
+                <a title="Сортировать" href="#" onclick="setOrder_by('?order_by=delivery_address'); return false" >&#9650; </a>Адрес поставки</th>
+            <th><a title="Сортировать" href="#" onclick="setOrder_by('?order_by=equipment'); return false" >&#9650; </a>Комплектация<br>(доп. опции)</th>
+            <th><a title="Сортировать" href="#" onclick="setOrder_by('?order_by=client'); return false" >&#9650; </a>Клиент<br>
+                <a title="Сортировать" href="#" onclick="setOrder_by('?order_by=service_company'); return false" >&#9650; </a>Сервисная организация</th>
         </tr>
         {% for car in cars %}
             <tr onclick="window.location.href='/info/{{ car.id }}'; return false" class="table_tr">
@@ -67,6 +99,12 @@
             </tr>
         {% endfor %}
         </table>
+        {% if request.user|has_group:"manager" or request.user|has_group:"admin" %}
+            <div class="center">
+                <a class="button slim" href="{% url 'create_car' %}" role="button">Добавить запись</a>
+                <a class="button slim" href="{% url 'reference_book' %}" role="button">Редактор справочников</a>
+            </div>
+        {% endif %}
     {% else %}
         <h4 class="center">Нет записей о машинах, которые вам доступны к просмотру.</h4>
 
@@ -78,4 +116,5 @@
         {% endif %}
 
     {% endif %}
+<script src="{% static 'js/info.js' %}"></script>
 {% endblock content %}

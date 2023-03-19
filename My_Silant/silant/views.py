@@ -43,16 +43,41 @@ class Info(PermissionRequiredMixin, ListView):
         context = super().get_context_data(*args, **kwargs)
         order_by = self.request.GET.get('order_by', 'date_of_shipment_from_the_factory')
         if order_by in ['technique_model', 'engine_model', 'transmission_model', 'drive_axle_model',
-                        'steerable_axle_model', 'client', 'service_company']:
+                        'steerable_axle_model', 'service_company']:
             order_by = order_by+"__name"
-        # print("order_by = ", order_by)
+        if order_by in ['client']:
+            order_by = "client__username"
+        print('order_by = ', order_by)
+        context['te'] = self.request.GET.get('te', '---')
+        context['en'] = self.request.GET.get('en', '---')
+        context['tr'] = self.request.GET.get('tr', '---')
+        context['da'] = self.request.GET.get('da', '---')
+        context['sa'] = self.request.GET.get('sa', '---')
+
+        qs = Car.objects.all()
+        filter=None
+        if context['te'] != "---":
+            filter = Technique_model.objects.get(name=context['te']).id
+            qs = qs.filter(technique_model=filter)
+        if context['en'] != "---":
+            filter = Engine_model.objects.get(name=context['en']).id
+            qs = qs.filter(engine_model=filter)
+        if context['tr'] != "---":
+            filter = Transmission_model.objects.get(name=context['tr']).id
+            qs = qs.filter(transmission_model=filter)
+        if context['da'] != "---":
+            filter = Drive_axle_model.objects.get(name=context['da']).id
+            qs = qs.filter(drive_axle_model=filter)
+        if context['sa'] != "---":
+            filter = Steerable_axle_model.objects.get(name=context['sa']).id
+            qs = qs.filter(steerable_axle_model=filter)
 
         if self.request.user.groups.filter(name='admin').exists() or self.request.user.groups.filter(name='manager').exists():
-            context['cars'] = Car.objects.all().order_by(order_by)
+            context['cars'] = qs.order_by(order_by)
         elif self.request.user.groups.filter(name='service').exists():
-            context['cars'] = Car.objects.filter(service_company__user=self.request.user.id).order_by(order_by)
+            context['cars'] = qs.filter(service_company__user=self.request.user.id).order_by(order_by)
         elif self.request.user.groups.filter(name='client').exists():
-            context['cars'] = Car.objects.filter(client=self.request.user.id).order_by(order_by)
+            context['cars'] = qs.filter(client=self.request.user.id).order_by(order_by)
         else:
             context['cars'] = []
         return context

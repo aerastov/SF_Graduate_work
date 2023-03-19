@@ -22,20 +22,20 @@
         {% for car in cars %}
             <br>
             <h3 class="center">Данные найденной машины:</h3>
-<div class="center">
-            <table>
-            <tr><td>Зав. №  машины:</td><td>{{ car.factory_number }}</td></tr>
-            <tr><td>Модель техники:</td><td>{{ car.technique_model }}</td></tr>
-            <tr><td>Модель двигателя:</td><td>{{ car.engine_model }}</td></tr>
-            <tr><td>Зав. № двигателя:</td><td>{{ car.engine_number }}</td></tr>
-            <tr><td>Модель трансмиссии:</td><td>{{ car.transmission_model }}</td></tr>
-            <tr><td>Зав. № трансмиссии:</td><td>{{ car.transmission_number }}</td></tr>
-            <tr><td>Модель ведущего моста:</td><td>{{ car.drive_axle_model }}</td></tr>
-            <tr><td>Зав. № ведущего моста:</td><td>{{ car.drive_axle_number }}</td></tr>
-            <tr><td>Модель управляемого моста:</td><td>{{ car.steerable_axle_model }}</td></tr>
-            <tr><td>Зав. № управляемого моста:</td><td>{{ car.steerable_axle_number }}</td></tr>
-            </table>
-</div>
+            <div class="center">
+                <table>
+                    <tr><td>Зав. №  машины:</td><td>{{ car.factory_number }}</td></tr>
+                    <tr><td>Модель техники:</td><td>{{ car.technique_model }}</td></tr>
+                    <tr><td>Модель двигателя:</td><td>{{ car.engine_model }}</td></tr>
+                    <tr><td>Зав. № двигателя:</td><td>{{ car.engine_number }}</td></tr>
+                    <tr><td>Модель трансмиссии:</td><td>{{ car.transmission_model }}</td></tr>
+                    <tr><td>Зав. № трансмиссии:</td><td>{{ car.transmission_number }}</td></tr>
+                    <tr><td>Модель ведущего моста:</td><td>{{ car.drive_axle_model }}</td></tr>
+                    <tr><td>Зав. № ведущего моста:</td><td>{{ car.drive_axle_number }}</td></tr>
+                    <tr><td>Модель управляемого моста:</td><td>{{ car.steerable_axle_model }}</td></tr>
+                    <tr><td>Зав. № управляемого моста:</td><td>{{ car.steerable_axle_number }}</td></tr>
+                </table>
+            </div>
         {% endfor %}
     {% else %}
         <h3 class="center">Данных о машине с таким заводским номером нет в системе</h3>
