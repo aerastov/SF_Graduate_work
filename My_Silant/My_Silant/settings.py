@@ -98,8 +98,6 @@ is_open_for_signup = 'False'
 
 
 
-
-
 WSGI_APPLICATION = 'My_Silant.wsgi.application'
 
 
