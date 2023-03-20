@@ -5,13 +5,13 @@
 
     <div class="center">
         <table>
-            <tr><th class="account_tr">Логин</th>
-                <th class="account_tr">Наименование</th>
-                <th class="account_tr">Группа</th>
+            <tr><th class="account_tr"><a href="?order_by=username">&#9650; </a>Логин</th>
+                <th class="account_tr"><a href="?order_by=first_name">&#9650; </a>Наименование</th>
+                <th class="account_tr"><a href="?order_by=groups__name">&#9650; </a>Группа</th>
                 <th class="account_tr"></th>
             </tr>
             {% for user in users %}
-                <tr onclick="window.location.href='{{ request.get_full_path }}/{{ user.id }}'; return false" class="table_tr" style="cursor: pointer">
+                <tr onclick="window.location.href='{{ request.path }}/{{ user.id }}'; return false" class="table_tr" style="cursor: pointer">
                     <td>{{ user.username }}</td>
                     <td>{% if user.first_name %}{{ user.first_name }}{% else %}Отсутствует{% endif %}</td>
                     <td>{{ user.groups.all.0 }}</td>

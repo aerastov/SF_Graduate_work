@@ -11,6 +11,10 @@ class FactoryNumber(forms.Form):
 
 
 class CreateCarForm(forms.ModelForm):
+    client = forms.ModelChoiceField(
+        queryset=CustomUser.objects.filter(groups__name='client').order_by('first_name')
+    )
+
     class Meta:
         model = Car
         widgets = {'factory_number': forms.Textarea(attrs={'rows': 1}),
@@ -20,10 +24,11 @@ class CreateCarForm(forms.ModelForm):
                    'steerable_axle_number': forms.Textarea(attrs={'rows': 1}),
                    'supply_contract': forms.Textarea(attrs={'rows': 1}),
                    'consignee': forms.Textarea(attrs={'rows': 1}),
-                   'delivery_address': forms.Textarea(attrs={'rows': 1}),
-                   'equipment': forms.Textarea(attrs={'rows': 1}),
-                   'date_of_shipment_from_the_factory': forms.NumberInput(attrs={'type': 'date'})}
+                   'delivery_address': forms.Textarea(attrs={'rows': 2}),
+                   'equipment': forms.Textarea(attrs={'rows': 5}),
+                   'date_of_shipment_from_the_factory': forms.NumberInput(attrs={'type': 'date'}),
                   # 'date_of_shipment_from_the_factory': forms.SelectDateWidget(years=list(reversed(range(2000, now.year+1)))) }
+                   }
         fields = '__all__'
 
 

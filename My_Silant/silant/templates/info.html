@@ -14,47 +14,56 @@
 
     <h4 class="center">Информация о комплектации и технических<br>характеристиках вашей техники</h4>
 
-    <div>
-        <span class="select_name">машина</span>
-        <select class="select_filter" onchange="setFilter_te(this.value);">
-            <option value="{{ te }}">&nbsp;{{ te }}&nbsp;</option>
-<!--            <option value="{{select_car.technique_model}}">&#9776;</option>-->
-            {% for car in cars %}
-                <option value="{{car.technique_model}}">&nbsp;{{ car.technique_model }}&nbsp;</option>
-            {% endfor %}
-        </select>
-        <span class="select_name">двигатель</span>
-        <select class="select_filter" onchange="setFilter_en(this.value);">
-            <option value="{{ en }}">&nbsp;{{ en }}&nbsp;</option>
-            {% for car in cars %}
-                <option value="{{car.engine_model}}">&nbsp;{{ car.engine_model }}&nbsp;</option>
-            {% endfor %}
-        </select>
-
-        <span class="select_name">трансмиссия</span>
-        <select class="select_filter" onchange="setFilter_tr(this.value);">
-            <option value="{{ tr }}">&nbsp;{{ tr }}&nbsp;</option>
-            {% for car in cars %}
-                <option value="{{car.transmission_model}}">&nbsp;{{ car.transmission_model }}&nbsp;</option>
-            {% endfor %}
-        </select>
-
-        <span class="select_name">вед. мост</span>
-        <select class="select_filter" onchange="setFilter_da(this.value);">
-            <option value="{{ da}}">&nbsp;{{ da }}&nbsp;</option>
-            {% for car in cars %}
-                <option value="{{car.drive_axle_model}}">&nbsp;{{ car.drive_axle_model }}&nbsp;</option>
-            {% endfor %}
-        </select>
-
-        <span class="select_name">упр. мост</span>
-        <select class="select_filter" onchange="setFilter_sa(this.value);">
-            <option value="{{ sa }}">&nbsp;{{ sa }}&nbsp;</option>
-            {% for car in cars %}
-                <option value="{{car.steerable_axle_model}}">&nbsp;{{ car.steerable_axle_model }}&nbsp;</option>
-            {% endfor %}
-        </select>
-        <a title="Очистить фильтры" class="button slim" href="" role="button" onclick="reset(); return false">сбросить</a>
+    <div class="left-right-wrap">
+        <div class="div_item_filter">
+            <span class="select_name">машина</span>
+            <select class="select_filter" onchange="setFilter_te(this.value);">
+                <option value="{{ te }}">&nbsp;{{ te }}&nbsp;</option>
+    <!--            <option value="{{select_car.technique_model}}">&#9776;</option>-->
+                {% for car in cars %}
+                    <option value="{{car.technique_model}}">&nbsp;{{ car.technique_model }}&nbsp;</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="div_item_filter">
+            <span class="select_name">двигатель</span>
+            <select class="select_filter" onchange="setFilter_en(this.value);">
+                <option value="{{ en }}">&nbsp;{{ en }}&nbsp;</option>
+                {% for car in cars %}
+                    <option value="{{car.engine_model}}">&nbsp;{{ car.engine_model }}&nbsp;</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="div_item_filter">
+            <span class="select_name">трансмиссия</span>
+            <select class="select_filter" onchange="setFilter_tr(this.value);">
+                <option value="{{ tr }}">&nbsp;{{ tr }}&nbsp;</option>
+                {% for car in cars %}
+                    <option value="{{car.transmission_model}}">&nbsp;{{ car.transmission_model }}&nbsp;</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="div_item_filter">
+            <span class="select_name">вед. мост</span>
+            <select class="select_filter" onchange="setFilter_da(this.value);">
+                <option value="{{ da}}">&nbsp;{{ da }}&nbsp;</option>
+                {% for car in cars %}
+                    <option value="{{car.drive_axle_model}}">&nbsp;{{ car.drive_axle_model }}&nbsp;</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="div_item_filter">
+            <span class="select_name">упр. мост</span>
+            <select class="select_filter" onchange="setFilter_sa(this.value);">
+                <option value="{{ sa }}">&nbsp;{{ sa }}&nbsp;</option>
+                {% for car in cars %}
+                    <option value="{{car.steerable_axle_model}}">&nbsp;{{ car.steerable_axle_model }}&nbsp;</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="div_item_filter">
+            <a title="Очистить фильтры" class="button_reset" href="" role="button" onclick="reset(); return false">сбросить</a>
+        </div>
     </div>
 
 

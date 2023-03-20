@@ -414,8 +414,8 @@ class ServiceCompanyEdit(PermissionRequiredMixin, UpdateView):
         form.save()
         # Перезаписываем имя сервисной компании в Аккаунте
         name = form.cleaned_data.get("name")
-        username = form.cleaned_data.get("user")
-        id = User.objects.get(username=username).id
+        first_name = form.cleaned_data.get("user")
+        id = User.objects.get(first_name=first_name).id
         user = User.objects.get(id=id)
         user.first_name = name
         user.save()

@@ -66,9 +66,10 @@ input {
     color: var(--silant_black);
 }
 
+/* Фильтрация */
 .select_car {
     width: 73%;
-    padding: 0 52px 0 0;
+    padding: 0 2px 0 0;
 }
 select {
     color: var(--silant_black);
@@ -87,7 +88,22 @@ select {
     font-size: 0.7em;
     border-radius: 3px;
 }
+.div_item_filter {
+    width: fit-content;
+    margin: auto 5px;
+}
+.button_reset {
+    border: 1px solid var(--silant_grey);
+    text-decoration: none;
+    border-radius: 5px;
+    color: var(--silant_black);
+    background: transparent;
+    font-size: 0.7em;
+    cursor: pointer;
+    padding: 0 5px 2px 5px;
+}
 
+/**********************************/
 
 table {
     border-bottom: 1px solid var(--silant_grey);
@@ -205,6 +221,14 @@ footer {
     display: flex;
     justify-content: space-between;
     margin: 10px 0;
+}
+.left-right-wrap {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 2px 0;
 }
 .column {
     width: fit-content;

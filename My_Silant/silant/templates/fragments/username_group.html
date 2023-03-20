@@ -1,9 +1,10 @@
 {% load auth_extras %}
 {% if user.is_authenticated %}
-    <div class="div_full_horizontal_content_space_around">
-        <div>Логин: {{ user.username }}</div>
+<!--    <div class="div_full_horizontal_content_space_around">-->
+    <div class="center">
+        <div><b>Логин:</b> {{ user.username }}&emsp;</div>
         <div>
-            Роль:
+            <b>Роль:</b>
             {% if request.user|has_group:"client" %}
                 Клиент
             {% elif request.user|has_group:"service" %}

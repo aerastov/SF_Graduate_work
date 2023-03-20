@@ -16,7 +16,8 @@ class AccountList(PermissionRequiredMixin, ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['users'] = User.objects.all().order_by('username').order_by('groups')
+        order_by = self.request.GET.get('order_by', 'first_name')
+        context['users'] = User.objects.order_by(order_by)
         return context
 
 
@@ -38,8 +39,8 @@ class CreateAccount(PermissionRequiredMixin, CreateView):
         group = form.cleaned_data.get("groups")
         first_name = form.cleaned_data.get("first_name")
         username = form.cleaned_data.get("username")
+        user = form.save()
         id = User.objects.get(username=username).id
-        user = form.save(commit=False)
         user.password = make_password(form.cleaned_data.get("password"))
         user.save()
         # Сразу создаем новую сервисную компанию в справочнике, если группа = 'service'

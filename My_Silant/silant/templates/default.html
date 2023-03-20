@@ -42,14 +42,15 @@
 						{% if request.user|has_group:"admin" %}
 							<a class="button slim" href="{% url 'account_list' %}" role="button">аккаунты</a>
 						{% endif %}
-						<a class="button slim" href="/accounts/logout/" role="button">выйти</a>
+						<a class="button slim" style='margin: 5px 12px;' href="/accounts/logout/" role="button">выйти</a>
 					{% else %}
 						<a class="button slim" href="/accounts/login" role="button">авторизация</a>
 					{% endif %}
 				</div>
 			</div>
+			{% include "fragments/username_group.html" %}
 			<p class="center">Электронная сервисная книжка "Мой Силант"</p>
-			    {% include "fragments/username_group.html" %}
+
 		</div>
 	</header>
 	<main>
