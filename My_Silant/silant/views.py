@@ -41,26 +41,28 @@ class Info(PermissionRequiredMixin, ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
+        # self.request.session['order_by'] = 'order_by'
+        # print('session = ', self.request.session)
         order_by = self.request.GET.get('order_by', 'date_of_shipment_from_the_factory')
         if order_by in ['technique_model', 'engine_model', 'transmission_model', 'drive_axle_model',
                         'steerable_axle_model', 'service_company']:
             order_by = order_by+"__name"
         if order_by in ['client']:
             order_by = "client__username"
-        print('order_by = ', order_by)
+
+        # print('order_by = ', order_by)
         context['te'] = self.request.GET.get('te', '---')
         context['en'] = self.request.GET.get('en', '---')
         context['tr'] = self.request.GET.get('tr', '---')
         context['da'] = self.request.GET.get('da', '---')
         context['sa'] = self.request.GET.get('sa', '---')
 
-        qs = Car.objects.all()
-        filter=None
+        qs = qs_filter = Car.objects.all()
         if context['te'] != "---":
             filter = Technique_model.objects.get(name=context['te']).id
             qs = qs.filter(technique_model=filter)
         if context['en'] != "---":
-            filter = Engine_model.objects.get(name=context['en']).id
+            filter = Engine_model.objects.get(name=context['en'])
             qs = qs.filter(engine_model=filter)
         if context['tr'] != "---":
             filter = Transmission_model.objects.get(name=context['tr']).id
@@ -71,13 +73,19 @@ class Info(PermissionRequiredMixin, ListView):
         if context['sa'] != "---":
             filter = Steerable_axle_model.objects.get(name=context['sa']).id
             qs = qs.filter(steerable_axle_model=filter)
-
+        filter_list = ['technique_model', 'engine_model', 'transmission_model', 'drive_axle_model', 'steerable_axle_model']
         if self.request.user.groups.filter(name='admin').exists() or self.request.user.groups.filter(name='manager').exists():
             context['cars'] = qs.order_by(order_by)
+            for filter in filter_list:
+                context[filter] = set(qs_filter.values_list(filter+'__name', flat=True))
         elif self.request.user.groups.filter(name='service').exists():
             context['cars'] = qs.filter(service_company__user=self.request.user.id).order_by(order_by)
+            for filter in filter_list:
+                context[filter] = set(qs_filter.filter(service_company__user=self.request.user.id).values_list(filter+'__name', flat=True))
         elif self.request.user.groups.filter(name='client').exists():
             context['cars'] = qs.filter(client=self.request.user.id).order_by(order_by)
+            for filter in filter_list:
+                context[filter] = set(qs_filter.filter(client=self.request.user.id).values_list(filter+'__name', flat=True))
         else:
             context['cars'] = []
         return context
@@ -121,17 +129,59 @@ class MaintenanceList(PermissionRequiredMixin, ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        order_by = self.request.GET.get('order_by', 'maintenance_date')
-        if order_by in ['car', 'service_company', 'type_maintenance']:
-            order_by = order_by+"__name"
-        # print("order_by = ", order_by)
+
+        # Очищаем переменные session при получении параметра "clear"
+        if self.request.GET.get('clear'):
+            self.request.session.pop('order_by2', None)
+            self.request.session.pop('tm', None) #вид ТО
+            self.request.session.pop('cr', None) #зав.номер машины
+            self.request.session.pop('sc', None) #сервисная компания для таблицы «ТО»
+
+        # Перезаписываем order_by2 в session при получении url параметра "order_by" или maintenance_date
+        if self.request.GET.get('order_by'): self.request.session['order_by2'] = self.request.GET.get('order_by')
+        if not 'order_by2' in self.request.session: self.request.session['order_by2'] = 'maintenance_date'
+        # Добавляем "__name" к переменную order_by для связанных объектов
+        order_by = self.request.session['order_by2']
+        if order_by in ['type_maintenance', 'car', 'service_company']: order_by = order_by+"__name"
+
+        # Перезаписываем в session переменные для фильтрации при получении их параметра через url
+        # Отправляем значение фильтра в шаблон для отображения в SELECT
+        if self.request.GET.get('tm'): self.request.session['tm'] = self.request.GET.get('tm')
+        context['tm'] = self.request.session['tm'] if "tm" in self.request.session else '---'
+        if self.request.GET.get('cr'): self.request.session['cr'] = self.request.GET.get('cr')
+        context['cr'] = self.request.session['cr'] if "cr" in self.request.session else '---'
+        if self.request.GET.get('sc'): self.request.session['sc'] = self.request.GET.get('sc')
+        context['sc'] = self.request.session['sc'] if "sc" in self.request.session else '---'
+
+        # Готовим наборы объектов перед фильтрацией и для списка значений фильтра
+        qs = qs_filter = Maintenance.objects.all()
+        # фильтрация объектов
+        if "tm" in self.request.session:
+            filter = Type_maintenance.objects.get(name=self.request.session['tm']).id
+            qs = qs.filter(type_maintenance=filter)
+        if "cr" in self.request.session:
+            filter = Car.objects.get(factory_number=self.request.session['cr'])
+            qs = qs.filter(car=filter)
+        if "sc" in self.request.session:
+            filter = Service_company.objects.get(name=self.request.session['sc']).id
+            qs = qs.filter(service_company=filter)
 
         if self.request.user.groups.filter(name='admin').exists() or self.request.user.groups.filter(name='manager').exists():
-            context['maintenances'] = Maintenance.objects.all().order_by(order_by)
+            # Формируем список значений для select фильтров из доступного для клиента диапазона записей
+            context['type_maintenance'] = set(qs_filter.values_list('type_maintenance__name', flat=True))
+            context['car'] = set(qs_filter.values_list('car__factory_number', flat=True))
+            context['service_company'] = set(qs_filter.values_list('service_company__name', flat=True))
+            context['maintenances'] = qs.order_by(order_by)
         elif self.request.user.groups.filter(name='service').exists():
-            context['maintenances'] = Maintenance.objects.filter(service_company__user=self.request.user).order_by(order_by)
+            context['type_maintenance'] = set(qs_filter.filter(service_company__user=self.request.user).values_list('type_maintenance__name', flat=True))
+            context['car'] = set(qs_filter.filter(service_company__user=self.request.user).values_list('car__factory_number', flat=True))
+            context['service_company'] = set(qs_filter.filter(service_company__user=self.request.user).values_list('service_company__name', flat=True))
+            context['maintenances'] = qs.filter(service_company__user=self.request.user).order_by(order_by)
         elif self.request.user.groups.filter(name='client').exists():
-            context['maintenances'] = Maintenance.objects.filter(client=self.request.user.id).order_by(order_by)
+            context['type_maintenance'] = set(qs_filter.filter(car__client=self.request.user).values_list('type_maintenance__name', flat=True))
+            context['car'] = set(qs_filter.filter(car__client=self.request.user).values_list('car__factory_number', flat=True))
+            context['service_company'] = set(qs_filter.filter(car__client=self.request.user).values_list('service_company__name', flat=True))
+            context['maintenances'] = qs.filter(car__client=self.request.user).order_by(order_by)
         else:
             context['maintenances'] = []
         return context
@@ -156,7 +206,11 @@ class CreateMaintenances(PermissionRequiredMixin, CreateView):
         if self.request.user.groups.filter(name='admin').exists() or self.request.user.groups.filter(name='manager').exists():
             context['cars'] = Car.objects.all()
         else:
-            context['cars'] = Car.objects.all(client='self.request.user')
+            print('self.request.user = ', self.request.user)
+            if self.request.user.groups.filter(name='client').exists():
+                context['cars'] = Car.objects.filter(client=self.request.user)
+            else:
+                context['cars'] = Car.objects.filter(service_company__user=self.request.user)
         return context
 
     def get_form_kwargs(self):
@@ -200,7 +254,16 @@ class ComplaintsList(PermissionRequiredMixin, ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        order_by = self.request.GET.get('order_by', 'date_of_refusal')
+
+        if self.request.GET.get('order_by'): order_by = self.request.session['order_by3'] = self.request.GET.get('order_by')
+        elif 'order_by3' in self.request.session: order_by = (self.request.session['order_by3'])
+        else: order_by = 'date_of_refusal'
+
+        if self.request.GET.get('fn'): fn = self.request.session['fn'] = self.request.GET.get('fn')
+        elif 'fn' in self.request.session: fn = (self.request.session['fn'])
+        else: fn = '---'
+
+        # order_by = self.request.GET.get('order_by', 'date_of_refusal')
         if order_by in ['car', 'service_company', 'description_failure', 'recovery_method']:
             order_by = order_by+"__name"
         # print("order_by = ", order_by)

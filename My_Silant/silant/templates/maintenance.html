@@ -1,7 +1,9 @@
 {% extends 'default.html' %}
 {% load auth_extras %}
+{% load static %}
 
 {% block content %}
+
 
     <div class="div_full_horizontal_content_space_around">
         <a class="button_menu " href="{% url 'info' %}" role="button">Машины</a>
@@ -15,28 +17,51 @@
 
 <!--вид ТО;-->
 <!--зав.номер машины;-->
-<!--сервисная компания для таблицы «ТО»;-->
-
-
-    <div class="center">
-        {% if maintenances %}
-            <a class="button slim" href="{% url 'create_maintenance' %}" role="button">Добавить запись</a>
-        {% endif %}
-        {% if request.user|has_group:"manager" or request.user|has_group:"admin" %}
-            <a class="button slim" href="{% url 'reference_book' %}" role="button">Редактор справочников</a>
-        {% endif %}
+<!--сервисная компания -->
+    <div class="left-right-wrap">
+        <div class="div_item_filter">
+            <span class="select_name">зав.номер машины</span>
+            <select class="select_filter" onchange="window.location.assign('?cr=' + this.value);">
+                <option value="{{ cr }}">&nbsp;{{ cr }}&nbsp;</option>
+                {% for item in car %}
+                    <option value="{{ item }}">&nbsp;{{ item }}&nbsp;</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="div_item_filter">
+            <span class="select_name">сервисная компания</span>
+            <select class="select_filter" onchange="window.location.assign('?sc=' + this.value);">
+                <option value="{{ sc }}">&nbsp;{{ sc }}&nbsp;</option>
+                {% for item in service_company %}
+                    <option value="{{ item }}">&nbsp;{{ item }}&nbsp;</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="div_item_filter">
+            <span class="select_name">вид ТО</span>
+            <select class="select_filter" onchange="window.location.assign('?tm=' + this.value);">
+                <option value="{{ tm }}">&nbsp;{{ tm }}&nbsp;</option>
+                {% for item in type_maintenance %}
+                    <option value="{{ item }}">&nbsp;{{ item }}&nbsp;</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="div_item_filter">
+            <a title="Очистить фильтры" class="button_reset" href="?clear=clear" role="button">сбросить</a>
+        </div>
     </div>
+
 
     {% if maintenances %}
         <table class="small_font">
         <tr>
-            <th><a href="?order_by=car">&#9650; </a>Машина</th>
-            <th><a href="?order_by=service_company">&#9650; </a>Сервисная организация</th>
-            <th><a href="?order_by=type_maintenance">&#9650; </a>Вид ТО<br>
-                <a href="?order_by=maintenance_date">&#9650; </a>Дата ТО</th>
-            <th><a href="?order_by=operating_time">&#9650; </a>Наработка</th>
-            <th><a href="?order_by=order">&#9650; </a>№ заказа-наряда<br>
-                <a href="?order_by=order_date">&#9650; </a>Дата заказа-наряда</th>
+            <th><a title="Сортировать" href="?order_by=car">&#9650; </a>Машина</th>
+            <th><a title="Сортировать" href="?order_by=service_company">&#9650; </a>Сервисная организация</th>
+            <th><a title="Сортировать" href="?order_by=type_maintenance">&#9650; </a>Вид ТО<br>
+                <a title="Сортировать" href="?order_by=maintenance_date" >&#9650; </a>Дата ТО</th>
+            <th><a title="Сортировать" href="?order_by=operating_time">&#9650; </a>Наработка</th>
+            <th><a title="Сортировать" href="?order_by=order">&#9650; </a>№ заказа-наряда<br>
+                <a title="Сортировать" href="?order_by=order_date">&#9650; </a>Дата заказа-наряда</th>
         </tr>
         {% for maintenance in maintenances %}
             <tr onclick="window.location.href='/maintenance/{{ maintenance.id }}'; return false" class="table_tr">
@@ -50,8 +75,18 @@
             </tr>
         {% endfor %}
         </table>
+
+        <div class="center">
+            {% if maintenances %}
+                <a class="button slim" href="{% url 'create_maintenance' %}" role="button">Добавить запись</a>
+            {% endif %}
+            {% if request.user|has_group:"manager" or request.user|has_group:"admin" %}
+                <a class="button slim" href="{% url 'reference_book' %}" role="button">Редактор справочников</a>
+            {% endif %}
+        </div>
+
     {% else %}
-        <h4 class="center">Еще нет записей о ТО ваших машин.</h4>
+        <h4 class="center">Нет записей о ТО ваших машин, соответствующих запросу.</h4>
         <div class="center">
             <a class="button medium" href="{% url 'create_maintenance' %}" role="button">Добавить первую запись о ТО</a>
             {% if request.user|has_group:"manager" or request.user|has_group:"admin" %}
@@ -59,4 +94,5 @@
             {% endif %}
         </div>
     {% endif %}
+    <script src="{% static 'js/maintenance.js' %}"></script>
 {% endblock content %}

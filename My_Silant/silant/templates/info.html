@@ -1,10 +1,17 @@
 {% extends 'default.html' %}
 {% load auth_extras %}
-{% block content %}
-
-
 {% load static %}
 
+
+{% block content %}
+
+<h1>{{ request.session.order_by }}</h1>
+
+    <script src="{% static 'js/jquery-3.6.4.js' %}"></script>
+    <script src="{% static 'js/info.js' %}"></script>
+
+<script>base_url = '{{ request.path }}';</script>
+<script>csrf_token = '{{ csrf_token }}';</script>
 
     <div class="div_full_horizontal_content_space_around">
         <a class="button_menu active" href="{% url 'info' %}" role="button">Машины</a>
@@ -19,9 +26,8 @@
             <span class="select_name">машина</span>
             <select class="select_filter" onchange="setFilter_te(this.value);">
                 <option value="{{ te }}">&nbsp;{{ te }}&nbsp;</option>
-    <!--            <option value="{{select_car.technique_model}}">&#9776;</option>-->
-                {% for car in cars %}
-                    <option value="{{car.technique_model}}">&nbsp;{{ car.technique_model }}&nbsp;</option>
+                {% for item in technique_model %}
+                    <option value="{{ item }}">&nbsp;{{ item }}&nbsp;</option>
                 {% endfor %}
             </select>
         </div>
@@ -29,8 +35,8 @@
             <span class="select_name">двигатель</span>
             <select class="select_filter" onchange="setFilter_en(this.value);">
                 <option value="{{ en }}">&nbsp;{{ en }}&nbsp;</option>
-                {% for car in cars %}
-                    <option value="{{car.engine_model}}">&nbsp;{{ car.engine_model }}&nbsp;</option>
+                {% for item in engine_model %}
+                    <option value="{{ item }}">&nbsp;{{ item }}&nbsp;</option>
                 {% endfor %}
             </select>
         </div>
@@ -38,17 +44,17 @@
             <span class="select_name">трансмиссия</span>
             <select class="select_filter" onchange="setFilter_tr(this.value);">
                 <option value="{{ tr }}">&nbsp;{{ tr }}&nbsp;</option>
-                {% for car in cars %}
-                    <option value="{{car.transmission_model}}">&nbsp;{{ car.transmission_model }}&nbsp;</option>
+                {% for item in transmission_model %}
+                    <option value="{{ item }}">&nbsp;{{ item }}&nbsp;</option>
                 {% endfor %}
             </select>
         </div>
         <div class="div_item_filter">
             <span class="select_name">вед. мост</span>
             <select class="select_filter" onchange="setFilter_da(this.value);">
-                <option value="{{ da}}">&nbsp;{{ da }}&nbsp;</option>
-                {% for car in cars %}
-                    <option value="{{car.drive_axle_model}}">&nbsp;{{ car.drive_axle_model }}&nbsp;</option>
+                <option value="{{ da }}">&nbsp;{{ da }}&nbsp;</option>
+                {% for item in drive_axle_model %}
+                    <option value="{{ item }}">&nbsp;{{ item }}&nbsp;</option>
                 {% endfor %}
             </select>
         </div>
@@ -56,8 +62,8 @@
             <span class="select_name">упр. мост</span>
             <select class="select_filter" onchange="setFilter_sa(this.value);">
                 <option value="{{ sa }}">&nbsp;{{ sa }}&nbsp;</option>
-                {% for car in cars %}
-                    <option value="{{car.steerable_axle_model}}">&nbsp;{{ car.steerable_axle_model }}&nbsp;</option>
+                {% for item in steerable_axle_model %}
+                    <option value="{{ item }}">&nbsp;{{ item }}&nbsp;</option>
                 {% endfor %}
             </select>
         </div>
@@ -119,7 +125,7 @@
             </div>
         {% endif %}
     {% else %}
-        <h4 class="center">Нет записей о машинах, которые вам доступны к просмотру.</h4>
+        <h4 class="center">Нет записей о ваших машинах, которые соответствуют запросу.</h4>
 
         {% if request.user|has_group:"manager" or request.user|has_group:"admin" %}
             <div class="center">
@@ -129,5 +135,4 @@
         {% endif %}
 
     {% endif %}
-<script src="{% static 'js/info.js' %}"></script>
 {% endblock content %}

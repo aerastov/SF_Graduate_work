@@ -97,8 +97,8 @@ class Car(models.Model):
     supply_contract = models.TextField(max_length=50, blank=True, verbose_name='Договор поставки №, дата.')
     date_of_shipment_from_the_factory = models.DateField(db_index=True, verbose_name='Дата отгрузки с завода')
     consignee = models.TextField(max_length=50, blank=True, verbose_name='Грузополучатель')
-    delivery_address = models.TextField(max_length=150, blank=True, verbose_name='Адрес поставки (эксплуатации)')
-    equipment = models.TextField(max_length=150, blank=True, verbose_name='Комплектация (доп. опции)')
+    delivery_address = models.TextField(max_length=300, blank=True, verbose_name='Адрес поставки (эксплуатации)')
+    equipment = models.TextField(blank=True, verbose_name='Комплектация (доп. опции)')
     client = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Клиент')
     service_company = models.ForeignKey(Service_company, null=True, on_delete=models.CASCADE, blank=True, verbose_name='Сервисная организация')
 

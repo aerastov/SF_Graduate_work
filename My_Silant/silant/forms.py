@@ -1,8 +1,5 @@
 from django import forms
 from .models import *
-import datetime
-from django.utils import timezone
-now = timezone.now()
 
 
 class FactoryNumber(forms.Form):
@@ -27,7 +24,6 @@ class CreateCarForm(forms.ModelForm):
                    'delivery_address': forms.Textarea(attrs={'rows': 2}),
                    'equipment': forms.Textarea(attrs={'rows': 5}),
                    'date_of_shipment_from_the_factory': forms.NumberInput(attrs={'type': 'date'}),
-                  # 'date_of_shipment_from_the_factory': forms.SelectDateWidget(years=list(reversed(range(2000, now.year+1)))) }
                    }
         fields = '__all__'
 
@@ -35,22 +31,25 @@ class CreateCarForm(forms.ModelForm):
 class CreateMaintenancesForm(forms.ModelForm):
     class Meta:
         model = Maintenance
-        # exclude = ('car',)
+        # exclude = ('service_company',)
         fields = '__all__'
         widgets = {'order': forms.Textarea(attrs={'rows': 1}),
                    'maintenance_date': forms.NumberInput(attrs={'type': 'date'}),
                    'order_date': forms.NumberInput(attrs={'type': 'date'}),
                    'car': forms.HiddenInput(),
+                   'service_company': forms.HiddenInput(),
+
                    }
 
-
     def __init__(self, *args, **kwargs):
-        super(CreateMaintenancesForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         service_company = kwargs.pop('initial')['service_company']
-        # self.fields['service_company'].initial = service_company
-        self.fields['service_company'].help_text='Назначить или изменить организацию для данной машины может менеджер в информации о машине'
-        # self.fields['service_company'].widget.attrs['disabled'] = True
-        self.fields['service_company'].widget.attrs['readonly'] = True
+        self.fields['service_company'].initial = service_company
+        # self.fields['service_company'].help_text='По заданию "У каждой машины только одна сервисная организация", ' \
+        #                                          'поэтому менять сервисную компанию для записей ТО отключена. Назначить ' \
+        #                                          'или изменить организацию для данной машины может менеджер в информации' \
+        #                                          ' о машине'
+
 
 class UpdateMaintenancesForm(forms.ModelForm):
     class Meta:
@@ -60,6 +59,8 @@ class UpdateMaintenancesForm(forms.ModelForm):
                    'maintenance_date': forms.NumberInput(attrs={'type': 'date'}),
                    'order_date': forms.NumberInput(attrs={'type': 'date'}),
                    'car': forms.HiddenInput(),
+                   # 'service_company': forms.widgets.Select(attrs={'disabled': 'disabled'})
+                   'service_company': forms.HiddenInput()
                    }
 
 

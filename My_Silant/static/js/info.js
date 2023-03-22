@@ -1,3 +1,8 @@
+//if (!localStorage.getItem('pageLoaded')) {
+//    if (typeof location.search.split('order_by=')[1] == "undefined") {
+//        reload();
+//    }
+//}
 function setOrder_by(name) {
     window.sessionStorage.setItem('order_by', name);
     reload();
@@ -37,4 +42,5 @@ function reload() {
     if (window.sessionStorage.getItem('sa') === null) {sa = "";}else{sa = window.sessionStorage.getItem('sa');}
     httpParam = order_by + te + en + tr + da + sa;
     window.location.href = httpParam;
+
 }

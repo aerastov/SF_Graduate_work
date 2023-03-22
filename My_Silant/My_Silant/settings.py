@@ -66,6 +66,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+# SESSION_COOKIE_HTTPONLY = False
+
 ROOT_URLCONF = 'My_Silant.urls'
 
 TEMPLATES = [
@@ -83,6 +86,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 # Setting for allauth
 AUTHENTICATION_BACKENDS = [

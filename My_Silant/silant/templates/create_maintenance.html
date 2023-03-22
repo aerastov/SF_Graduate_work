@@ -7,11 +7,11 @@
 {% block content %}
     <div class="left-right">
         <p class="select_car">Выберите машину</p>
-        <select class="form-select" onchange="window.location.href = this.value">
-            <option value="{{select_car.id}}">{{ select_car }} {{ select_car.technique_model }} {{ select_car.engine_model }}</option>
+        <select class="form-select" style='margin: 0 0 0 25px;' onchange="window.location.href = this.value">
+            <option value="{{select_car.id}}">{{ select_car }}</option>
             {% for car in cars %}
                 {% if car.id != select_car.id %}
-                    <option value="?id={{car.id}}">{{ car.factory_number }} {{ car.technique_model }}</option>
+                    <option value="?id={{car.id}}">{{ car.factory_number }}</option>
                 {% endif %}
             {% endfor %}
         </select>

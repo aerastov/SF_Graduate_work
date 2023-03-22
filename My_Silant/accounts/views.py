@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.views.generic.edit import FormMixin, CreateView, UpdateView, DeleteView
-from django.views.generic import ListView, DetailView, TemplateView
+from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
+from django.views.generic.edit import FormMixin, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, TemplateView
 from .models import *
 from .forms import *
 from silant.models import Service_company
@@ -50,8 +51,6 @@ class CreateAccount(PermissionRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-
-
 class EditAccount(PermissionRequiredMixin, UpdateView):
     permission_required = 'auth.change_user'
     model = User
@@ -77,5 +76,4 @@ class EditAccount(PermissionRequiredMixin, UpdateView):
             object = Service_company(user_id=id, name=first_name, description="Отсутствует")
             object.save()
         return super().form_valid(form)
-
 

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-
+from django.contrib.auth.forms import AdminPasswordChangeForm
 
 class UpdateAccountForm(forms.ModelForm):
     class Meta:
@@ -40,3 +40,4 @@ class CreateAccountForm(forms.ModelForm):
                                         'настройку прав самой группы вы можете сделать в административной части сайта ' \
                                         '(/admin).'
         self.fields['groups'].label='Роль (группа)'
+        self.fields['groups'].required=True
