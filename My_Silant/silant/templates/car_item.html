@@ -1,22 +1,23 @@
 {% extends 'default.html' %}
 {% load auth_extras %}
 {% load bootstrap5 %}
+{% block bootstrap_css %}{% bootstrap_css %}{% bootstrap_javascript %}{% endblock bootstrap_css %}
 
 {% block content %}
 
-<h4 class="center">Данные выбранной машины:</h4>
+<h5 class="center">Данные выбранной машины:</h5>
 
 <div class="center">
-    <table>
+    <table style="border-bottom: none; border-top: none;">
     <tr><td>Зав. №  машины:</td><td>{{ car.factory_number }}</td></tr>
-    <tr><td>Модель техники:</td><td>{{ car.technique_model }}</td></tr>
-    <tr><td>Модель двигателя:</td><td>{{ car.engine_model }}</td></tr>
+    <tr><td>Модель техники:</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#technique_model"><b>{{ car.technique_model }}</b></a></td></tr>
+    <tr><td>Модель двигателя:</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#engine_model"><b>{{ car.engine_model }}</b></a></td></tr>
     <tr><td>Зав. № двигателя:</td><td>{{ car.engine_number }}</td></tr>
-    <tr><td>Модель трансмиссии:</td><td>{{ car.transmission_model }}</td></tr>
+    <tr><td>Модель трансмиссии:</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#transmission_model"><b>{{ car.transmission_model }}</b></a></td></tr>
     <tr><td>Зав. № трансмиссии:</td><td>{{ car.transmission_number }}</td></tr>
-    <tr><td>Модель ведущего моста:</td><td>{{ car.drive_axle_model }}</td></tr>
+    <tr><td>Модель ведущего моста:</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#drive_axle_model"><b>{{ car.drive_axle_model }}</b></a></td></tr>
     <tr><td>Зав. № ведущего моста:</td><td>{{ car.drive_axle_number }}</td></tr>
-    <tr><td>Модель управляемого моста:</td><td>{{ car.steerable_axle_model }}</td></tr>
+    <tr><td>Модель управляемого моста:</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#steerable_axle_model"><b>{{ car.steerable_axle_model }}</b></a></td></tr>
     <tr><td>Зав. № управляемого моста:</td><td>{{ car.steerable_axle_number }}</td></tr>
     <tr><td>Договор поставки №, дата:</td><td>{% if car.supply_contract %}{{ car.supply_contract }}
         {% else %}Отсутствует{% endif %}</td></tr>
@@ -28,7 +29,7 @@
     <tr><td>Комплектация (доп. опции):</td><td>{% if car.equipment %}{{ car.equipment }}{% else %}Отсутствует
         {% endif %}</td></tr>
     <tr><td>Клиент:</td><td>{% if car.client %}{{ car.client }}{% else %}Отсутствует{% endif %}</td></tr>
-    <tr><td>Сервисная организация:</td><td>{% if car.service_company %}{{ car.service_company }}{% else %}Отсутствует
+    <tr><td>Сервисная организация:</td><td>{% if car.service_company %}<a href="#" data-bs-toggle="modal" data-bs-target="#service_company"><b>{{ car.service_company }}</b></a>{% else %}Отсутствует
         {% endif %}</td></tr>
     </table>
 </div>
@@ -37,11 +38,103 @@
 <div class="center">
     <a href="{% url 'info' %}" class="button medium">Назад</a>
     {% if perms.silant.change_car %}
-        <a href="{{ request.get_full_path }}/edit" class="button medium">Редактировать</a>
+        <a href="{{ request.path }}/edit" class="button medium">Редактировать</a>
     {% endif %}
     {% if perms.silant.delete_car %}
-        <a href="{{ request.get_full_path }}/delete" class="button medium">Удалить</a>
+        <a href="{{ request.path }}/delete" class="button medium">Удалить</a>
     {% endif %}
+</div>
+
+
+<div class="modal" tabindex="-1" id="technique_model">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        Описание из справочника:<br><br>
+        {% if car.technique_model.description %}
+            {{ car.technique_model.description }}
+        {% else %}
+            Описание отсутствует :(
+        {% endif %}
+        <br><br><button type="button" class="button medium" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" id="engine_model">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        Описание из справочника:<br><br>
+        {% if car.engine_model.description %}
+            {{ car.engine_model.description }}
+        {% else %}
+            Описание отсутствует :(
+        {% endif %}
+        <br><br><button type="button" class="button medium" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" id="transmission_model">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        Описание из справочника:<br><br>
+        {% if car.transmission_model.description %}
+            {{ car.transmission_model.description }}
+        {% else %}
+            Описание отсутствует :(
+        {% endif %}
+        <br><br><button type="button" class="button medium" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" id="drive_axle_model">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        Описание из справочника:<br><br>
+        {% if car.drive_axle_model.description %}
+            {{ car.drive_axle_model.description }}
+        {% else %}
+            Описание отсутствует :(
+        {% endif %}
+        <br><br><button type="button" class="button medium" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" id="steerable_axle_model">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        Описание из справочника:<br><br>
+        {% if car.steerable_axle_model.description %}
+            {{ car.steerable_axle_model.description }}
+        {% else %}
+            Описание отсутствует :(
+        {% endif %}
+        <br><br><button type="button" class="button medium" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" id="service_company">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        Описание из справочника:<br><br>
+        {% if car.service_company.description %}
+            {{ car.service_company.description }}
+        {% else %}
+            Описание отсутствует :(
+        {% endif %}
+        <br><br><button type="button" class="button medium" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock content %}

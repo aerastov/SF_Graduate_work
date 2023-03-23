@@ -1,15 +1,16 @@
 {% extends 'default.html' %}
 {% load auth_extras %}
 {% load bootstrap5 %}
+{% block bootstrap_css %}{% bootstrap_css %}{% bootstrap_javascript %}{% endblock bootstrap_css %}
 
 {% block content %}
 
-<h4 class="center">Данные ТО:</h4>
+<h5 class="center">Данные ТО:</h5>
 <div class="center">
-    <table>
+    <table style="border-bottom: none; border-top: none;">
     <tr><td>Зав. №  машины:</td><td>{{ maintenance.car }}</td></tr>
-    <tr><td>Сервисная организация:</td><td>{{ maintenance.service_company }}</td></tr>
-    <tr><td>Вид ТО:</td><td>{{ maintenance.type_maintenance }}</td></tr>
+    <tr><td>Сервисная организация:</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#service_company"><b>{{ maintenance.service_company }}</b></a></td></tr>
+    <tr><td>Вид ТО:</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#type_maintenance"><b>{{ maintenance.type_maintenance }}</b></a></td></tr>
     <tr><td>Дата проведения ТО:</td><td>{{ maintenance.maintenance_date }}</td></tr>
     <tr><td>Наработка мотто/часов:</td><td>{{ maintenance.operating_time }}</td></tr>
     <tr><td>Номер заказа-наряда:</td><td>{{ maintenance.order }}</td></tr>
@@ -27,5 +28,35 @@
     {% endif %}
 </div>
 
+<div class="modal" tabindex="-1" id="service_company">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        Описание из справочника:<br><br>
+        {% if maintenance.service_company.description %}
+            {{ maintenance.service_company.description }}
+        {% else %}
+            Описание отсутствует :(
+        {% endif %}
+        <br><br><button type="button" class="button medium" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" id="type_maintenance">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        Описание из справочника:<br><br>
+        {% if maintenance.type_maintenance.description %}
+            {{ maintenance.type_maintenance.description }}
+        {% else %}
+            Описание отсутствует :(
+        {% endif %}
+        <br><br><button type="button" class="button medium" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock content %}

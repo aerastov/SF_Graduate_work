@@ -94,6 +94,17 @@ class InfoItem(PermissionRequiredMixin, DetailView):
     template_name = 'car_item.html'
     context_object_name = 'car'
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        #Для вывода информации из справочников по клику на значение
+        context['technique_model'] = Technique_model.objects.all()
+        context['engine_model'] = Engine_model.objects.all()
+        context['transmission_model'] = Transmission_model.objects.all()
+        context['drive_axle_model'] = Drive_axle_model.objects.all()
+        context['steerable_axle_model'] = Steerable_axle_model.objects.all()
+        context['service_company'] = Service_company.objects.all()
+        return context
+
 
 class CreateCar(PermissionRequiredMixin, CreateView):
     permission_required = 'silant.add_car'
@@ -227,6 +238,13 @@ class MaintenanceItem(PermissionRequiredMixin, DetailView):
     template_name = 'maintenance_item.html'
     context_object_name = 'maintenance'
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        #Для вывода информации из справочников по клику на значение
+        context['type_maintenance'] = Type_maintenance.objects.all()
+        context['service_company'] = Service_company.objects.all()
+        return context
+
 
 class MaintenanceEdit(PermissionRequiredMixin, UpdateView):
     permission_required = 'silant.change_maintenance'
@@ -347,6 +365,13 @@ class ComplaintsItem(PermissionRequiredMixin, DetailView):
     template_name = 'complaints_item.html'
     context_object_name = 'complaints'
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        #Для вывода информации из справочников по клику на значение
+        context['description_failure'] = Description_failure.objects.all()
+        context['recovery_method'] = Recovery_method.objects.all()
+        context['service_company'] = Service_company.objects.all()
+        return context
 
 class ComplaintsEdit(PermissionRequiredMixin, UpdateView):
     permission_required = 'silant.change_complaints'
@@ -421,8 +446,6 @@ class TechniqueModelEdit(PermissionRequiredMixin, UpdateView):
     template_name = 'update.html'
     form_class = UpdateTechniqueModelForm
     success_url = '../../'
-    # def get_success_url(self):
-    #     return self.request.META.get('HTTP_REFERER', reverse_lazy('myapp:index'))
 
 
 class EngineModelCreate(PermissionRequiredMixin, CreateView):
