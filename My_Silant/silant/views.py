@@ -41,8 +41,6 @@ class Info(PermissionRequiredMixin, ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        # self.request.session['order_by'] = 'order_by'
-        # print('session = ', self.request.session)
         order_by = self.request.GET.get('order_by', 'date_of_shipment_from_the_factory')
         if order_by in ['technique_model', 'engine_model', 'transmission_model', 'drive_axle_model',
                         'steerable_axle_model', 'service_company']:
@@ -50,7 +48,6 @@ class Info(PermissionRequiredMixin, ListView):
         if order_by in ['client']:
             order_by = "client__username"
 
-        # print('order_by = ', order_by)
         context['te'] = self.request.GET.get('te', '---')
         context['en'] = self.request.GET.get('en', '---')
         context['tr'] = self.request.GET.get('tr', '---')

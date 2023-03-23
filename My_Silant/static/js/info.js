@@ -1,8 +1,8 @@
-//if (!localStorage.getItem('pageLoaded')) {
-//    if (typeof location.search.split('order_by=')[1] == "undefined") {
-//        reload();
-//    }
-//}
+if (!localStorage.getItem('pageLoaded')) {
+    if (typeof location.search.split('order_by=')[1] == "undefined") {
+        reload();
+    }
+}
 function setOrder_by(name) {
     window.sessionStorage.setItem('order_by', name);
     reload();
