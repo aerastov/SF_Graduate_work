@@ -174,7 +174,7 @@ class Complaints(models.Model):
     failure_node = models.TextField(verbose_name='Узел отказа')
     description_failure = models.ForeignKey(Description_failure, on_delete=models.CASCADE, verbose_name='Характер отказа')
     recovery_method = models.ForeignKey(Recovery_method, on_delete=models.CASCADE, verbose_name='Способ восстановления')
-    parts_used = models.TextField(verbose_name='Используемые запасные части')
+    parts_used = models.TextField(blank=True, verbose_name='Используемые запасные части')
     date_of_restoration = models.DateField(verbose_name='Дата восстановления')
     equipment_downtime = models.TextField(verbose_name='Время простоя техники')
 

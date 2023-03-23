@@ -17,7 +17,38 @@
 <!--способ восстановления;-->
 <!--сервисная компания для таблицы «Рекламация».-->
 
-
+    <div class="left-right-wrap">
+        <div class="div_item_filter">
+            <span class="select_name">сервисная компания</span>
+            <select class="select_filter" onchange="window.location.assign('?sc=' + this.value);">
+                <option value="{{ sc }}">&nbsp;{{ sc }}&nbsp;</option>
+                {% for item in service_company %}
+                    <option value="{{ item }}">&nbsp;{{ item }}&nbsp;</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="div_item_filter">
+            <span class="select_name">узел отказа</span>
+            <select class="select_filter" onchange="window.location.assign('?fn=' + this.value);">
+                <option value="{{ fn }}">&nbsp;{{ fn }}&nbsp;</option>
+                {% for item in failure_node %}
+                    <option value="{{ item }}">&nbsp;{{ item }}&nbsp;</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="div_item_filter">
+            <span class="select_name">способ восстановления</span>
+            <select class="select_filter" onchange="window.location.assign('?rm=' + this.value);">
+                <option value="{{ rm }}">&nbsp;{{ rm }}&nbsp;</option>
+                {% for item in recovery_method %}
+                    <option value="{{ item }}">&nbsp;{{ item }}&nbsp;</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="div_item_filter">
+            <a title="Очистить фильтры" class="button_reset" href="?clear=clear" role="button">сбросить</a>
+        </div>
+    </div>
 
 
     {% if complaints %}

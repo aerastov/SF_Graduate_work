@@ -7,7 +7,7 @@
         {% if name == "Сервисная организация" %}
             <p><b>Новая запись в справочнике появится при создании аккаунта,<br> принадлежащего к группе "service" </b></p>
         {% else %}
-            <a class="button slim" style="color:red" href="{{ request.build_absolute_uri}}/{{ item.id }}create" role="button">Создать новую запись</a>
+            <a class="button slim" style="color:red" href="{{ request.path }}{{ item.id }}create/" role="button">Создать новую запись</a>
         {% endif %}
     </div>
     <table>
@@ -20,13 +20,13 @@
                 <td>{{ item.name }}</td>
                 <td>{{ item.description }}</td>
                 <td><a class="button slim" style="padding:0 10"
-                       href="{{ request.build_absolute_uri}}/{{ item.id }}/edit" role="button">Изменить</a></td>
+                       href="{{ request.path }}{{ item.id }}/edit/" role="button">Изменить</a></td>
             </tr>
         {% endfor %}
     </table>
     <br>
     <div class="center">
-       <a class="button medium" href="./" role="button">назад</a>
+       <a class="button medium" href="{% url 'reference_book' %}" role="button">назад</a>
     </div>
 
 {% endblock content %}

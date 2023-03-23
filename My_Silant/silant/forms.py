@@ -74,6 +74,7 @@ class CreateComplaintsForm(forms.ModelForm):
                    'date_of_restoration': forms.NumberInput(attrs={'type': 'date'}),
                    'equipment_downtime': forms.Textarea(attrs={'rows': 1}),
                    'car': forms.HiddenInput(),
+                   'service_company': forms.HiddenInput(),
                    }
 
 
@@ -93,6 +94,7 @@ class UpdateComplaintsForm(forms.ModelForm):
                    'date_of_restoration': forms.NumberInput(attrs={'type': 'date'}),
                    'equipment_downtime': forms.Textarea(attrs={'rows': 1}),
                    'car': forms.HiddenInput(),
+                   'service_company': forms.HiddenInput()
                    }
 
 

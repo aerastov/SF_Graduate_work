@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .models import *
 from .forms import *
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.core import serializers
 
@@ -140,7 +140,7 @@ class MaintenanceList(PermissionRequiredMixin, ListView):
         # Перезаписываем order_by2 в session при получении url параметра "order_by" или maintenance_date
         if self.request.GET.get('order_by'): self.request.session['order_by2'] = self.request.GET.get('order_by')
         if not 'order_by2' in self.request.session: self.request.session['order_by2'] = 'maintenance_date'
-        # Добавляем "__name" к переменную order_by для связанных объектов
+        # Добавляем "__name" к переменной order_by для связанных объектов
         order_by = self.request.session['order_by2']
         if order_by in ['type_maintenance', 'car', 'service_company']: order_by = order_by+"__name"
 
@@ -255,25 +255,57 @@ class ComplaintsList(PermissionRequiredMixin, ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
 
-        if self.request.GET.get('order_by'): order_by = self.request.session['order_by3'] = self.request.GET.get('order_by')
-        elif 'order_by3' in self.request.session: order_by = (self.request.session['order_by3'])
-        else: order_by = 'date_of_refusal'
+        # Очищаем переменные session при получении параметра "clear"
+        if self.request.GET.get('clear'):
+            self.request.session.pop('order_by3', None)
+            self.request.session.pop('fn', None) #Узел отказа
+            self.request.session.pop('rm', None) #Способ восстановления
+            self.request.session.pop('sc3', None) #сервисная компания
 
-        if self.request.GET.get('fn'): fn = self.request.session['fn'] = self.request.GET.get('fn')
-        elif 'fn' in self.request.session: fn = (self.request.session['fn'])
-        else: fn = '---'
+        # Перезаписываем order_by3 в session при получении url параметра "order_by" или date_of_refusal
+        if self.request.GET.get('order_by'): self.request.session['order_by3'] = self.request.GET.get('order_by')
+        if not 'order_by3' in self.request.session: self.request.session['order_by3'] = 'date_of_refusal'
+        # Добавляем "__name" к переменной order_by для связанных объектов
+        order_by = self.request.session['order_by3']
+        if order_by in ['recovery_method', 'service_company']: order_by = order_by + "__name"
 
-        # order_by = self.request.GET.get('order_by', 'date_of_refusal')
-        if order_by in ['car', 'service_company', 'description_failure', 'recovery_method']:
-            order_by = order_by+"__name"
-        # print("order_by = ", order_by)
+        # Перезаписываем в session переменные для фильтрации при получении их параметра через url
+        # Отправляем значение фильтра в шаблон для отображения в SELECT
+        if self.request.GET.get('fn'): self.request.session['fn'] = self.request.GET.get('fn')
+        context['fn'] = self.request.session['fn'] if "fn" in self.request.session else '---'
+        if self.request.GET.get('rm'): self.request.session['rm'] = self.request.GET.get('rm')
+        context['rm'] = self.request.session['rm'] if "rm" in self.request.session else '---'
+        if self.request.GET.get('sc'): self.request.session['sc3'] = self.request.GET.get('sc')
+        context['sc'] = self.request.session['sc3'] if "sc3" in self.request.session else '---'
+
+        # Готовим наборы объектов перед фильтрацией и для списка значений фильтра
+        qs = qs_filter = Complaints.objects.all()
+        # фильтрация объектов
+        if "fn" in self.request.session:
+            qs = qs.filter(failure_node=self.request.session['fn'])
+        if "rm" in self.request.session:
+            filter = Recovery_method.objects.get(name=self.request.session['rm'])
+            qs = qs.filter(recovery_method=filter)
+        if "sc3" in self.request.session:
+            filter = Service_company.objects.get(name=self.request.session['sc3']).id
+            qs = qs.filter(service_company=filter)
 
         if self.request.user.groups.filter(name='admin').exists() or self.request.user.groups.filter(name='manager').exists():
-            context['complaints'] = Complaints.objects.all().order_by(order_by)
+            # Формируем список значений для select фильтров из доступного для клиента диапазона записей
+            context['failure_node'] = set(qs_filter.values_list('failure_node', flat=True))
+            context['recovery_method'] = set(qs_filter.values_list('recovery_method__name', flat=True))
+            context['service_company'] = set(qs_filter.values_list('service_company__name', flat=True))
+            context['complaints'] = qs.order_by(order_by)
         elif self.request.user.groups.filter(name='service').exists():
-            context['complaints'] = Complaints.objects.filter(service_company__user=self.request.user.id).order_by(order_by)
+            context['failure_node'] = set(qs_filter.filter(service_company__user=self.request.user).values_list('failure_node', flat=True))
+            context['recovery_method'] = set(qs_filter.filter(service_company__user=self.request.user).values_list('recovery_method__name', flat=True))
+            context['service_company'] = set(qs_filter.filter(service_company__user=self.request.user).values_list('service_company__name', flat=True))
+            context['complaints'] = qs.filter(service_company__user=self.request.user).order_by(order_by)
         elif self.request.user.groups.filter(name='client').exists():
-            context['complaints'] = Complaints.objects.filter(client=self.request.user.id).order_by(order_by)
+            context['failure_node'] = set(qs_filter.filter(car__client=self.request.user).values_list('failure_node', flat=True))
+            context['recovery_method'] = set(qs_filter.filter(car__client=self.request.user).values_list('recovery_method__name', flat=True))
+            context['service_company'] = set(qs_filter.filter(car__client=self.request.user).values_list('service_company__name', flat=True))
+            context['complaints'] = qs.filter(car__client=self.request.user.id).order_by(order_by)
         else:
             context['complaints'] = []
         return context
@@ -298,7 +330,7 @@ class CreateComplaints(PermissionRequiredMixin, CreateView):
         if self.request.user.groups.filter(name='admin').exists() or self.request.user.groups.filter(name='manager').exists():
             context['cars'] = Car.objects.all()
         else:
-            context['cars'] = Car.objects.all(client='self.request.user')
+            context['cars'] = Car.objects.filter(service_company__user=self.request.user)
         return context
 
     def get_form_kwargs(self):
@@ -310,7 +342,6 @@ class CreateComplaints(PermissionRequiredMixin, CreateView):
             service_company = Car.objects.get(id=id).service_company_id
             kwargs['initial'] = {'service_company': service_company, 'car': id}
         return kwargs
-
 
 
 class ComplaintsItem(PermissionRequiredMixin, DetailView):
@@ -340,9 +371,10 @@ def reference_book(request):
 
 
 class ReferenceBookList(PermissionRequiredMixin, TemplateView):
-    permission_required = 'silant.view_technique_model, silant.view_engine_model, silant.view_transmission_model,' \
-                          ' silant.view_drive_axle_model, silant.view_steerable_axle_model, silant.view_service_company,' \
-                          ' silant.view_type_maintenance, silant.view_description_failure, silant.view_recovery_method'
+    permission_required = ('silant.view_technique_model', 'silant.view_engine_model', 'silant.view_transmission_model',
+                           'silant.view_drive_axle_model', 'silant.view_steerable_axle_model',
+                           'silant.view_service_company', 'silant.view_type_maintenance',
+                           'silant.view_description_failure', 'silant.view_recovery_method')
     template_name = 'reference_book_list.html'
 
     def get_context_data(self, **kwargs):
@@ -383,7 +415,7 @@ class TechniqueModeCreate(PermissionRequiredMixin, CreateView):
     model = Technique_model
     template_name = 'update.html'
     form_class = UpdateTechniqueModelForm
-    success_url = './'
+    success_url = '../'
 
 
 class TechniqueModelEdit(PermissionRequiredMixin, UpdateView):
@@ -391,7 +423,9 @@ class TechniqueModelEdit(PermissionRequiredMixin, UpdateView):
     model = Technique_model
     template_name = 'update.html'
     form_class = UpdateTechniqueModelForm
-    success_url = '../'
+    success_url = '../../'
+    # def get_success_url(self):
+    #     return self.request.META.get('HTTP_REFERER', reverse_lazy('myapp:index'))
 
 
 class EngineModelCreate(PermissionRequiredMixin, CreateView):
@@ -399,7 +433,7 @@ class EngineModelCreate(PermissionRequiredMixin, CreateView):
     model = Engine_model
     template_name = 'update.html'
     form_class = UpdateEngineModelForm
-    success_url = './'
+    success_url = '../'
 
 
 class EngineModelEdit(PermissionRequiredMixin, UpdateView):
@@ -407,7 +441,7 @@ class EngineModelEdit(PermissionRequiredMixin, UpdateView):
     model = Engine_model
     template_name = 'update.html'
     form_class = UpdateEngineModelForm
-    success_url = '../'
+    success_url = '../../'
 
 
 class TransmissionModelCreate(PermissionRequiredMixin, CreateView):
@@ -415,7 +449,7 @@ class TransmissionModelCreate(PermissionRequiredMixin, CreateView):
     model = Transmission_model
     template_name = 'update.html'
     form_class = UpdateTransmissionModelForm
-    success_url = './'
+    success_url = '../'
 
 
 class TransmissionModelEdit(PermissionRequiredMixin, UpdateView):
@@ -423,7 +457,7 @@ class TransmissionModelEdit(PermissionRequiredMixin, UpdateView):
     model = Transmission_model
     template_name = 'update.html'
     form_class = UpdateTransmissionModelForm
-    success_url = '../'
+    success_url = '../../'
 
 
 class DriveAxleModelCreate(PermissionRequiredMixin, CreateView):
@@ -431,7 +465,7 @@ class DriveAxleModelCreate(PermissionRequiredMixin, CreateView):
     model = Drive_axle_model
     template_name = 'update.html'
     form_class = UpdateDriveAxleModelForm
-    success_url = './'
+    success_url = '../'
 
 
 class DriveAxleModelEdit(PermissionRequiredMixin, UpdateView):
@@ -439,7 +473,7 @@ class DriveAxleModelEdit(PermissionRequiredMixin, UpdateView):
     model = Drive_axle_model
     template_name = 'update.html'
     form_class = UpdateDriveAxleModelForm
-    success_url = '../'
+    success_url = '../../'
 
 
 class SteerableAxleModelCreate(PermissionRequiredMixin, CreateView):
@@ -447,7 +481,7 @@ class SteerableAxleModelCreate(PermissionRequiredMixin, CreateView):
     model = Steerable_axle_model
     template_name = 'update.html'
     form_class = UpdateSteerableAxleModelForm
-    success_url = './'
+    success_url = '../'
 
 
 class SteerableAxleModelEdit(PermissionRequiredMixin, UpdateView):
@@ -455,7 +489,7 @@ class SteerableAxleModelEdit(PermissionRequiredMixin, UpdateView):
     model = Steerable_axle_model
     template_name = 'update.html'
     form_class = UpdateSteerableAxleModelForm
-    success_url = '../'
+    success_url = '../../'
 
 
 class ServiceCompanyCreate(PermissionRequiredMixin, CreateView):
@@ -463,7 +497,7 @@ class ServiceCompanyCreate(PermissionRequiredMixin, CreateView):
     model = Service_company
     template_name = 'update.html'
     form_class = CreateServiceCompanyForm
-    success_url = './'
+    success_url = '../'
 
 
 class ServiceCompanyEdit(PermissionRequiredMixin, UpdateView):
@@ -471,7 +505,7 @@ class ServiceCompanyEdit(PermissionRequiredMixin, UpdateView):
     model = Service_company
     template_name = 'update.html'
     form_class = UpdateServiceCompanyForm
-    success_url = '../'
+    success_url = '../../'
 
     def form_valid(self, form):
         form.save()
@@ -485,14 +519,12 @@ class ServiceCompanyEdit(PermissionRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-
-
 class TypeMaintenanceCreate(PermissionRequiredMixin, CreateView):
     permission_required = 'silant.add_type_maintenance'
     model = Type_maintenance
     template_name = 'update.html'
     form_class = UpdateTypeMaintenanceForm
-    success_url = './'
+    success_url = '../'
 
 
 class TypeMaintenanceEdit(PermissionRequiredMixin, UpdateView):
@@ -500,7 +532,7 @@ class TypeMaintenanceEdit(PermissionRequiredMixin, UpdateView):
     model = Type_maintenance
     template_name = 'update.html'
     form_class = UpdateTypeMaintenanceForm
-    success_url = '../'
+    success_url = '../../'
 
 
 class DescriptionFailureCreate(PermissionRequiredMixin, CreateView):
@@ -508,7 +540,7 @@ class DescriptionFailureCreate(PermissionRequiredMixin, CreateView):
     model = Description_failure
     template_name = 'update.html'
     form_class = UpdateDescriptionFailureForm
-    success_url = './'
+    success_url = '../'
 
 
 class DescriptionFailureEdit(PermissionRequiredMixin, UpdateView):
@@ -516,7 +548,7 @@ class DescriptionFailureEdit(PermissionRequiredMixin, UpdateView):
     model = Description_failure
     template_name = 'update.html'
     form_class = UpdateDescriptionFailureForm
-    success_url = '../'
+    success_url = '../../'
 
 
 class RecoveryMethodCreate(PermissionRequiredMixin, CreateView):
@@ -524,7 +556,7 @@ class RecoveryMethodCreate(PermissionRequiredMixin, CreateView):
     model = Recovery_method
     template_name = 'update.html'
     form_class = UpdateRecoveryMethodForm
-    success_url = './'
+    success_url = '../'
 
 
 class RecoveryMethodEdit(PermissionRequiredMixin, UpdateView):
@@ -532,4 +564,4 @@ class RecoveryMethodEdit(PermissionRequiredMixin, UpdateView):
     model = Recovery_method
     template_name = 'update.html'
     form_class = UpdateRecoveryMethodForm
-    success_url = '../'
+    success_url = '../../'
