@@ -17,8 +17,8 @@ class Index(FormMixin, ListView):
     form_class = FactoryNumber
     success_url = 'index'
 
-    def get_queryset(self):
-        return []
+    # def get_queryset(self):
+    #     return []
 
     def post(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
@@ -31,6 +31,16 @@ class Index(FormMixin, ListView):
             self.object_list = []
 
         return self.render_to_response(self.get_context_data(object_list=self.object_list, form=form))
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        #Для вывода информации из справочников по клику на значение
+        context['technique_model'] = Technique_model.objects.all()
+        context['engine_model'] = Engine_model.objects.all()
+        context['transmission_model'] = Transmission_model.objects.all()
+        context['drive_axle_model'] = Drive_axle_model.objects.all()
+        context['steerable_axle_model'] = Steerable_axle_model.objects.all()
+        return context
 
 
 class Info(PermissionRequiredMixin, ListView):
