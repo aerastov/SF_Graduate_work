@@ -7,7 +7,6 @@
     --silant_cell_grey: #f3f3f3;
 
 }
-
 @font-face {
     font-family: 'PT-Astra-Sans_Regular';
     src: local('PT-Astra-Sans_Regular'), url('/static/fonts/PT Astra Sans/PT-Astra-Sans_Regular.ttf') format('truetype');
@@ -42,7 +41,6 @@ html {
 
 body {
     height: 100%;
-
     font-weight: 400;
     line-height: 1.5;
     color: var(--silant_black);
@@ -51,10 +49,10 @@ body {
 h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
     margin-bottom: 0.5rem;
-    /*padding: 40px 20px;*/
 }
 
 a {
+    /*Иначе bootstrap5 перебивает((*/
     text-decoration: none !important;
 }
 p {
@@ -80,9 +78,7 @@ select {
     font-size: 0.8em;
 }
 .select_filter {
-    /*width: 75px;*/
     -webkit-appearance: none;
-    -moz-appearance: none;
     appearance: none;
     padding: 0 5px 0 0;
     font-size: 0.7em;
@@ -117,15 +113,12 @@ table {
     max-width: fit-content;
     margin: auto;
 }
-
-
 th {
     border-bottom: 1px solid var(--silant_grey);
     background-color: var(--silant_light_grey);
     padding: 2px 2px;
     white-space: nowrap;
 }
-
 table a {
     text-decoration: none;
     color: var(--silant_black);
@@ -138,7 +131,6 @@ th,td {
     border-right: 1px solid var(--silant_grey);
     border-left: 1px solid var(--silant_grey);
 }
-
 .td_slim {
     max-width: 100px;
     overflow: hidden;
@@ -157,10 +149,9 @@ tr:nth-child(odd) {
 .small_font {
     font-size: 0.8em;
 }
-
 .wrapper {
+    display: -webkit-flex; /* Safari */
     display: flex;
-
     flex-direction: column;
     min-height: 100%;
     margin: 0 auto;
