@@ -17,8 +17,8 @@ class Index(FormMixin, ListView):
     form_class = FactoryNumber
     success_url = 'index'
 
-    # def get_queryset(self):
-    #     return []
+    def get_queryset(self):
+        return []
 
     def post(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()

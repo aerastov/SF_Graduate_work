@@ -6,15 +6,14 @@
 
 {% block content %}
 
-    <h6 class="center">Проверьте комплектацию и технические характеристики техники Силант</h6>
+    <h6 class="center">Проверьте комплектацию и технические характеристики техники Силант</h6> <br>
     <div class="center">
     <form method="post" class="row g-3">
         {% csrf_token %}
-<!--        <div class="input-group">-->
         <div>
             {{ form }}
             {% buttons %}
-            <button type="submit" class="button slim">поиск</button>
+            <br><button type="submit" class="button medium">поиск</button>
             {% endbuttons %}
         </div>
     </form>
@@ -25,15 +24,26 @@
             <h6 class="center">Данные найденной машины:</h6>
             <div class="center">
                 <table style="border-bottom: none; border-top: none;">
-                    <tr><td>Зав. №  машины:</td><td>{{ car.factory_number }}</td></tr>
-                    <tr><td>Модель техники:</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#technique_model"><b>{{ car.technique_model }}</b></a></td></tr>
-                    <tr><td>Модель двигателя:</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#engine_model"><b>{{ car.engine_model }}</b></a></td></tr>
+                    <tr><td>Зав. №  машины:</td>
+                        <td>{{ car.factory_number }}</td></tr>
+                    <tr><td>Модель техники:</td>
+                        <td><a href="#" data-bs-toggle="modal" data-bs-target="#technique_model">
+                        <b>{{ car.technique_model }}</b></a></td></tr>
+                    <tr><td>Модель двигателя:</td>
+                        <td><a href="#" data-bs-toggle="modal" data-bs-target="#engine_model">
+                        <b>{{ car.engine_model }}</b></a></td></tr>
                     <tr><td>Зав. № двигателя:</td><td>{{ car.engine_number }}</td></tr>
-                    <tr><td>Модель трансмиссии:</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#transmission_model"><b>{{ car.transmission_model }}</b></a></td></tr>
+                    <tr><td>Модель трансмиссии:</td>
+                        <td><a href="#" data-bs-toggle="modal" data-bs-target="#transmission_model">
+                        <b>{{ car.transmission_model }}</b></a></td></tr>
                     <tr><td>Зав. № трансмиссии:</td><td>{{ car.transmission_number }}</td></tr>
-                    <tr><td>Модель ведущего моста:</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#drive_axle_model"><b>{{ car.drive_axle_model }}</b></a></td></tr>
+                    <tr><td>Модель ведущего моста:</td>
+                        <td><a href="#" data-bs-toggle="modal" data-bs-target="#drive_axle_model">
+                        <b>{{ car.drive_axle_model }}</b></a></td></tr>
                     <tr><td>Зав. № ведущего моста:</td><td>{{ car.drive_axle_number }}</td></tr>
-                    <tr><td>Модель управляемого моста:</td><td><a href="#" data-bs-toggle="modal" data-bs-target="#steerable_axle_model"><b>{{ car.steerable_axle_model }}</b></a></td></tr>
+                    <tr><td>Модель управляемого моста:</td>
+                        <td><a href="#" data-bs-toggle="modal" data-bs-target="#steerable_axle_model">
+                            <b>{{ car.steerable_axle_model }}</b></a></td></tr>
                     <tr><td>Зав. № управляемого моста:</td><td>{{ car.steerable_axle_number }}</td></tr>
                 </table>
             </div>

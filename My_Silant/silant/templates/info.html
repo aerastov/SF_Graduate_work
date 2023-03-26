@@ -5,13 +5,7 @@
 
 {% block content %}
 
-<h1>{{ request.session.order_by }}</h1>
-
-    <script src="{% static 'js/jquery-3.6.4.js' %}"></script>
     <script src="{% static 'js/info.js' %}"></script>
-
-<script>base_url = '{{ request.path }}';</script>
-<script>csrf_token = '{{ csrf_token }}';</script>
 
     <div class="div_full_horizontal_content_space_around">
         <a class="button_menu active" href="{% url 'info' %}" role="button">Машины</a>
